@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/user/css/user.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background: #f4f4f4;padding: 35px 0">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-md-9">
+                    <div class="right-content">
+                        <div class="right-content-header">
+                            <span>
+                                <p>提交工单</p>
+                            </span>
+                        </div>
+                        <div class="work-order">
+                            <a class="work-order-category" href="javascript:;">
+                                {$category.title}
+                            </a>
+                            <form role="form" action="{:url('workOrderSave')}" method="post" class="ajax-form">
+                                <div class="work-order-head">
+                                    基本信息
+                                </div>
+                                <div class="work-order-info">
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="name">站点<span class="form-required">*</span></label>
+                                        <select name="website_id" id="name" class="form-control">
+                                            {volist name="websiteList" id="vo"}
+                                            <option value="{$vo.id}" {if condition:$data.website_id eq $vo.id}selected{/if}>{$vo.name}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="name">问题类型<span class="form-required">*</span></label>
+                                        <select name="sub_category_id" id="sub_category_id" class="form-control">
+                                            {volist name="categoryList" id="vo"}
+                                            <option value="{$vo.id}" {if condition:$data.sub_category_id eq $vo.id}selected{/if}>{$vo.title}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="title">问题标题<span class="form-required">*</span></label>
+                                        <input type="text" class="form-control" name="title" value="{$data.title}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="description">问题描述<span class="form-required">*</span></label>
+                                        <textarea class="form-control" name="description" id="description" cols="30"
+                                            rows="5" placeholder="写下您问题的详细描述">{$data.description}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="operation">操作描述<span class="form-required">*</span></label>
+                                        <textarea class="form-control" name="operation" id="operation" cols="30" rows="5"
+                                            placeholder="请您详细描述在做什么操作的时，出现什么问题">{$data.operation}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h5 p-b" for="profile_image">上传图片<span class="form-required">*</span></label>
+                                        <div class="inputs">
+                                            <input type="text" class="form-control" id="pic" name="pic" value="{$data.pic}"
+                                                placeholder="">
+                                            <span>
+                                                <button type="button" id="plupload-image" rel="image" class="btn btn-danger plupload">
+                                                    <i class="fa fa-upload"></i> 上传</button>
+                                            </span>
+                                            <div class="input-group " style="margin-top:.5em;">
+                                                <img src="{$data.pic|default='/static/addon/hx/images/nopic.jpg'}" class="img-responsive2"
+                                                    width="150px" />
+                                                <em class="close" style="position:absolute; top: 0px; right: -14px;margin: 0 15px 0 0;"
+                                                    title="删除这张图片" onclick="deleteImage(this)">×</em>
+                                            </div>
+                                            <small class="block text-muted m-t">JPEG 590x242</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="work-order-head">
+                                    加密信息 <span>(此部分信息将做加密处理，为方便您的问题尽快处理请放心填写)</span>
+                                </div>
+                                <div class="work-order-info">
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="website_domain">站点网址<span class="form-required">*</span></label>
+                                        <input type="text" class="form-control" name="website_domain"  value="{$data.website_domain}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="website_account">创始人账号<span class="form-required">*</span></label>
+                                        <input type="text" class="form-control" name="website_account"  value="{$data.website_account}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="website_password">创始人密码<span class="form-required">*</span></label>
+                                        <input type="password" class="form-control" name="website_password"  value="{$data.website_password}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="website_ip">网址/ip</label>
+                                        <input type="text" class="form-control" name="website_ip"  value="{$data.website_ip}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="website_ftp_account">FTP账号</label>
+                                        <input type="text" class="form-control" name="website_ftp_account"  value="{$data.website_ftp_account}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="website_ftp_password">FTP密码</label>
+                                        <input type="password" class="form-control" name="website_ftp_password"  value="{$data.website_ftp_password}"/>
+                                    </div>
+                                </div>
+                                <div class="work-order-head">
+                                    联系方式
+                                </div>
+                                <div class="work-order-info">
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="qq">联系qq<span class="form-required">*</span></label>
+                                        <input type="text" class="form-control" name="qq" value="{$data.qq}" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="phone">手机号<span class="form-required">*</span></label>
+                                        <input type="text" class="form-control" name="phone" value="{$data.phone}" />
+                                    </div>
+                                </div>
+                                <div class="form-group m-t-md m-b-0">
+                                    <input type="file" name="image" id="imagefile" style="display: none;" />
+                                    <input type="hidden" name="category_id" id="category_id" value="{$category.id}"/>
+                                    <input type="hidden" name="id" id="id" value="{$data.id}"/>
+                                    <button id="form-submit" class="btn btn-primary" type="button" onclick="formAjaxSubmit()">保存</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+<script>
+    $(".plupload").click(function () {
+        //获取要填写值的input
+        inputid = $(this).parent().prev()
+        //为上传图片触发点击事件
+        $("input[name='image']").click();
+    });
+    //ajax上传图片开始
+    $("input[name='image']").on("change", function () {
+        var formData = new FormData();
+        formData.append("myimage", document.getElementById("imagefile").files[0]);
+        formData.append('name', inputid.attr("id"));
+        $.ajax({
+            type: "POST",
+            url: "{:url('user.index/upload')}",
+            processData: false,  // 不要处理发送的数据
+            contentType: false,   // 不要设置Content-Type请求头
+            data: formData,
+            success: function (data) {
+                if (data.cod == 1) {
+                    inputid.val(data.path);
+                    inputid.parent().find('img').attr("src", data.path);
+                }
+            }
+        });
+        // 
+        $("input[name='image']").val('');
+    });
+</script>
+
+</html>

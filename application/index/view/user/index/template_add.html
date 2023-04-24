@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>应用商店</title>
+    <!-- ALL STYLESHEET -->
+    <link href="__STATIC__/newstore/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/responsive.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/hx.css" rel="stylesheet">
+    <!--link href="css/blog-single.css" rel="stylesheet">
+		<link href="css/responsive.css" rel="stylesheet"-->
+</head>
+
+<body>
+    {include file="public/header"}
+    <section class="featured-product recommented-product">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-sm-9">
+                    <!-- desktop -->
+                    <div class="featured-product desktop">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form role="form" action="{:url('templateSave')}" method="post" class="ajax-form">
+                                    <div class="form-group">
+                                        <label class="h6 p-b-md block" for="featured_items">分类：</label>
+                                        <select name="type" id="type" class="form-control">
+                                            {volist name='list' id="vo"}
+                                            <option value="{$vo.id}">{$vo.name}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="title">标题</label>
+                                        <input type="text" class="form-control" name="title" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="author">作者</label>
+                                        <input type="text" class="form-control" name="author" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="price">价格</label>
+                                        <input type="text" class="form-control" name="price" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6 p-b-xs" for="content">描述</label>
+                                        <textarea class="form-control" name="content"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h5 p-b" for="profile_image">封面图</label>
+                                        <div class="inputs">
+                                            <input type="text" class="form-control" id="pic_a" name="pic_a" value="">
+                                            <span>
+                                                <button type="button" rel="image" class="btn btn-danger plupload">
+                                                    <i class="fa fa-upload"></i> 上传</button>
+                                            </span>
+                                            <div class="input-group " style="margin-top:.5em;">
+                                                <img src="/static/addon/hx/images/nopic.jpg" class="img-responsive2"
+                                                    width="150px" />
+                                                <em class="close" style="position:absolute; top: 0px; right: -14px;margin: 0 15px 0 0;"
+                                                    title="删除这张图片" onclick="deleteImage(this)">×</em>
+                                            </div>
+                                            <small class="block text-muted m-t">JPEG 590x242</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h5 p-b" for="profile_image">模板文件</label>
+                                        <div class="inputs">
+                                            <input type="text" class="form-control" id="down_path" name="down_path"
+                                                value="">
+                                            <span>
+                                                <button type="button" rel="image" class="btn btn-danger plupload">
+                                                    <i class="fa fa-upload"></i> 上传</button>
+                                            </span>
+                                            <small class="block text-muted m-t">ZIP/RAR</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-t-md m-b-0">
+                                        <input type="file" name="image" id="imagefile" style="display: none;" />
+                                        <button id="form-submit" class="btn skin b-skin" type="button" onclick="formsubmit()">保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> <!-- desktop -->
+                </div>
+                <!--div 9 -->
+            </div>
+        </div>
+    </section>
+    {include file="public/footer"}
+</body>
+<script>
+    $(".plupload").click(function () {
+        //获取要填写值的input
+        inputid = $(this).parent().prev()
+        //为上传图片触发点击事件
+        $("input[name='image']").click();
+    });
+    //ajax上传图片开始
+    $("input[name='image']").on("change", function () {
+        var formData = new FormData();
+        formData.append("myimage", document.getElementById("imagefile").files[0]);
+        formData.append('name', inputid.attr("id"));
+        $.ajax({
+            type: "POST",
+            url: "{:url('user.index/upload')}",
+            processData: false,  // 不要处理发送的数据
+            contentType: false,   // 不要设置Content-Type请求头
+            data: formData,
+            success: function (data) {
+                if (data.cod == 1) {
+                    inputid.val(data.path);
+                    inputid.parent().find('img').attr("src", data.path);
+                }
+            }
+        });
+        // 
+        $("input[name='image']").val('');
+    });
+    function formsubmit() {
+        var index = layer.load(0, { shade: [0.1, '#fff'] });
+        var obj = $('.ajax-form');
+        var url = $(obj).attr('action');
+        if (typeof (obj) == 'undefined' || typeof (url) == 'undefined') {
+            return layer.msg('参数错误');
+        }
+        $.ajax({
+            url: url,
+            data: $(obj).serialize(),
+            type: 'post',
+            dataType: 'json',
+            success: function (res) {
+                layer.msg(res.msg);
+                if (res.code && res.url) {
+                    location.href = res.url;
+                }
+                if (res.code != 1) {
+                    layer.msg(res.msg)
+                }
+                layer.close(index);
+            }
+        })
+    }
+</script>
+
+</html>

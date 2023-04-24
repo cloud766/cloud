@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    <link rel="icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" media="screen">
+    <link rel="shortcut icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" media="screen">
+    <link rel="stylesheet" href="__STATIC__/store/css/62faa85_base_1.css" />
+    <link rel="stylesheet" href="__STATIC__/store/css/76ad35d_fwIcon_1.css" />
+    <link rel="stylesheet" href="__STATIC__/store/css/0f9c9b0_swiper.min_1.css" />
+    <link rel="stylesheet" href="__STATIC__/store/css/style.css" />
+    <!--[if lt IE 8]><!-->
+    <link rel="stylesheet" href="__STATIC__/store/css/f1cf8b4_ie7_1.css" />
+    <!--<![endif]-->
+    <script src="__STATIC__/store/js/6463a26_jquery-1.11.2.min_1.js"></script>
+    <script src="__STATIC__/store/js/6463a26_jquery.cookie_2.js"></script>
+    <script src="__STATIC__/store/js/6463a26_jquery.lazyload.min_3.js"></script>
+    <script src="__STATIC__/store/js/6463a26_base_5.js"></script>
+    <script src="__STATIC__/store/js/6463a26_menu_6.js"></script>
+</head>
+
+<body>
+    <div class="c_header">
+        <div class="wrap">
+            <ul>
+                {if condition:$user}
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px">亲，欢迎<span style="color:red;padding: 0 5px">{$user.nickname}</span>来到弘讯应用商店！</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/user.index/user_info')}">个人中心</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/order/cart')}">购物车</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" href="{:url('index/user.login/loginout')}">退出</a></li>
+                {else/}
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px">亲，欢迎来到弘讯应用商店！</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/user.login/login')}">请登录</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/user.login/register')}">免费注册</a></li>
+                {/if}
+            </ul>
+        </div>
+    </div>
+    <!-- WPA Button Begin -->
+    <!-- WPA Button END -->
+    <!--公用头部-->
+    <!--logo-->
+    <div class="c_logo_box clearfix">
+        <div class="c_logo">
+            <h1 class="c_logo_left fl">
+                <a href="/" title="弘讯应用商店服务市场">弘讯应用商店服务市场</a>
+            </h1>
+
+            <div class="fr">
+                <div class="search-box pr" style="z-index: 1001">
+                    <div class="search-tab">
+                        <a href="javascript:void (0)" class="service active">插件</a>
+                    </div>
+                    <div class="search-form">
+                        <form method="get" action="">
+                            <div class="search-form-left">
+                                <div class="search-all">
+                                    <input name="keyword" id="keyword" type="text" placeholder="搜索您需要的插件" value="{$keyword}">
+                                    <input type="hidden" name='price' id="price" value="{$price}">
+                                    <input type="hidden" name='time' id="time" value="{$time}">
+                                    <input type="hidden" name='free' id="free" value="{$free}">
+                                    <button class="_search_button" onclick="formSubmit()" type="button">搜索</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="search-mess" style="display: none;">
+                        <div class="animated animated-1"></div>
+                        <div class="animated animated-2"></div>
+                        <div class="animated animated-3"></div>
+                        <div class="animated animated-4"></div>
+                        <div class="animated animated-5"></div>
+                        <span class="animated animated-6" id="close-btn"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--公用导航-->
+    <link rel="stylesheet" href="__STATIC__/store/css/d07d5b2_services_1.css" xmlns="http://www.w3.org/1999/html" />
+    <div class="services">
+        <div class="servies-nav">
+            <div class="wrap" style="overflow: hidden">
+                <a href="/" class="home">首页</a>
+                &gt;<a href="" class="home">插件市场</a>
+            </div>
+        </div>
+        <div class="search-guide clearfix">
+            <div class="wrap guide-box">
+                <div class="clearfix">
+                    <div class="guide-title fl t-c f-12">
+                        插件分类：
+                    </div>
+                    <ul class="guide-list fl f-12">
+                        <li class="fl {if condition:!$cid}active{/if}">
+                            <a href="{:url('index/store.addon/index')}" style="padding-right:10px">全部</a>
+                        </li>
+                        {volist name="typeList" id="vo"}
+                        <li class="fl {if condition:$cid eq $vo.id}active{/if}">
+                            <a href="{:url('index/store.addon/index', array('cid'=>$vo.id))}" style="padding-right:10px">{$vo.name}</a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="services-body">
+            <div class="wrap" id="ser_tab">
+                <div class="order-box">
+                    <ul class="order-box-top clearfix">
+                        <li style="margin-top: 6px;"><a href="javascript:;" onclick="defaultOrder()" {if
+                                condition:!$time and !$price}class="active" {/if}>默认排序 </a> </li> <li><a href="javascript:;"
+                                    onclick="priceOrder()" {if condition:$price}class="active" {/if}>价格 <i class="pic-order {$price}"></i></a>
+                        </li>
+                        <li><a href="javascript:;" onclick="timeOrder()" {if condition:$time}class="active" {/if}>发布时间
+                                <i class="pic-order {$time}"></i></a> </li>
+                    </ul>
+                    <ul class="order-box-top order-box-bottom clearfix">
+                        <li><a href="javascript:;" onclick="free()" {if condition:$free eq 1}class="active" {/if}> <i
+                                class="selected"></i>免费使用</a></li>
+                    </ul>
+                </div>
+                <div class="services-box clearfix">
+                    {volist name="list" id="vo"}
+                    <a class="services-list fl subscript-body" href="{:url('index/store.addon/detail',array('id'=>$vo.id))}"
+                        target="_blank">
+                        <div class="list-pic t-c pt-40">
+                            <img src="{$vo.pic_a}">
+                        </div>
+                        <h3 class="t-c f-20 pb-10 pl-10 pr-10 mt-15">{$vo.title}</h3>
+                        <p class="services-intro t-c f-13 l-24 pb-10">{$vo.content}</p>
+                        <div class="org t-c f-13 pt-10">{$vo.price} 元</div>
+                        {if condition:$vo.uploader eq 1}
+                        <div class="subscript-gf">
+                            官方
+                        </div>
+                        {else/}
+                        <div class="subscript-dsf">
+                            第三方
+                        </div>
+                        {/if}
+                    </a>
+                    {/volist}
+                </div>
+                <div class="t-c">
+                    {$page}
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file='public/footer'}
+</body>
+<script>
+    function defaultOrder() {
+        $('#price').val('');
+        $('#time').val('');
+        $('form').submit();
+    }
+    function timeOrder() {
+        $('#price').val('');
+        var time = $('#time').val();
+        console.log(time);
+        time_sort = time == 'down' ? 'up' : 'down';
+        $('#time').val(time_sort);
+        $('form').submit();
+    }
+    function priceOrder() {
+        $('#time').val('');
+        var price = $('#price').val();
+        price_sort = price == 'down' ? 'up' : 'down';
+        $('#price').val(price_sort);
+        $('form').submit();
+    }
+    function free() {
+        var free = $('#free').val();
+        free = free == 1 ? '' : 1;
+        $('#free').val(free);
+        $('form').submit();
+    }
+    function formSubmit() {
+        $('form').submit();
+    }
+</script>
+
+</html>

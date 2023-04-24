@@ -1,0 +1,96 @@
+{include file="public/css"}
+<link rel="stylesheet" href="__STATIC__/iCheck/flat/blue.css">
+<section class="content-header">
+  <h1>
+    附件列表
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="/admin/index/welcome.html">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">附件管理</li>
+    <li class="active">附件列表</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="box">
+    <div class="box-body">
+      <div class="dataTables_wrapper form-inline dt-bootstrap">
+        <div class="row">
+          <div class="col-sm-12">
+            <div id="example1_filter" class="dataTables_filter">
+              <form action="">
+               
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+              <thead>
+                <tr>
+                  <th width="60">
+                    <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                      <i class="fa fa-square-o"></i>
+                    </button>
+                  </th>
+                  <th>ID</th>
+                  <th>名称</th>
+                  <th>类型</th>
+                  <th>路径</th>
+                  <th>大小</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {volist name='list' id='vo'}
+                <tr>
+                  <td class="mailbox-messages">
+                    <input type="checkbox" value="{$vo.id}">
+                  </td>
+                  <td>{$vo.id}</td>
+                  <td>{$vo.name}</td>
+                  <td>{$vo.type}</td>
+                  <td>{$vo.path}{if condition:$vo.type eq 'image'}<br/><img src="{$vo.path}" height="100" width="auto">{/if}</td>
+                  <td>{$vo.size > 1024*1024 ? ceil($vo.size/1024*1024) : ceil($vo.size/1024)}{$vo.size > 1024*1024 ? 'm' : 'k'}</td>
+                  <td>
+                    <button type="button" onclick="del(this)" data-url="{:url('admin/attachment/delete')}" data-id="{$vo.id}" class="btn btn-danger btn-sm">删除</button>
+                  </td>
+                </tr>
+                {/volist}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <button type="button" onclick="batchDel(this)" data-url="{:url('admin/attachment/delete')}" class="btn btn-danger btn-sm">批量删除</button>
+        {$pages}
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}
+<script src="__STATIC__/iCheck/icheck.min.js"></script>
+<script>
+  $('.mailbox-messages input[type="checkbox"]').iCheck({
+    checkboxClass: 'icheckbox_flat-blue',
+    radioClass: 'iradio_flat-blue'
+  });
+
+  $(".checkbox-toggle").click(function () {
+    var clicks = $(this).data('clicks');
+    if (clicks) {
+      $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+      $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+      console.log('选中')
+    } else {
+      //Check all checkboxes
+      $(".mailbox-messages input[type='checkbox']").iCheck("check");
+      $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+      console.log('取消选中')
+    }
+    $(this).data("clicks", !clicks);
+  });
+</script>

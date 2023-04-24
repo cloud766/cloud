@@ -1,0 +1,94 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>
+    验证安全设置    
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="{:url('admin/index/welcome')}">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统设置</li>
+    <li class="active">验证安全设置</li>
+    <li class="active">验证码参数设置</li>
+  </ol>
+</section>
+<section class="content">
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+      </div>
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="{:url('admin/config/index', array('group'=>'verify_code_setting'))}">验证码参数设置</a></li>
+          <li><a href="{:url('admin/config/index', array('group'=>'verify_question_setting'))}">验证问题设置</a></li>
+        </ul>
+      </div>
+      <form class="form-horizontal" action="{:url('admin/config/saveConfig')}" method="post">
+        <div class="box-body">
+          <div class="form-group">
+            <label for="open_verify_code" class="col-sm-2 control-label">开启系统验证码</label>
+            <div class="col-sm-8">
+              <select multiple="multiple" class="form-control" data-id="84" name="open_verify_code[]">
+                <option value="1" {if(strstr($config.open_verify_code,'1'))}selected{/if}>前台登陆</option>
+                <option value="2" {if(strstr($config.open_verify_code,'2'))}selected{/if}>会员发布</option>
+                <option value="3" {if(strstr($config.open_verify_code,'3'))}selected{/if}>后台登录</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="verify_code_type" class="col-sm-2 control-label">验证码生成类型</label>
+            <div class="col-sm-8">
+              <select class="form-control" data-id="85" name="verify_code_type">
+                <option value="0" {if condition:$config.verify_code_type eq 0}selected{/if}>数字</option>
+                <option value="1" {if condition:$config.verify_code_type eq 1}selected{/if}>英文</option>
+                <option value="2" {if condition:$config.verify_code_type eq 2}selected{/if}>单词</option>
+                <option value="3" {if condition:$config.verify_code_type eq 3}selected{/if}>滑动（极验）</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="verify_code_file_type" class="col-sm-2 control-label">选择验证码文件类型</label>
+            <div class="col-sm-8">
+              <select class="form-control" data-id="86" name="verify_code_file_type">
+                <option value="0" {if condition:$config.verify_code_file_type eq 0}selected{/if}>JPG</option>
+                <option value="1" {if condition:$config.verify_code_file_type eq 1}selected{/if}>PNG</option>
+                <option value="2" {if condition:$config.verify_code_file_type eq 2}selected{/if}>GIF</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="verify_code_interfere" class="col-sm-2 control-label">验证码干扰设置</label>
+            <div class="col-sm-8">
+              <select class="form-control" data-id="87" name="verify_code_interfere">
+                <option value="0" {if condition:$config.verify_code_interfere eq 0}selected{/if}>背景</option>
+                <option value="1" {if condition:$config.verify_code_interfere eq 1}selected{/if}>背景图</option>
+                <option value="2" {if condition:$config.verify_code_interfere eq 2}selected{/if}>混杂文本色</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="verify_code_image_size_width" class="col-sm-2 control-label">验证码图片大小（宽）</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="verify_code_image_size_width" name="verify_code_image_size_width" value="{$config.verify_code_image_size_width}" placeholder="" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="verify_code_image_size_height" class="col-sm-2 control-label">验证码图片大小（高）</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="verify_code_image_size_height" name="verify_code_image_size_height" value="{$config.verify_code_image_size_height}" placeholder="" />
+            </div>
+          </div>
+        </div>
+        <div class="box-footer">
+          <input type="hidden" name="group" value="{$group}" /> 
+          <button type="submit" class="btn btn-info pull-right">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</section>
+{include file="public/js"}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>应用商店</title>
+    <!-- ALL STYLESHEET -->
+    {include file="public/css"}
+    <!--link href="css/blog-single.css" rel="stylesheet">
+		<link href="css/responsive.css" rel="stylesheet"-->
+</head>
+<style>
+    .template {
+        border: 1px solid #eee;
+        padding: 5px;
+    }
+
+    .template-image {
+        height: 200px;
+    }
+
+    .template-image img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .btn-default {
+        float: right;
+        margin: 20px 0;
+        border: 0;
+        border-bottom: 2px solid #8AAA63;
+        color: #fff;
+        background-color: #8ec63f;
+        font-weight: 600;
+        font-size: 13px;
+    }
+    .btn-default:hover{
+        background-color: #7ac7c2;
+        color: #fff;
+    }
+</style>
+
+<body>
+    {include file="public/header"}
+    <section class="featured-product recommented-product">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-sm-9">
+                    <!-- desktop -->
+                    <div class="featured-product desktop">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {volist name="list" id="vo"}
+                                <div class="col-sm-4">
+                                    <div class=" template">
+                                        <div class="template-image">
+                                            <img src="{$vo.pic_a}" alt="">
+                                        </div>
+                                        <div class="template-info">
+                                            <div class="template-title">{$vo.title}</div>
+                                            <div class="template-pirce">状态：{if condition:$vo.status eq 0}未审核{elseif
+                                                condition:$vo.status eq 1}已审核{else/}被驳回{/if}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/volist}
+                            </div>
+                        </div>
+                    </div> <!-- desktop -->
+                    <!-- pagination -->
+                    <nav>
+                        {$page}
+                        <a href="{:url('templateAdd')}" class="btn btn-default" role="button">上传模板</a>
+                    </nav>
+                </div>
+                <!--div 9 -->
+            </div>
+        </div>
+    </section>
+    {include file="public/footer"}
+</body>
+
+</html>

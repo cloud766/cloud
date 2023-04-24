@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>应用商店</title>
+    <!-- ALL STYLESHEET -->
+    <link href="__STATIC__/newstore/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/responsive.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/hx.css" rel="stylesheet">
+    <!--link href="css/blog-single.css" rel="stylesheet">
+		<link href="css/responsive.css" rel="stylesheet"-->
+</head>
+
+<body>
+    {include file="public/header"}
+    <section class="featured-product recommented-product">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-sm-9">
+                    <!-- desktop -->
+                    <div class="featured-product desktop">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form role="form" action="{:url('save')}" method="post" class="ajax-form">
+                                    <div class="form-group">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon warn b-warn">
+                                                <i class="icon-weibo text-md"></i>
+                                            </span>
+                                            <input id="weibo" class="form-control" name="sina" placeholder="只需填写微博名，不需要填写http://weibo.com/"
+                                                value="{$user['sina']}" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon blue b-blue">
+                                                <i class="icon-qq text-md"></i>
+                                            </span>
+                                            <input id="qq" class="form-control" name="qq" placeholder="填写您的QQ号，只展示给购买过您作品的会员"
+                                                value="{$user['qq']}" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon green b-green">
+                                                <i class="icon-weixin text-md"></i>
+                                            </span>
+                                            <input id="weixin" class="form-control" name="wechat" placeholder="您的微信号"
+                                                value="{$user['sina']}" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-t-md m-b-0">
+                                        <input type="hidden" name="page" value="liaison" />
+                                        <button id="form-submit" class="btn skin b-skin" type="button" onclick="formAjaxSubmit()">保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> <!-- desktop -->
+                    <!-- pagination -->
+                    <nav>
+                        {$page.pages}
+                    </nav>
+                </div>
+                <!--div 9 -->
+            </div>
+        </div>
+    </section>
+    {include file="public/footer"}
+</body>
+
+</html>

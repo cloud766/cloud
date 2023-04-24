@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    <link rel="icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" media="screen">
+    <link rel="shortcut icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" media="screen">
+    <link rel="stylesheet" href="__STATIC__/store/css/62faa85_base_1.css" />
+    <link rel="stylesheet" href="__STATIC__/store/css/76ad35d_fwIcon_1.css" />
+    <link rel="stylesheet" href="__STATIC__/store/css/0f9c9b0_swiper.min_1.css" />
+    <link rel="stylesheet" href="__STATIC__/store/css/style.css" />
+    <!--[if lt IE 8]><!-->
+    <link rel="stylesheet" href="__STATIC__/store/css/f1cf8b4_ie7_1.css" />
+    <!--<![endif]-->
+    <script src="__STATIC__/store/js/6463a26_jquery-1.11.2.min_1.js"></script>
+    <script src="__STATIC__/store/js/6463a26_jquery.cookie_2.js"></script>
+    <script src="__STATIC__/store/js/6463a26_jquery.lazyload.min_3.js"></script>
+    <script src="__STATIC__/store/js/6463a26_swiper.min_4.js"></script>
+    <script src="__STATIC__/store/js/6463a26_base_5.js"></script>
+    <script src="__STATIC__/store/js/6463a26_menu_6.js"></script>
+</head>
+
+<body>
+    <div class="c_header">
+        <div class="wrap">
+            <ul>
+                {if condition:$user}
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px">亲，欢迎<span style="color:red;padding: 0 5px">{$user.nickname}</span>来到弘讯应用商店！</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/user.index/user_info')}">个人中心</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/order/cart')}">购物车</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" href="{:url('index/user.login/loginout')}">退出</a></li>
+                {else/}
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px">亲，欢迎来到弘讯应用商店！</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/user.login/login')}">请登录</a></li>
+                <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/user.login/register')}">免费注册</a></li>
+                {/if}
+            </ul>
+        </div>
+    </div>
+    <!-- WPA Button Begin -->
+    <script type="text/javascript" src="__STATIC__/statistics.js"></script>
+    <!-- WPA Button END -->
+    <!--公用头部-->
+    <!--logo-->
+    <div class="c_logo_box clearfix">
+        <div class="c_logo">
+            <h1 class="c_logo_left fl">
+                <a href="/" title="弘讯应用商店服务市场">弘讯应用商店服务市场</a>
+            </h1>
+
+            <div class="fr">
+                <div class="search-box pr" style="z-index: 1001">
+                    <div class="search-tab">
+                        <a href="javascript:void (0)" class="service active">插件</a>
+                        <!--<a href="javascript:void (0)" class="provider">服务商</a>-->
+                    </div>
+                    <div class="search-form">
+                        <form method="get" action="{:url('index/store.addon/index')}">
+                            <div class="search-form-left">
+                                <div class="search-all">
+                                    <input name="keyword" type="text" placeholder="搜索您需要的插件" value="">
+                                    <button class="_search_button" type="submit">搜索</button>
+                                </div>
+                                <div class="service-list">
+                                    <!-- <a href="http://fuwu.xyunqi.com/cate/192" target="_blank" style="color:#141ef9">ECShop无忧焕装套餐</a> -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="search-mess" style="display: none;">
+                        <div class="animated animated-1"></div>
+                        <div class="animated animated-2"></div>
+                        <div class="animated animated-3"></div>
+                        <div class="animated animated-4"></div>
+                        <div class="animated animated-5"></div>
+                        <span class="animated animated-6" id="close-btn"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--公用导航-->
+    <link rel="stylesheet" href="__STATIC__/store/css/d07d5b2_services_1.css" xmlns="http://www.w3.org/1999/html" />
+    <style>
+        #xq img {
+            max-width: 100%;
+        }
+    </style>
+    <div class="services">
+        <div class="services-details">
+            <div class="wrap">
+                <div class="pl-20 pr-20 pt-40">
+                    <div class="clearfix pb-30">
+                        <div class="fl subscript-body">
+                            <div class="detailImg">
+                                <img src="{$data.pic_a}" alt="">
+                            </div>
+                            {if condition:$data.uploader eq 1}
+                            <div class="subscript-gf">
+                                官方
+                            </div>
+                            {else/}
+                            <div class="subscript-dsf">
+                                第三方
+                            </div>
+                            {/if}
+                        </div>
+                        <div class="top-right fr">
+                            <h1 class="f-30">{$data.title}</h1>
+                            <div class="f-13 pt-15 pb-15" style="border-bottom: 1px solid #CCCCCC">
+                                作者：{$data.author}
+                            </div>
+                            <p class="pt-10 pb-10 f-14 l-30">{$data.content}</p>
+                            <div class="pt-20 pb-20 top-sale clearfix">
+                                <div class="sale-list f-14">
+                                    <div class="sale-bottom dsal">
+                                        <span class="org f-40">{$data.price}元</span>
+                                    </div>
+                                    <a href="javascript:;" onclick="buy()" class="sale-btn f-16 fr" target="_blank">
+                                        立即购买
+                                    </a>
+                                    <a href="javascript:;" onclick="cart()" class="sale-btn f-16 fr" target="_blank">
+                                        加入购物车
+                                    </a>
+                                    <select id="website_id" style="float: right;height: 36px;line-height: 36px;margin-right: 30px;width: 100px;margin-top: 15px;border: 1px solid #ccc;border-radius: 4px;">
+                                        {volist name="websiteList" id="vo"}
+                                        <option value="{$vo.id}">{$vo.name}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="bottom-body" id="xq">
+                    <div class="t-c pt-60 pb-40">
+                        {volist name="data.pic_f" id="vo"}
+                        <img src="{$vo}" alt="">
+                        {/volist}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file='public/footer'}
+</body>
+<script>
+    function buy() {
+        var website_id = $('#website_id').val();
+        var user = '{$user}';
+        if (!user) {
+            alert('请登录');
+            return;
+        }
+        if (!website_id) {
+            alert('请选择站点');
+            return;
+        }
+        $.ajax({
+            url: '{:url("index/order/buyNow")}',
+            data: { website_id: website_id, 'relation': 'addon', 'relation_id': '{$data.id}' },
+            type: 'post',
+            dataType: 'json',
+            success: function (res) {
+                location.href = res.url;
+            }
+        })
+    }
+    function cart() {
+        var website_id = $('#website_id').val();
+        var user = '{$user}';
+        if (!user) {
+            alert('请登录');
+            return;
+        }
+        if (!website_id) {
+            alert('请选择站点');
+            return;
+        }
+        $.ajax({
+            url: '{:url("index/order/addCart")}',
+            data: { website_id: website_id, 'relation': 'addon', 'relation_id': '{$data.id}' },
+            type: 'post',
+            dataType: 'json',
+            success: function (res) {
+                alert(res.msg);
+            }
+        })
+    }
+</script>
+
+</html>

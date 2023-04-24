@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/user/css/user.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background: #f4f4f4;padding: 35px 0">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-md-9">
+                    <div class="right-content">
+                        <form role="form" class="horizontal-form disable-on-submit ajax-form" action="{:url('save')}"
+                            method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="h5 p-b-xs" for="profile_image">你的头像</label>
+                                <div class="inputs p-y">
+                                    <img alt="admin" src="{$user['head_img']|default='/static/addon/hx/images/nopic.jpg'}"
+                                        class="w-128 img-circle m-r" style="width:120px;height:120px" />
+                                    <img alt="admin" src="{$user['head_img']|default='/static/addon/hx/images/nopic.jpg'}"
+                                        class="w-64 img-circle m-r" style="width:90px;height:90px" />
+                                    <img alt="admin" src="{$user['head_img']|default='/static/addon/hx/images/nopic.jpg'}"
+                                        class="w-32 img-circle" style="width:60px;height:60px" />
+                                    <input type="text" class="form-control" id="head_img" name="head_img" value="{$user['head_img']}">
+                                    <span>
+                                        <button type="button" id="plupload-image" rel="image" class="btn btn-danger plupload">
+                                            <i class="fa fa-upload"></i> 上传</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group m-t-md m-b-0">
+                                <input type="hidden" name="page" value="portrait" />
+                                <input type="file" name="image" id="imagefile" style="display: none;" />
+                                <button id="form-submit" class="btn btn-primary" type="button" onclick="formAjaxSubmit()">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+<script>
+    $(".plupload").click(function () {
+        //获取要填写值的input
+        inputid = $(this).parent().prev()
+        //为上传图片触发点击事件
+        $("input[name='image']").click();
+    });
+    //ajax上传图片开始
+    $("input[name='image']").on("change", function () {
+        var formData = new FormData();
+        formData.append("myimage", document.getElementById("imagefile").files[0]);
+        formData.append('name', inputid.attr("id"));
+        $.ajax({
+            type: "POST",
+            url: "{:url('user.index/upload')}",
+            processData: false,  // 不要处理发送的数据
+            contentType: false,   // 不要设置Content-Type请求头
+            data: formData,
+            success: function (data) {
+                if (data.cod == 1) {
+                    inputid.val(data.path);
+                    $('.img-circle').attr("src", data.path);
+                }
+            }
+        });
+        // 
+        $("input[name='image']").val('');
+    });
+</script>
+
+</html>

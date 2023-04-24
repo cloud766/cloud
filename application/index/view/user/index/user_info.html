@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/user/css/user.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background: #f4f4f4;padding: 35px 0">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-md-9">
+                    <div class="right-content">
+                        <form role="form" action="{:url('save')}" method="post" class="ajax-form">
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="nickname">昵称</label>
+                                <input id="nickname" class="form-control" name="nickname" required="true" type="text"
+                                    value="{$user['nickname']}" />
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="invoice_to">公司名称</label>
+                                <input id="invoice_to" class="form-control" name="company" type="text" value="{$user['company']}" />
+                                <small class="text-muted block m-t-xs">没有请留空</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="lives_in">所在城市</label>
+                                <input id="lives_in" class="form-control" name="city" type="text" value="{$user['city']}" />
+                                <small class="text-muted block m-t-xs">比如：北京</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="email">邮件地址</label>
+                                <input id="email" class="form-control" name="email" value="{$user['email']}" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="address">详细地址</label>
+                                <input id="address" class="form-control" name="address" value="{$user['address']}" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="by_line">个性签名</label>
+                                <input id="by_line" class="form-control" name="autograph" type="text" value="{$user['autograph']}" />
+                            </div>
+                            <div class="form-group m-t-md m-b-0">
+                                <input type="hidden" name="page" value="user_info" />
+                                <button id="form-submit" class="btn btn-primary" type="button" onclick="formAjaxSubmit()">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+
+</html>

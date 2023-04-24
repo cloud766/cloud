@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/user/css/user.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background: #f4f4f4;padding: 35px 0">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-md-9">
+                    <div class="right-content">
+                        <form role="form" action="{:url('save')}" method="post" id="form1" class="ajax-form">
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="old_password">输入旧密码</label>
+                                <input type="password" class="form-control" id="old_password" name="old_password" />
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="password">输入新密码</label>
+                                <input type="password" class="form-control" id="password" name="password" />
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="user_password_again">确认新密码</label>
+                                <input type="password" class="form-control" id="user_password_again" name="user_password_again" />
+                            </div>
+                            <div class="form-group m-t-md m-b-0">
+                                <input type="hidden" name="page" value="reset_pwd" />
+                            </div>
+                            <button id="form-submit" class="btn btn-primary" type="button" onclick="formAjaxSubmit()">保存</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+
+</html>

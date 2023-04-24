@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>解压文件</title>
+</head>
+<form action="{:url('data/uzip')}" method="get" enctype="multipart/form-data">
+    <span>请选择要解压的文件</span><br><br><select name="from">
+    {foreach $zips as $zip}
+        <option  value="{$zip['name']}" >{$zip['name']}</option>;
+   {/foreach}
+       
+    ?>
+    </select><br><br>
+    <span>请填写要解压到的目录名称（<font color="red">相对于当前目录，为空表示解压到当前目录下，不能用“/”开头</font>）</span><br><br><input type="text" name="to" value=""/><br/><br>
+    <input type="hidden" name="m" value="do_unzip" />
+    <input type="submit" value="解压"/>
+  
+</form>
+</html>
+

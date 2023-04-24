@@ -1,0 +1,38 @@
+{include file="public/css"}
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">版本更新</h3>
+  </div>
+  <div class="box-body">
+    <p>校验文件<code id="update_count">0</code> / <code>{$count}</code> 个文件</p>
+    <button type="button" onclick="update()" class="btn bg-olive btn-flat margin">检查更新</button>
+  </div>
+</div>
+{include file="public/js"}
+<script>
+  var count = '{$count}';
+  function update(){
+    check_file(0);
+  }
+
+  function check_file(start){
+    $.ajax({
+      url : '{:url("admin/yun.sourcecode/get_cloud_file_list")}',
+      data : {start:start},
+      dataType : 'json',
+      type : 'post',
+      success : function(res){
+        if (res.code == 1) {
+          if(start > count){
+            layer.msg('更新成功');
+            $('#update_count').text(count);
+            return;
+          }else{
+            $('#update_count').text(start);
+          }
+          check_file(start+100);
+        }
+      }
+    })
+  }
+</script>

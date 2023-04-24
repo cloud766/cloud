@@ -1,0 +1,26 @@
+<div class="col-md-2 compose">
+    <div class="mail-profile">
+        <div class="mail-pic">
+            <a href="#"></a>
+        </div>
+        <div class="mailer-name">
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <div class="compose-bottom">
+        <ul>
+            <li><a {if condition:$left eq 'addon_list' }class="hilate" {/if} href="{:url('admin/yun.addon/addon_list')}"><i
+                        class="fa fa-star-o"> </i>插件列表</a></li>
+            <li><a {if condition:$left eq 'auditing_list' }class="hilate" {/if} href="{:url('admin/yun.addon/auditing_list')}"><i
+                        class="fa fa-star-o"> </i>审核列表</a></li>
+            <li><a {if condition:$left eq 'type_list' }class="hilate" {/if} href="{:url('admin/yun.addon/type_list')}"><i
+                        class="fa fa-inbox"> </i>插件类型</a></li>
+            <li><a {if condition:$left eq 'buy_list' }class="hilate" {/if} href="{:url('admin/yun.addon/buy_list')}"><i
+                        class="fa fa-pencil-square-o"> </i>购买统计</a></li>
+            <li><a {if condition:$left eq 'download_list' }class="hilate" {/if} href="{:url('admin/yun.addon/download_list')}"><i
+                        class="fa fa-pencil-square-o"> </i>下载统计</a></li>
+            <li><a {if condition:$left eq 'auth_list' }class="hilate" {/if} href="{:url('admin/yun.addon/auth_list')}"><i
+                        class="fa fa-pencil-square-o"> </i>授权管理</a></li>
+        </ul>
+    </div>
+</div>

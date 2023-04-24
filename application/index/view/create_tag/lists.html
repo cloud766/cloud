@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{include file="create_tag/tag_header"}
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">弘讯应用商店</a>
+        </div>
+    </nav>
+    <div class="container">
+        {include file="create_tag/tag_nav"}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>内容列表 <span class="label label-info">list</span></h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>栏目ID:</label>
+                        <input type="number" class="form-control number" name="cid">
+                    </div>
+                    <div class="form-group">
+                        <label>排序:</label>
+                        <select name="orderby_1" class="form-control">
+                            <option value="id">id</option>
+                            <option value="sort">排序</option>
+                            <option value="update_time">更新时间</option>
+                            <option value="create_time">创建时间</option>
+                        </select>
+                        <select name="orderby_2" class="form-control">
+                            <option value="desc">倒序</option>
+                            <option value="asc">正序</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>关键词:</label>
+                        <input type="text" class="form-control input" name="keyword">
+                    </div>
+                    <div class="form-group">
+                        <label>显示数量:</label>
+                        <input type="number" class="form-control number" name="limit">
+                    </div>
+                    <input type="hidden" name="tag_type" value="lists">
+                    <button class="btn btn-info" onclick="createTagLib(this)" type="button">生成标签</button>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>幻灯片 <span class="label label-info">banner</span></h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>类型ID:</label>
+                        <input type="text" class="form-control number" name="tid">
+                    </div>
+                    <div class="form-group">
+                        <label>排序:</label>
+                        <select name="orderby_1" class="form-control">
+                            <option value="id">id</option>
+                            <option value="sort">排序</option>
+                        </select>
+                        <select name="orderby_2" class="form-control">
+                            <option value="desc">倒序</option>
+                            <option value="asc">正序</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>显示数量:</label>
+                        <input type="text" class="form-control number" name="limit">
+                    </div>
+                    <input type="hidden" name="tag_type" value="banner">
+                    <button class="btn btn-info" onclick="createTagLib(this)" type="button">生成标签</button>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>友情链接 <span class="label label-info">link</span></h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>排序:</label>
+                        <select name="orderby_1" class="form-control">
+                            <option value="id">id</option>
+                            <option value="update_time">更新时间</option>
+                        </select>
+                        <select name="orderby_2" class="form-control">
+                            <option value="desc">倒序</option>
+                            <option value="asc">正序</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>显示数量:</label>
+                        <input type="text" class="form-control number" name="limit">
+                    </div>
+                    <div class="form-group">
+                        <label>标识:</label>
+                        <select name="flag" class="form-control">
+                            <option value="0">无图片</option>
+                            <option value="1">有图片</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="tag_type" value="link">
+                    <button class="btn btn-info" onclick="createTagLib(this)" type="button">生成标签</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+<script>
+    function createTagLib(obj) {
+        $.ajax({
+            url: '{:url("index/createTag/createTagLib")}',
+            data: $(obj).parent().serialize(),
+            type: 'post',
+            dataType: 'json',
+            success: function (res) {
+                $('#textarea').val(res);
+            }
+        })
+    }
+</script>
+
+
+</html>

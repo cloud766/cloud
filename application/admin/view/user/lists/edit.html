@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>会员管理 - 编辑会员 - HXCloud - Hong Xun Technology Development Co., Ltd.</title>
+  {include file="public/css"}
+  <!--//skycons-icons-->
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="left-content">
+      <div class="mother-grid-inner">
+        <!--header start here-->
+        {include file="public/header_main"}
+        <!--heder end here-->
+        <!--inner block start here-->
+        <div class="inner-block">
+          <div class="inbox">
+            <h2>会员管理/编辑会员</h2>
+            {include file="user/left"}
+            <div class="col-md-10 compose-right">
+              <div class="inbox-details-default">
+                <div class="inbox-details-heading">
+                  编辑会员
+                </div>
+                <div class="inbox-details-body">
+                  <form action="{:url('admin/user.lists/save')}" method="post" class="com-mail ajax-form">
+                    用户名<input type="text" name="username" value="{$user.username}">
+                    昵称<input type="text" name="nickname" value="{$user.nickname}">
+                    Email<input type="text" name="email" value="{$user.email}">
+                    会员等级
+                    <select name="level" id="">
+                      {volist name="listclass" id="vo"}
+                        <option value="{$vo.id}" {if condition:$user.type eq $vo.id}selected{/if}>{$vo.name}</option>
+                      {/volist}
+                    </select> 
+                    性别
+                    <select name="gender" id="">
+                      <option value="1" {if condition:$user.gender eq '1'}selected{/if}>男</option>
+                      <option value="0" {if condition:$user.gender eq '0'}selected{/if}>女</option>
+                    </select> 
+                    <!-- 会员属性
+                    <select name="type" id="">
+                      {volist name="attribute" id="vo"}
+                        <option value="{$vo.id}" {if condition:$vo.id eq $user.attribute}selected{/if}>{$vo.name}</option>
+                      {/volist}
+                    </select>  -->
+                    QQ号<input type="text" name="qq" value="{$user.qq}">
+                    微信号<input type="text" name="wechat" value="{$user.wechat}">
+                    配置分组
+                    <select name="type" id="">
+                      <{volist name="typelist" id="vo"}
+                      <option value="{$vo.id}" {if condition:$user.type eq $vo.id}selected{/if}>{$vo.name}</option>
+                      {/volist}
+                    </select> 
+                    <input type="hidden" name="id" value="{$user.id}">
+                    {:token()}
+                    <input type="button" onclick="formAjaxSubmit()" value="保存">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+      <!--inner block end here-->
+      <!--copy rights start here-->
+      {include file="public/copyright"}
+      <!--COPY rights end here-->
+    </div>
+    <!--slider menu-->
+    {include file="public/sidebar_menu"}
+    <div class="clearfix"> </div>
+  </div>
+  <!--slide bar menu end here-->
+  {include file="public/js"}
+  <!-- mother grid end here-->
+</body>
+
+</html>

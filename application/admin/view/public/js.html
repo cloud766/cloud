@@ -1,0 +1,70 @@
+<script>
+    var toggle = true;
+
+    $(".sidebar-icon").click(function () {
+        if (toggle) {
+            $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+            $("#menu span").css({ "position": "absolute" });
+            setTimeout(function () {
+                if ($('.sidebar-menu').width() < 70) {
+                    $('.fas').css('width', '0');
+                } else {
+                    $('.fas').css('width', '200px');
+                    if ($(document).width() < 768) {
+                        $('.fas').css('padding-left', '60px');
+                    }
+                }
+            }, 400);
+        }
+        else {
+            $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+            setTimeout(function () {
+                $("#menu span").css({ "position": "relative" });
+            }, 400);
+            if ($('.sidebar-menu').width() > 70) {
+                $('.fas').css('width', '0');
+            } else {
+                $('.fas').css('width', '200px');
+                if ($(document).width() < 768) {
+                    $('.fas').css('padding-left', '60px');
+                }
+            }
+        }
+        toggle = !toggle;
+    });
+</script>
+<!--scrolling js-->
+<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
+<script src="__STATIC__/admin/js/scripts.js"></script>
+<!--//scrolling js-->
+<script src="__STATIC__/admin/js/bootstrap.js"> </script>
+<script src="__STATIC__/addon/hx/js/global.js?v=1"> </script>
+<script src="__STATIC__/addon/layer/layer.js?v=1"> </script>
+<script src="__STATIC__/addon/jquery.s2t.js?v=1"> </script>
+<script src="__STATIC__/addon/jquery.cookie.js?v=1"> </script>
+<script>
+    $('.inner-block').css('min-height', $(window).height());
+    changeStr();
+    $('#s2t').click(function () {
+        var font = $.cookie('font');
+        if (font != 1) {
+            $.cookie('font', 1, { expires: 7, path: '/admin/' });
+        }
+        changeStr();
+    })
+    $('#t2s').click(function () {
+        var font = $.cookie('font');
+        if (font != 0) {
+            $.cookie('font', 0, { expires: 7, path: '/admin/' });
+        }
+        changeStr();
+    })
+    function changeStr() {
+        var font = $.cookie('font');
+        if (font == 0) {
+            $('body').t2s();
+        } else {
+            $('body').s2t();
+        }
+    }
+</script>

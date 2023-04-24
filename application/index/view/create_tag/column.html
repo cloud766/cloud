@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{include file="create_tag/tag_header"}
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">弘讯应用商店</a>
+        </div>
+    </nav>
+    <div class="container">
+        {include file="create_tag/tag_nav"}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>栏目列表 <span class="label label-info">catlist</span></h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>栏目ID:</label>
+                        <input name="cid" class="form-control number" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>类型:</label>
+                        <select name="type" class="form-control">
+                            <option value="top">顶级栏目(此类型下cid可忽略)</option>
+                            <option value="parent">父级栏目</option>
+                            <option value="son">下级栏目</option>
+                            <option value="self">同级栏目</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>显示数量:</label>
+                        <input name="limit" class="form-control number" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>标识:</label>
+                        <select name="flag" class="form-control">
+                            <option value="0">不显示外部链接和单页</option>
+                            <option value="1">全部</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="tag_type" value="columnlist">
+                    <button class="btn btn-info" onclick="createTagLib(this)" type="button">生成标签</button>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>单个栏目 <span class="label label-info">type</span></h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>栏目ID:</label>
+                        <input name="cid" class="form-control number" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>类型:</label>
+                        <select name="type" class="form-control">
+                            <option value="default">默认</option>
+                            <option value="parent">指定为cid的顶级栏目</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="tag_type" value="column">
+                    <button class="btn btn-info" onclick="createTagLib(this)" type="button">生成标签</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+<script>
+    function createTagLib(obj) {
+        $.ajax({
+            url: '{:url("index/createTag/createTagLib")}',
+            data: $(obj).parent().serialize(),
+            type: 'post',
+            dataType: 'json',
+            success: function (res) {
+                $('#textarea').val(res);
+            }
+        })
+    }
+</script>
+
+
+</html>

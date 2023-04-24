@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>HXCloud - Hong Xun Technology Development Co., Ltd.</title>
+  {include file="public/css"}
+  <!--static chart-->
+  <script src="__STATIC__/admin/js/Chart.min.js"></script>
+  <!--//charts-->
+  <!-- geo chart -->
+  <script src="http://cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+  <script>window.modernizr || document.write('<script src="lib/modernizr/modernizr-custom.js"><\/script>')</script>
+  <!--<script src="lib/html5shiv/html5shiv.js"></script>-->
+  <!-- Chartinator  -->
+  <script src="__STATIC__/admin/js/chartinator.js"></script>
+  <script type="text/javascript">
+    jQuery(function ($) {
+      var chart3 = $('#geoChart').chartinator({
+        tableSel: '.geoChart',
+        columns: [{ role: 'tooltip', type: 'string' }],
+        colIndexes: [2],
+        rows: [
+          ['China - 2015'],
+          ['Colombia - 2015'],
+          ['France - 2015'],
+          ['Italy - 2015'],
+          ['Japan - 2015'],
+          ['Kazakhstan - 2015'],
+          ['Mexico - 2015'],
+          ['Poland - 2015'],
+          ['Russia - 2015'],
+          ['Spain - 2015'],
+          ['Tanzania - 2015'],
+          ['Turkey - 2015']],
+        ignoreCol: [2],
+        chartType: 'GeoChart',
+        chartAspectRatio: 1.5,
+        chartZoom: 1.75,
+        chartOffset: [-12, 0],
+        chartOptions: {
+          width: null,
+          backgroundColor: '#fff',
+          datalessRegionColor: '#F5F5F5',
+          region: 'world',
+          resolution: 'countries',
+          legend: 'none',
+          colorAxis: {
+            colors: ['#679CCA', '#337AB7']
+          },
+          tooltip: {
+            trigger: 'focus',
+            isHtml: true
+          }
+        }
+      });
+    });
+  </script>
+  <!--geo chart-->
+  <!--skycons-icons-->
+  <script src="__STATIC__/admin/js/skycons.js"></script>
+  <!--//skycons-icons-->
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="left-content">
+      <div class="mother-grid-inner">
+        <!--header start here-->
+        {include file="public/header_main"}
+        <!-- /script-for sticky-nav -->
+        <!--inner block start here-->
+        <div class="inner-block">
+          <!--market updates updates-->
+          <div class="market-updates">
+            <div class="col-md-4 market-update-gd">
+              <div class="market-update-block clr-block-1">
+                <div class="col-md-8 market-update-left">
+                  <h3>源码数量：{$codeCount}</h3>
+                  <h4>版本数量：{$codeVersionCount}</h4>
+                  <p>校验次数：1</p>
+                </div>
+                <div class="col-md-4 market-update-right">
+                  <i class="fa fa-code"> </i>
+                </div>
+                <div class="clearfix"> </div>
+              </div>
+            </div>
+            <div class="col-md-4 market-update-gd">
+              <div class="market-update-block clr-block-2">
+                <div class="col-md-8 market-update-left">
+                  <h3>插件数量：{$addonCount}</h3>
+                  <h4>下载次数：{$addonDownloadCount}</h4>
+                  <p>授权次数：{$addonAuthCount}</p>
+                </div>
+                <div class="col-md-4 market-update-right">
+                  <i class="fa fa-mixcloud"> </i>
+                </div>
+                <div class="clearfix"> </div>
+              </div>
+            </div>
+            <div class="col-md-4 market-update-gd">
+              <div class="market-update-block clr-block-3">
+                <div class="col-md-8 market-update-left">
+                  <h3>模板数量：{$templateCount}</h3>
+                  <h4>下载次数：{$templateDownloadCount}</h4>
+                  <p>授权次数：{$templateAuthCount}</p>
+                </div>
+                <div class="col-md-4 market-update-right">
+                  <i class="fa fa-building"> </i>
+                </div>
+                <div class="clearfix"> </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+          <!--market updates end here-->
+          <!--mainpage chit-chating-->
+          <div class="chit-chat-layer1">
+            <div class="col-md-6 chit-chat-layer1-left">
+              <div class="work-progres">
+                <div class="chit-chat-heading"> 站点列表</div>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>站点名称</th>
+                        <th>站点域名</th>
+                        <th>购买授权</th>
+                        <th>所属会员</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {volist name="websiteList" id="vo" key="k"}
+                      <tr>
+                        <td>{$k}</td>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.domain}</td>
+                        {if condition:$vo.auth}
+                        <td><span class="label label-success">是</span></td>
+                        {else/}
+                        <td><span class="label label-danger">否</span></td>
+                        {/if}
+                        <td><span class="badge badge-info">{$vo.nickname|default='无'}</span></td>
+                      </tr>
+                      {/volist}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 chit-chat-layer1-left">
+              <div class="work-progres">
+                <div class="chit-chat-heading"> 站点黑名单</div>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>站点名称</th>
+                        <th>站点域名</th>
+                        <th>网站状态</th>
+                        <th>所属会员</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {volist name="blackList" id="vo" key="k"}
+                      <tr>
+                        <td>{$k}</td>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.domain}</td>
+                        <td><span class="label label-warning">已拉黑</span></td>
+                        <td><span class="badge badge-info">{$vo.nickname|default='无'}</span></td>
+                      </tr>
+                      {/volist}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+          <!--main page chit chating end here-->
+          <!--main page chart start here-->
+          <div class="main-page-charts">
+            <div class="main-page-chart-layer1">
+              <div class="col-md-6 chart-layer1-left">
+                <div class="work-progres">
+                  <div class="chit-chat-heading"> 插件列表</div>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>插件名称</th>
+                          <th>所属程序</th>
+                          <th>版本号</th>
+                          <th>销售价格</th>
+                          <th>购买次数</th>
+                          <th>开发者</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {volist name="addonList" id="vo" key="k"}
+                        <tr>
+                          <td>{$k}</td>
+                          <td>{$vo.title}</td>
+                          <td>{$vo.code_name|default='无'}</td>
+                          <td>V{$vo.version}</td>
+                          <td>¥{$vo.price}</td>
+                          <td>{$vo.sale_num}</td>
+                          <td><span class="label label-info">{$vo.nickname|default='无'}</span></td>
+                        </tr>
+                        {/volist}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 chart-layer1-right">
+                <div class="work-progres">
+                  <div class="chit-chat-heading"> 模板列表</div>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>模板名称</th>
+                          <th>所属程序</th>
+                          <th>模板类型</th>
+                          <th>销售价格</th>
+                          <th>购买次数</th>
+                          <th>开发者</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {volist name="templateList" id="vo" key="k"}
+                        <tr>
+                          <td>{$k}</td>
+                          <td>{$vo.title}</td>
+                          <td>{$vo.code_name|default='无'}</td>
+                          <td>{$vo.type_name|default='无'}</td>
+                          <td>¥{$vo.price}</td>
+                          <td>{$vo.sale_num}</td>
+                          <td><span class="label label-info">{$vo.nickname|default='无'}</span></td>
+                        </tr>
+                        {/volist}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"> </div>
+            </div>
+          </div>
+          <!--main page chart layer2-->
+          <div class="chart-layer-2"> </div>
+
+          <!--climate start here-->
+          <div class="climate"> </div>
+          <!--climate end here-->
+        </div>
+        <!--inner block end here-->
+        <!--copy rights start here-->
+        {include file="public/copyright"}
+        <!--COPY rights end here-->
+      </div>
+    </div>
+    <!--slider menu-->
+    {include file="public/sidebar_menu"}
+    <div class="clearfix"> </div>
+  </div>
+  <!--slide bar menu end here-->
+  {include file="public/js"}
+  <!-- mother grid end here-->
+</body>
+
+</html>

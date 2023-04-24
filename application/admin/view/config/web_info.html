@@ -1,0 +1,267 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>
+    站点信息
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="{:url('admin/index/welcome')}">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统设置</li>
+    <li class="active">站点信息</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <form class="form-horizontal" id="form1" action="{:url('admin/config/saveConfig')}" method="post">
+    <div class="col-md-6">
+      <div class="box box-info">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="default_login_type" class="col-sm-2 control-label">站点状态</label>
+              <div class="col-sm-8">
+                <select class="form-control" data-id="22" name="default_login_type">
+                  <option value="1" {if condition:$config.open_site eq 1}selected{/if}>关闭</option>
+                  <option value="0" {if condition:$config.open_site eq 0}selected{/if}>开启</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="web_title" class="col-sm-2 control-label">网站名称</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="web_title" name="web_title" value="{$config.web_title}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="web_url" class="col-sm-2 control-label">网站url</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="web_url" name="web_url" value="{$config.web_url}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="web_keywords" class="col-sm-2 control-label">Keywords</label>
+              <div class="col-sm-8">
+                <textarea class="form-control" rows="3" name="web_keywords" placeholder="">{$config.web_keywords}</textarea>
+               <!--  <input type="text" class="form-control" id="web_keywords" name="web_keywords" value="{$config.web_keywords}" placeholder="" /> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="web_description" class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-8">
+               <!--  <input type="text" class="form-control" id="web_description" name="web_description" value="{$config.web_description}" placeholder="" /> -->
+                <textarea class="form-control" rows="3" name="web_description" placeholder="">{$config.web_description}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="web_tps" class="col-sm-2 control-label">第三方统计代码</label>
+              <div class="col-sm-8">
+                <textarea class="form-control" rows="3" name="web_tps" placeholder="">{$config.web_tps}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="web_icp" class="col-sm-2 control-label">ICP备案号</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="web_icp" name="web_icp" value="{$config.web_icp}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="company_name" class="col-sm-2 control-label">公司名称</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="company_name" name="company_name" value="{$config.company_name}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="company_contact" class="col-sm-2 control-label">联系人</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="company_contact" name="company_contact" value="{$config.company_contact}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="company_phone" class="col-sm-2 control-label">联系电话</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="company_phone" name="company_phone" value="{$config.company_phone}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="company_qq" class="col-sm-2 control-label">腾讯QQ</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="company_qq" name="company_qq" value="{$config.company_qq}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="company_email" class="col-sm-2 control-label">企业邮箱</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="company_email" name="company_email" value="{$config.company_email}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="web_copyrigth" class="col-sm-2 control-label">版权信息</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="web_copyrigth" name="web_copyrigth" value="{$config.web_copyrigth}" placeholder="" />
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box box-info">
+        <div class="box-body" style="height: 707px;">
+          <div class="form-group">
+            <label for="web_favorite_icon" class="col-sm-2 control-label">Favorite icon</label>
+            <div class="col-sm-8">
+              {tag:upload input='web_favorite_icon' value='$config.web_favorite_icon' path='$config.web_favorite_icon|default="__STATIC__/hx/images/nopic.jpg"'}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="web_logo" class="col-sm-2 control-label">网站前台logo</label>
+            <div class="col-sm-8">
+              {tag:upload input='web_logo' value='$config.web_logo' path='$config.web_logo|default="__STATIC__/hx/images/nopic.jpg"'}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="company_qrcode" class="col-sm-2 control-label">公众号二维码</label>
+            <div class="col-sm-8">
+              {tag:upload input='company_qrcode' value='$config.company_qrcode' path='$config.company_qrcode|default="__STATIC__/hx/images/nopic.jpg"'}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12" style="margin-bottom: 51px;">
+      <div class="box box-info">
+        <div class="box-body">
+          <div class="form-group">
+            <label for="company_address" class="col-sm-2 control-label">公司地址</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="company_address" data-map_relation_id="19" onblur="address_blur(this)" name="company_address" value="{$config.company_address}" placeholder="" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="company_latlng" class="col-sm-2 control-label">地理位置</label>
+            <div class="col-sm-8">
+              <input type="hidden" id="company_latlng" name="company_latlng" value="{$config.company_latlng}" placeholder="" />
+              <div class="allmap" id="company_latlng_map" data-relation="19" style="height: 300px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" name="group" value="{$group}">
+  </form>
+  <div class="col-md-12" style="border-top: 1px solid #adadad;background-color: #e7e7e7; padding:15px 0;position: fixed;bottom: 0;left: 0">
+    <div style="width: 100px;height: auto;margin:0 auto;line-height: center;text-align: center;">
+      <button type="submit" class="btn btn-info pull-right" id="submit">保存</button>
+    </div>
+  </div>
+</div>
+</section>
+{include file="public/js"}
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=Q0AWXP9FNzYvVy6zRAGy8sKs7lWzAZO7"></script>
+<script type="text/javascript">
+$(function(){ 
+  //提交表单
+  $("#submit").click(function(){
+    //这里是需要验证的值
+    var web_url = $("input[name='web_url']").val();//网站url
+    var company_phone = $("input[name='company_phone']").val();//联系电话
+    var company_qq = $("input[name='company_qq']").val();//腾讯QQ
+    var company_email = $("input[name='company_email']").val();//企业邮箱
+    if(!isURL(web_url)){
+       layer.msg('网站url输入不合法');
+       return false;
+    }else if(!isPHONE(company_phone)){
+      layer.msg('联系电话输入不合法');
+       return false;
+    }else if(!isQQ(company_qq)){
+      layer.msg('腾讯QQ输入不合法');
+       return false;
+    }else if(!isEMAIL(company_email)){
+      layer.msg('企业邮箱输入不合法');
+       return false;
+    }else{
+      $("#form1").submit();
+    }
+  })
+  $('.switch').click(function(){
+    var _this = $(this);
+    var id = _this.data('id');
+    var value = _this.val();
+    if (value == 1) {
+      $('.hide_relation_'+id).show();
+    }
+    if (value == 0) {
+      $('.hide_relation_'+id).hide();
+    }
+  });
+});                               
+
+function address_blur(obj){
+  var _this = $(obj);
+  var address = _this.val();
+  if (address.trim()) {
+    var relation_id = _this.data('map_relation_id');
+    var relation = $('.allmap[data-relation='+relation_id+']');
+    var map_id = relation.attr('id');
+    var map = new BMap.Map(map_id);
+    var myGeo = new BMap.Geocoder();
+    // 将地址解析结果显示在地图上,并调整地图视野
+    myGeo.getPoint(address, function(point){
+      if (point) {
+        var lng = point['lng'];
+        var lat = point['lat'];
+        var location = lng+','+lat;
+        relation.prev().val(location);
+        map.centerAndZoom(point, 16);
+        map.addOverlay(new BMap.Marker(point));
+        map.addEventListener("click",function(e){
+          map.clearOverlays();
+          map.addOverlay(new BMap.Marker(e.point));
+          var click_point = e.point;
+          var lng = click_point['lng'];
+          var lat = click_point['lat'];
+          var location = lng+','+lat;
+          relation.prev().val(location);
+        });
+      }else{
+        layer.msg("您选择地址没有解析到结果!");
+      }
+    }, "北京市");
+  }
+}
+$('.allmap').each(function(){
+  var _this = $(this);
+  var id = _this.attr('id');
+  var relation_id = _this.attr('id');
+  var location = _this.prev().val()
+  var lng = 116.404;
+  var lat = 39.915;
+  if (location) {
+    location = location.split(',');
+    lng = location[0];
+    lat = location[1];
+  }
+  var map = new BMap.Map(id);    // 创建Map实例
+  map.centerAndZoom(new BMap.Point(lng, lat), 16);  // 初始化地图,设置中心点坐标和地图级别
+  var marker = new BMap.Marker(new BMap.Point(lng, lat)); // 创建点
+  map.addOverlay(marker);    //增加点
+  //添加地图类型控件
+  map.addControl(new BMap.MapTypeControl({
+    mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));   
+  map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+  map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+  map.addEventListener("click",function(e){
+    map.clearOverlays();
+    map.addOverlay(new BMap.Marker(e.point));
+    var click_point = e.point;
+    var lng = click_point['lng'];
+    var lat = click_point['lat'];
+    var location = lng+','+lat;
+    _this.prev().val(location);
+  });
+})
+</script>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>授权信息 - 弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    <link rel="icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" media="screen">
+    <link rel="shortcut icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" media="screen">
+    <link rel="stylesheet" href="__STATIC__/store/css/62faa85.css" />
+    <link rel="stylesheet" href="__STATIC__/store/css/0f9c9b0.css" />
+    <script src="__STATIC__/store/js/ef88cbd.js"></script>
+</head>
+
+<body>
+    {include file="public/nav"}
+    <link rel="stylesheet" href="__STATIC__/store/css/ce458b9.css" />
+    <div class="ur_here f-14">
+        <div class="wrap">
+            <a href="/">首页</a> > <span>正版查询</span>
+        </div>
+    </div>
+    <div class="license wrap">
+        <h3 class="f-22 t-c pt-80">HXCMS 授权信息</h3>
+        <!-- 没有购买商业授权 -->
+        <p class="t-c pt-20 f-14 l-30">
+            您查询的网址是：{$url}<br>
+            {if condition:$auth}
+            该网站已购买商业授权
+            {else/}
+            该网站还没有购买商业授权，如用于商业用途，请联系客服购买授权。
+            {/if}
+        </p>
+        <a href="#" target="_blank" class="f-16 t-c">立即获取商业授权</a>
+    </div>
+    {include file="public/footer"}
+</body>
+
+</html>

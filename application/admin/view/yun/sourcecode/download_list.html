@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>源码管理 - 源码仓库 - 下载统计 - HXCloud - Hong Xun Technology Development Co., Ltd.</title>
+  {include file="public/css"}
+  <!--//skycons-icons-->
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="left-content">
+      <div class="mother-grid-inner">
+        <!--header start here-->
+        {include file="public/header_main"}
+        <!--heder end here-->
+        <!--inner block start here-->
+        <div class="inner-block">
+          <div class="inbox">
+            <h2>源码管理/源码仓库</h2>
+            {include file="yun/sourcecode/left"}
+            <div class="col-md-10 mailbox-content  tab-content tab-content-in">
+              <div class="tab-pane active text-style" id="tab1">
+                <div class="mailbox-border">
+                  <div class="mail-toolbar clearfix">
+                    <div class="float-left">
+                      <div class="btn btn_1 btn-default mrg5R" onclick="window.location.reload()">
+                        <i class="fa fa-refresh"> </i>
+                      </div>
+                      <div class="clearfix"> </div>
+                    </div>
+                    <div class="float-right">
+                      <!-- <span class="text-muted m-r-sm">Showing 1 of 100 </span> -->
+                      <div class="btn-group m-r-sm mail-hidden-options" style="display: inline-block;">
+                        <div class="btn-group">
+
+                        </div>
+                        <div class="btn-group">
+
+                        </div>
+                      </div>
+                      {$pages}
+                      <div class="clearfix"> </div>
+                    </div>
+                  </div>
+                  <table class="table tab-border">
+                    <tbody>
+                      <tr>
+                        <th><input type="checkbox" class="checkbox" onclick="selectAll(this)"></th>
+                        <th>id</th>
+                        <th>网站名</th>
+                        <th>域名</th>
+                        <th>源码版本</th>
+                        <th>ip</th>
+                        <th>下载时间</th>
+                      </tr>
+                      {volist name="list" id="vo"}
+                      <tr class="unread checked">
+                        <td class="hidden-xs">
+                          <input type="checkbox" value="{$vo.id}" class="checkbox select-all-checkbox">
+                        </td>
+                        <td>
+                          {$vo.id}
+                        </td>
+                        <td>
+                          {$vo.name}
+                        </td>
+                        <td>
+                          {$vo.domain}
+                        </td>
+                        <td>
+                          {$vo.title}
+                        </td>
+                        <td>
+                          {$vo.ip}
+                        </td>
+                        <td>
+                          {:date('Y-m-d H:i:s',$vo.create_time)}
+                        </td>
+                      </tr>
+                      {/volist}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+      <!--inner block end here-->
+      <!--copy rights start here-->
+      {include file="public/copyright"}
+      <!--COPY rights end here-->
+    </div>
+    <!--slider menu-->
+    {include file="public/sidebar_menu"}
+    <div class="clearfix"> </div>
+  </div>
+  <!--slide bar menu end here-->
+  {include file="public/js"}
+  <!-- mother grid end here-->
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<div class="col-md-2 compose">
+    <div class="mail-profile">
+        <div class="mail-pic">
+            <a href="#"></a>
+        </div>
+        <div class="mailer-name">
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <div class="compose-bottom">
+        <ul>
+            <li><a {if condition:$left eq 'code_list' }class="hilate" {/if} href="{:url('admin/yun.sourcecode/code_list')}"><i
+                        class="fa fa-star-o"> </i>源码列表</a></li>
+            <li><a {if condition:$left eq 'type_list' }class="hilate" {/if} href="{:url('admin/yun.sourcecode/type_list')}"><i
+                        class="fa fa-inbox"> </i>源码类型</a></li>
+            <li><a {if condition:$left eq 'download_list' }class="hilate" {/if} href="{:url('admin/yun.sourcecode/download_list')}"><i
+                        class="fa fa-pencil-square-o"> </i>下载统计</a></li>
+            <li><a {if condition:$left eq 'auth_list' }class="hilate" {/if} href="{:url('admin/yun.sourcecode/auth_list')}"><i
+                        class="fa fa-pencil-square-o"> </i>授权管理</a></li>
+        </ul>
+    </div>
+</div>

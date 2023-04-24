@@ -1,0 +1,161 @@
+{include file="public/css"}
+<link href="__STATIC__/addon/webuploader/xb-webuploader.css" rel="stylesheet">
+<style>
+    .image-item{
+        flex: 20%
+    }
+    .box{
+        position: relative;
+        border-radius: 3px;
+        background: #ffffff;
+        border: 1px solid #e7e7e7;
+        border-top: 3px solid #d2d6de;
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+</style>
+<section class="content">
+    <div class="box">
+        <div class="box-body no-padding">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li data-tab="local" class="active"><a href="javascript:;">本地附件</a></li>
+                    <li data-tab="filePicker"><a href="javascript:;">上传附件</a></li>
+                </ul>
+            </div>
+            <div id="local" style="padding: 15px;height: 350px;overflow:scroll">
+                <ul style="display:flex;flex-wrap:wrap;list-style: none;height: 350px;">
+                    {volist name="list" id="vo"}
+                    <li onclick="select(this)" data-name="{$vo.name}" data-path="{$vo.path}" data-size="{$vo.size}"
+                        class="image-item">
+                        <span class="mailbox-attachment-icon">
+                            <img src="{$vo.path}" alt="" width="170" style="min-height:130px;max-height: 130px;margin: 0 auto">
+                        </span>
+                        <div class="mailbox-attachment-info words" style="width:200px">
+                            {$vo.name}
+                            <span class="mailbox-attachment-size">
+                                {$vo.size > 1024*1024 ? ceil($vo.size/1024*1024) : ceil($vo.size/1024)}
+                                {$vo.size > 1024*1024 ? 'm' : 'k'}
+                            </span>
+                        </div>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+            <div id="filePicker" class="xb-uploader" style="padding: 20px;margin: 20px;border: 2px dashed #eee;text-align: center;display: none;">
+                <div class="queueList">
+                    <div class="placeholder">
+                        <div class="filePicker"></div>
+                        <p>选择附件</p>
+                    </div>
+                </div>
+                <div class="statusBar" style="display:none;">
+                    <div class="progress">
+                        <span class="text">0%</span>
+                        <span class="percentage"></span>
+                    </div>
+                    <div class="info"></div>
+                    <div class="btns">
+                        <div class="uploadBtn">开始上传</div>
+                    </div>
+                </div>
+                <div class="uploadSuccess" style="display: none;">
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="javascript:;" onclick="save()" class="btn btn-primary radius ml-10">保存</a>
+            </div>
+        </div>
+    </div>
+</section>
+{include file="public/js"}
+<script type="text/javascript" src="__STATIC__/addon/webuploader/webuploader.js"></script>
+<script type="text/javascript" src="__STATIC__/addon/webuploader/uploader.js?v=1.0"></script>
+<script>
+    var multiple = '{$param["multiple"] ? $param["multiple"] : 0}';
+    var type = '{$param["type"] ? $param["type"] : "file"}';
+    var num = '{$param["num"] ? $param["num"] : 1}';
+    var callback = '{$param["callback"]}';
+    var input = '{$param["input"]}';
+    var upload_paths = [];
+    var upload_names = [];
+    var upload_sizes = [];
+
+    function select(obj) {
+        if ($(obj).hasClass('selected')) {
+            $(obj).removeClass('selected');
+            $(obj).css('border', '1px solid #eee');
+        } else {
+            $(obj).addClass('selected');
+            $(obj).css('border', '1px solid blue');
+            if (!multiple) {
+                $(obj).siblings().removeClass('selected');
+                $(obj).siblings().css('border', '1px solid #eee');
+            }
+        }
+    }
+
+    function save() {
+        var paths = [];
+        var names = [];
+        var sizes = [];
+        var tab = $('.nav-tabs').find('.active').data('tab');
+        if (tab == 'local') {
+            if (multiple && $('.selected').length > 0) {
+                $('.selected').each(function () {
+                    paths.push($(this).data('path'));
+                    names.push($(this).data('name'));
+                    sizes.push($(this).data('size'));
+                });
+            }
+            if (!multiple && $('.selected').length > 0) {
+                paths = $('.selected').data('path');
+                names = $('.selected').data('name');
+                sizes = $('.selected').data('size');
+            }
+        } else {
+            paths = upload_paths;
+            names = upload_names;
+            sizes = upload_sizes;
+        }
+        eval('window.parent.' + callback + '(paths,names,sizes,input,multiple)');
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+
+    $('.nav-tabs li').click(function () {
+        var tab = $(this).data('tab');
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+        console.log(tab)
+        if (tab == 'local') {
+            $('#local').show();
+            $('#filePicker').hide();
+        } else {
+            $('#filePicker').show();
+            $('#local').hide();
+            $('#filePicker').Upload({
+                url: '{$param["url"]}',
+                picker: 'filePicker',
+                multiple: multiple,
+                sizeLimit: 10,
+                num: num,
+                success: function (data) {
+                    if (multiple) {
+                        upload_paths.push(data.path);
+                        upload_names.push(data.filename);
+                        upload_sizes.push(data.filesize);
+                    } else {
+                        upload_paths = data.path;
+                        upload_names = data.filename;
+                        upload_sizes = data.filesize;
+                    }
+                },
+                error: function (err) {
+                    console.info(err);
+                }
+            });
+        }
+    })
+</script>

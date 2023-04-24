@@ -1,0 +1,144 @@
+{include file="public/css"}
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title"></h3>
+        </div>
+        <form class="form-horizontal" action="{:url('admin/config/save')}" method="post">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="title" class="col-sm-2 control-label">配置标题</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="title" name="title" value="{$data['title']}" placeholder="配置中文名">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">配置名</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="name" name="name" value="{$data['name']}" placeholder="配置英文名">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="group" class="col-sm-2 control-label">配置分组</label>
+              <div class="col-sm-8">
+                <select class="form-control" name="group">
+                  {volist name="$groupList" id="vo"}
+                    <option value="{$vo.group}" {if condition:$data['group'] eq $vo.group}selected{/if}>{$vo.group}</option>
+                  {/volist}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="sort" class="col-sm-2 control-label">排序</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="sort" name="sort" value="{$data['sort']}" placeholder="排序">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="group" class="col-sm-2 control-label">配置类型</label>
+              <div class="col-sm-8">
+                <select class="form-control" name="type">
+                  <option value="parent" {if condition:$data['type'] eq 'parent'}selected{/if}>父级</option>
+                  <option value="input" {if condition:$data['type'] eq 'input'}selected{/if}>单行输入框</option>
+                  <option value="switch" {if condition:$data['type'] eq 'switch'}selected{/if}>开关</option>
+                  <option value="select" {if condition:$data['type'] eq 'select'}selected{/if}>下拉单选</option>
+                  <option value="selectm" {if condition:$data['type'] eq 'selectm'}selected{/if}>下拉多选</option>
+                  <option value="textarea" {if condition:$data['type'] eq 'textarea'}selected{/if}>多行输入框</option>
+                  <option value="upload" {if condition:$data['type'] eq 'upload'}selected{/if}>上传图片</option>
+                  <option value="baidumap" {if condition:$data['type'] eq 'baidumap'}selected{/if}>百度地图</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="tip" class="col-sm-2 control-label">配置提示</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="tip" name="tip" value="{$data['tip']}" placeholder="关于此配置的提示信息或使用说明">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="value" class="col-sm-2 control-label">配置默认值</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="value" name="value" value="{$data['value']}" placeholder="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="content" class="col-sm-2 control-label">配置选项</label>
+              <div class="col-sm-8">
+                <textarea name="content" id="content" class="form-control" cols="30" rows="10" placeholder="此配置仅适用于配置类型为单选按钮、多选框、下拉框。
+参考格式如下：
+1:北京
+2:上海
+3:广州
+4:深圳">{$data['content']}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pname" class="col-sm-2 control-label">配置顶部标题</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="pname" name="pname" value="{$data['pname']}" placeholder="配置页面左上角显示的名称，配置类型为父级时填写，与其他配置同名时显示选项卡，参考第三方登录配置">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="hide_relation_id" class="col-sm-2 control-label">关联开关配置(关联开关时，开关选择否后隐藏)</label>
+              <div class="col-sm-8">
+                <select class="form-control" name="hide_relation_id">
+                  <option value="0">无</option>
+                  {volist name="$switchList" id="vo"}
+                    <option value="{$vo.id}" {if condition:$data['hide_relation_id'] eq $vo.id}selected{/if}>{$vo.title}</option>
+                  {/volist}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="map_relation_title" class="col-sm-2 control-label">百度地图关联项标题</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="map_relation_title" name="map_relation_title"  value="{$data['map_relation_title']}" placeholder="中文名称，配置类型为百度地图时填写，用于生成一条配置保存经纬度">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="map_relation_name" class="col-sm-2 control-label">百度地图关联项名</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="map_relation_name" name="map_relation_name"  value="{$data['map_relation_name']}" placeholder="英文名称，配置类型为百度地图时填写，用于生成一条配置保存经纬度">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="rand_code" class="col-sm-2 control-label">开启随机字符串生成按钮</label>
+              <div class="col-sm-10 row">
+                <div class="radio col-sm-1">
+                  <label>
+                    <input type="radio" name="rand_code" value="1" {if condition:$data['rand_code'] eq 1}checked{/if}>是
+                  </label>
+                </div>
+                <div class="radio col-sm-1">
+                  <label>
+                    <input type="radio" name="rand_code" value="0" {if condition:$data['rand_code'] eq 0}checked{/if}>否
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="rand_code_length" class="col-sm-2 control-label">随机字符串长度</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="rand_code_length" name="rand_code_length" value="{$data['rand_code_length']}" placeholder="开启随机字符串生成按钮时填写，设置字符串长度">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="rand_code_change" class="col-sm-2 control-label">随机字符串格式</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="rand_code_change" name="rand_code_change" value="{$data['rand_code_change']}" placeholder="开启随机字符串生成按钮时填写，可以为空，支持的格式：toUpperCase，toLowerCase">
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <input type="hidden" name='id' value="{$data['id']}">
+            <button type="submit" class="btn btn-info pull-right">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}
+   

@@ -1,0 +1,64 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>
+    系统信息
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="/admin/index/welcome.html">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统信息</li>
+  </ol>
+  </h1>
+</section>
+<section class="content">
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">控制面板</h3>
+    </div>
+    <div class="box-body no-padding">
+      <table class="table table-striped">
+        <tr>
+            <td>网站域名</td>
+            <td>{$config.url}</td>
+        </tr>
+        <tr>
+            <td>网站目录</td>
+            <td>{$config.document_root}</td>
+        </tr>
+        <tr>
+            <td>服务器操作系统</td>
+            <td>{$config.server_os}</td>
+        </tr>
+        <tr>
+            <td>服务器端口</td>
+            <td>{$config.server_port}</td>
+        </tr>
+        <tr>
+            <td>服务器IP</td>
+            <td>{$config.server_ip}</td>
+        </tr>
+        <tr>
+            <td>WEB运行环境</td>
+            <td>{$config.server_soft}</td>
+        </tr>
+        <tr>
+            <td>MySQL数据库版本</td>
+            <td>{$config.mysql_version}</td>
+        </tr>
+        <tr>
+            <td>运行PHP版本</td>
+            <td>{$config.php_version}</td>
+        </tr>
+
+        <tr>
+            <td>最大上传限制</td>
+            <td>{$config.max_upload_size}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+{include file="public/js"}

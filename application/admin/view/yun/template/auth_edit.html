@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>模板管理 - 模板仓库 - 编辑授权 - HXCloud - Hong Xun Technology Development Co., Ltd.</title>
+  {include file="public/css"}
+  <!--//skycons-icons-->
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="left-content">
+      <div class="mother-grid-inner">
+        <!--header start here-->
+        {include file="public/header_main"}
+        <!--heder end here-->
+        <!--inner block start here-->
+        <div class="inner-block">
+          <div class="inbox">
+            <h2>模板管理/编辑授权</h2>
+            {include file="yun/template/left"}
+            <div class="col-md-10 compose-right">
+              <div class="inbox-details-default">
+                <div class="inbox-details-heading">
+                  版本管理
+                </div>
+                <div class="inbox-details-body">
+                  <form action="{:url('admin/yun.template/auth_save')}" method="post" class="com-mail ajax-form">
+                    输入站点
+                    <div class="input-button">
+                      <input type="text" id="website" />
+                      <input type="button" class="input-group-addon search" data-type="website" value="搜索" style="margin-top:0">
+                    </div>
+                    选择站点
+                    <select name="website_id" id="website_id">
+                    </select>
+                    输入模板
+                    <div class="input-button">
+                      <input type="text" id="template" />
+                      <input type="button" class="input-group-addon search" data-type="template" value="搜索" style="margin-top:0">
+                    </div>
+                    选择模板
+                    <select name="template_id" id="template_id">
+                    </select>
+                    {:token()}
+                    <input type="button" onclick="formAjaxSubmit()" value="保存">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+      <!--inner block end here-->
+      <!--copy rights start here-->
+      {include file="public/copyright"}
+      <!--COPY rights end here-->
+    </div>
+    <!--slider menu-->
+    {include file="public/sidebar_menu"}
+    <div class="clearfix"> </div>
+  </div>
+  <!--slide bar menu end here-->
+  {include file="public/js"}
+  <!-- mother grid end here-->
+</body>
+<script>
+  $('.search').click(function () {
+    var index = layer.load(0, { shade: [0.1, '#fff'] });
+    var type = $(this).data('type');
+    var keyword = $('#' + type).val();
+    $.ajax({
+      url: '{:url("admin/yun.template/auth_ajax")}',
+      data: { type: type, keyword: keyword },
+      type: 'post',
+      dataType: 'json',
+      success: function (res) {
+        if (res.code) {
+          var list = res.list;
+          var str = '';
+          for (var i = 0; i < list.length; i++) {
+            str += '<option value="';
+            str += list[i]['id'];
+            str += '">';
+            if (type == 'template') {
+              str += list[i]['title'];
+            } else {
+              str += list[i]['name'];
+            }
+            str += '</option>';
+          }
+          $('#' + type + '_id').html(str);
+          layer.close(index);   
+        }
+      }
+    })
+  })
+</script>
+
+</html>

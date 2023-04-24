@@ -1,0 +1,16 @@
+<div class="page-header">
+    <h1>HXCMS标签生成器</h1>
+    <h4>用于生成各类页面模板标签，方便站长建站</h4>
+</div>
+<div class="alert alert-danger" role="alert">
+    错误的标签配置组合可能导致无法获取所需数据，标签内调用不存在的字段可能导致程序报错，详情参考<a class="alert-link" href="#" target="_blank">标签手册</a>
+</div>
+<ul class="nav nav-tabs" id="nav">
+    <li {if condition:$Request.action eq 'index'}class="active"{/if} role="presentation"><a href="{:url('index')}">系统标签</a></li>
+    <li {if condition:$Request.action eq 'nav'}class="active"{/if} role="presentation"><a href="{:url('nav')}">导航标签</a></li>
+    <li {if condition:$Request.action eq 'column'}class="active"{/if} role="presentation"><a href="{:url('column')}">栏目标签</a></li>
+    <li {if condition:$Request.action eq 'lists'}class="active"{/if} role="presentation"><a href="{:url('lists')}">列表标签</a></li>
+    <!-- <li {if condition:$Request.action eq 'seo'}class="active"{/if} role="presentation"><a href="{:url('seo')}">seo标签</a></li>
+    <li {if condition:$Request.action eq 'other'}class="active"{/if} role="presentation"><a href="{:url('other')}">其他标签</a></li> -->
+</ul>
+<textarea class="form-control textarea" id="textarea" rows="8"></textarea>

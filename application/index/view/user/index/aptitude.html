@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/user/css/user.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background: #f4f4f4;padding: 35px 0">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-md-9">
+                    <div class="right-content">
+                        {if condition:$aptitude}
+                        <div class="aptituding">
+                            资质审核中，请耐心等待
+                        </div>
+                        {else/}
+                        <form role="form" action="{:url('aptitudeSave')}" method="post" class="ajax-form">
+                            <div class="form-group">
+                                <label class="h6 p-b-md block" for="featured_items">认证类型：</label>
+                                <select name="type" id="type" class="form-control">
+                                    <option value="1">个人</option>
+                                    <option value="2">企业</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="h5 p-b" for="profile_image">手持身份证正面照</label>
+                                <div class="inputs">
+                                    <input type="text" class="form-control" id="id_card_front" name="id_card_front"
+                                        value="">
+                                    <span>
+                                        <button type="button" id="plupload-image" rel="image" class="btn btn-danger plupload">
+                                            <i class="fa fa-upload"></i> 上传</button>
+                                    </span>
+                                    <div class="input-group " style="margin-top:.5em;">
+                                        <img src="/static/addon/hx/images/nopic.jpg" class="img-responsive2" width="150px" />
+                                        <em class="close" style="position:absolute; top: 0px; right: -14px;margin: 0 15px 0 0;"
+                                            title="删除这张图片" onclick="deleteImage(this)">×</em>
+                                    </div>
+                                    <small class="block text-muted m-t">JPEG 590x242</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="h5 p-b" for="profile_image">手持身份证反面照</label>
+                                <div class="inputs">
+                                    <input type="text" class="form-control" id="id_card_back" name="id_card_back" value="">
+                                    <span>
+                                        <button type="button" id="plupload-image" rel="image" class="btn btn-danger plupload">
+                                            <i class="fa fa-upload"></i> 上传</button>
+                                    </span>
+                                    <div class="input-group " style="margin-top:.5em;">
+                                        <img src="/static/addon/hx/images/nopic.jpg" class="img-responsive2" width="150px" />
+                                        <em class="close" style="position:absolute; top: 0px; right: -14px;margin: 0 15px 0 0;"
+                                            title="删除这张图片" onclick="deleteImage(this)">×</em>
+                                    </div>
+                                    <small class="block text-muted m-t">JPEG 590x242</small>
+                                </div>
+                            </div>
+                            <div class="form-group" id="business-licence" style="display:none">
+                                <label class="h5 p-b" for="profile_image">营业执照</label>
+                                <div class="inputs">
+                                    <input type="text" class="form-control" id="business_licence" name="business_licence"
+                                        value="">
+                                    <span>
+                                        <button type="button" id="plupload-image" rel="image" class="btn btn-danger plupload">
+                                            <i class="fa fa-upload"></i> 上传</button>
+                                    </span>
+                                    <div class="input-group " style="margin-top:.5em;">
+                                        <img src="/static/addon/hx/images/nopic.jpg" class="img-responsive2" width="150px" />
+                                        <em class="close" style="position:absolute; top: 0px; right: -14px;margin: 0 15px 0 0;"
+                                            title="删除这张图片" onclick="deleteImage(this)">×</em>
+                                    </div>
+                                    <small class="block text-muted m-t">JPEG 590x242</small>
+                                </div>
+                            </div>
+                            <div class="form-group m-t-md m-b-0">
+                                <button id="form-submit" class="btn skin b-skin" type="button" onclick="formAjaxSubmit()">保存</button>
+                                <input type="file" name="image" id="imagefile" style="display: none;" />
+                                <input type="hidden" name="user_id" value="{$user.id}">
+                            </div>
+                        </form>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+<script>
+    $(".plupload").click(function () {
+        //获取要填写值的input
+        inputid = $(this).parent().prev()
+        //为上传图片触发点击事件
+        $("input[name='image']").click();
+    });
+    //ajax上传图片开始
+    $("input[name='image']").on("change", function () {
+        var formData = new FormData();
+        formData.append("myimage", document.getElementById("imagefile").files[0]);
+        formData.append('name', inputid.attr("id"));
+        $.ajax({
+            type: "POST",
+            url: "{:url('user.index/upload')}",
+            processData: false,  // 不要处理发送的数据
+            contentType: false,   // 不要设置Content-Type请求头
+            data: formData,
+            success: function (data) {
+                if (data.cod == 1) {
+                    inputid.val(data.path);
+                    inputid.parent().find('img').attr("src", data.path);
+                }
+            }
+        });
+        // 
+        $("input[name='image']").val('');
+    });
+    $('#type').change(function () {
+        var type = $(this).val();
+        if (type == 1) {
+            $('#business-licence').hide();
+        } else {
+            $('#business-licence').show();
+        }
+    })
+</script>
+
+</html>

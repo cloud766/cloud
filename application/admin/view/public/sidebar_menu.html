@@ -1,0 +1,85 @@
+<style>
+    /* .fas {
+        line-height: 75px;
+        color: #ff0000;
+        font-size: 1.5em;
+        font-weight: 600;
+        padding-left: 30px;
+    } */
+
+    /* @media (max-width: 1430px) {
+        .fas {
+            padding-left: 10px;
+        }
+    } */
+
+    /* @media (max-width: 757px) {
+        .fas {
+            display: none;
+        }
+    } */
+</style>
+<div class="sidebar-menu">
+    <div id="fas" style="height:75px">
+        <div class="fas">HXCloud</div>
+        <div class="logo">
+            <a href="#" class="sidebar-icon">
+                <span class="fa fa-cloud"></span>
+            </a>
+
+            <a href="#">
+                <span id="logo"></span>
+                <!--<img id="logo" src="" alt="Logo"/>-->
+            </a>
+        </div>
+    </div>
+    <div class="menu">
+        <ul id="menu">
+            <li id="menu-home"><a href="{:url('admin/index/index')}"><i class="fa fa-linkedin-square"></i><span>后台首页</span></a></li>
+            <li><a href="#"><em class="fa fa-code"></em><span>源码管理</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                <ul>
+                    <li><a href="{:url('admin/yun.sourcecode/code_list')}">源码仓库</a></li>
+                    <li><a href="#">文件校验</a></li>
+                    <li><a href="{:url('admin/yun.sourcecode/download_list')}">下载统计</a></li>
+                    <li><a href="{:url('admin/yun.sourcecode/auth_list')}">授权管理</a></li>
+                </ul>
+            </li>
+            <li id="menu-comunicacao"><a href="#"><i class="fa fa-mixcloud nav_icon"></i><span>插件管理</span><span class="fa fa-angle-right"
+                        style="float: right"></span></a>
+                <ul id="menu-comunicacao-sub">
+                    <li id="menu-mensagens" style="width: 120px"><a href="{:url('admin/yun.addon/addon_list')}">插件仓库</a>
+                    </li>
+                    <li id="menu-arquivos"><a href="{:url('admin/yun.addon/download_list')}">下载统计</a></li>
+                    <li id="menu-arquivos"><a href="{:url('admin/yun.addon/auth_list')}">授权管理</a></li>
+                </ul>
+            </li>
+            <li id="menu-academico"><a href="#"><i class="fa fa-building"></i><span>模板管理</span><span class="fa fa-angle-right"
+                        style="float: right"></span></a>
+                <ul id="menu-academico-sub">
+                    <li id="menu-academico-boletim"><a href="{:url('admin/yun.template/list')}">模板管理</a></li>
+                    <li id="menu-academico-avaliacoes"><a href="{:url('admin/yun.template/download_list')}">下载统计</a></li>
+                    <li id="menu-academico-avaliacoes"><a href="{:url('admin/yun.template/auth_list')}">授权管理</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="fa fa-user"></i><span>会员管理</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                <ul id="menu-academico-sub">
+                    <li id="menu-academico-avaliacoes"><a href="{:url('admin/user.lists/index')}">会员列表</a></li>
+                    <li id="menu-academico-boletim"><a href="{:url('admin/user.type/index')}">会员类型</a></li>
+                    <li id="menu-academico-avaliacoes"><a href="{:url('admin/user.aptitude/index')}">资质认证</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="fa fa-desktop"></i><span>站点管理</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                <ul id="menu-academico-sub">
+                    <li id="menu-academico-avaliacoes"><a href="{:url('admin/yun.website/index')}">站点列表</a></li>
+                    <li id="menu-academico-boletim"><a href="{:url('admin/yun.website/index', array('is_black'=>1))}">站点黑名单</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="fa fa-shopping-cart"></i><span>工单管理</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                <ul id="menu-academico-sub">
+                    <li id="menu-academico-avaliacoes"><a href="{:url('admin/work.index/index', array('s'=>'wait'))}">待处理工单</a></li>
+                    <li id="menu-academico-boletim"><a href="{:url('admin/work.index/index', array('s'=>'finish'))}">已完成工单</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

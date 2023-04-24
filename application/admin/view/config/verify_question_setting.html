@@ -1,0 +1,74 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>
+    验证安全设置    
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="{:url('admin/index/welcome')}">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统设置</li>
+    <li class="active">验证安全设置</li>
+    <li class="active">验证问题设置</li>
+  </ol>
+</section>
+<section class="content">
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+      </div>
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li><a href="{:url('admin/config/index', array('group'=>'verify_code_setting'))}">验证码参数设置</a></li>
+          <li class="active"><a href="{:url('admin/config/index', array('group'=>'verify_question_setting'))}">验证问题设置</a></li>
+        </ul>
+      </div>
+      <form class="form-horizontal" action="{:url('admin/config/saveConfig')}" method="post">
+        <div class="box-body">
+          <div class="form-group hide_relation_0">
+            <label for="open_login_verify_question" class="col-sm-2 control-label">注册开启验证问题</label>
+            <div class="col-sm-8">
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="open_login_verify_question" data-id="90" value="1" {if condition:$config.open_login_verify_question eq 1}checked{/if}/>是</label>
+              </div>
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="open_login_verify_question" data-id="90" value="0" {if condition:$config.open_login_verify_question eq 0}checked{/if}/>否</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group hide_relation_0">
+            <label for="open_user_submission_verify_question" class="col-sm-2 control-label">会员投稿开启验证问题</label>
+            <div class="col-sm-8">
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="open_user_submission_verify_question" data-id="91" value="1" {if condition:$config.open_user_submission_verify_question eq 1}checked{/if}/>是</label>
+              </div>
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="open_user_submission_verify_question" data-id="91" value="0" {if condition:$config.open_user_submission_verify_question eq 0}checked{/if}/>否</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group hide_relation_0">
+            <label for="open_sms_verify_question" class="col-sm-2 control-label">短消息开启验证问题</label>
+            <div class="col-sm-8">
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="open_sms_verify_question" data-id="93" value="1" {if condition:$config.open_sms_verify_question eq 1}checked{/if}/>是</label>
+              </div>
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="open_sms_verify_question" data-id="93" value="0" {if condition:$config.open_sms_verify_question eq 0}checked{/if}/>否</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box-footer">
+          <input type="hidden" name="group" value="{$group}" /> 
+          <button type="submit" class="btn btn-info pull-right">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</section>
+{include file="public/js"}

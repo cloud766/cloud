@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/user/css/user.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background: #f4f4f4;padding: 35px 0">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-md-9">
+                    <div class="right-content">
+                        <div class="wallet">
+                            <div class="wallet-left">
+                                <div class="wallet-balance">
+                                    可用余额<span>{$user.balance-$user.frozen_balance}</span>元
+                                </div>
+                                <div class="wallet-balance">
+                                    冻结金额<span>{$user.frozen_balance}</span>元
+                                </div>
+                                <button class="btn btn-primary">充值</button>
+                                <button class="btn btn-success">提现</button>
+                            </div>
+                            <div class="wallet-right">
+                                <div class="wallet-income">
+                                    <h3><b>收入金额</b></h3>
+                                    <div class="wallet-log">
+                                        <div class="wallet-money"><span>{$income}</span>元</div>
+                                        <a href="{:url('accountLog')}">查看明细</a>
+                                    </div>
+                                </div>
+                                <div class="wallet-expenditure">
+                                    <h3><b>支出金额</b></h3>
+                                    <div class="wallet-log">
+                                        <div class="wallet-money"><span>{$expenditure}</span>元</div>
+                                        <a href="{:url('accountLog')}">查看明细</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+
+</html>

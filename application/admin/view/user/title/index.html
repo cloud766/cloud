@@ -1,0 +1,99 @@
+{include file="public/css"}
+<link rel="stylesheet" href="__STATIC__/iCheck/flat/blue.css">
+<link rel="stylesheet" href="__STATIC__/hx/css/admin.css">
+<section class="content-header">
+    <h1>
+        积分头衔
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="/admin/index/welcome.html">
+                <i class="fa fa-dashboard"></i> 首页</a>
+        </li>
+        <li class="active">会员管理</li>
+        <li class="active">积分头衔</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box">
+        <div class="box-body">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="example1_filter" class="dataTables_filter">
+                            <form action="">
+                                <label>头衔
+                                    <input type="text" class="form-control input-sm" name='keyword' value="{$keyword}">
+                                </label>
+                                <button type="submit" class="btn btn-default btn-sm">搜索</button>
+                                <a href="{:url('admin/user.title/edit')}" class="btn btn-default btn-sm pull-right">添加</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                            <thead>
+                                <tr>
+                                    <th width="60">
+                                        <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                            <i class="fa fa-square-o"></i>
+                                        </button>
+                                    </th>
+                                    <th>ID</th>
+                                    <th>头衔</th>
+                                    <th>添加时间</th>
+                                    <th>修改时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {volist name='list' id='vo'}
+                                <tr>
+                                    <td class="mailbox-messages">
+                                        <input type="checkbox" value="{$vo.id}">
+                                    </td>
+                                    <td>{$vo.id}</td>
+                                    <td>{$vo.name}</td>
+                                    <td>{:date('Y-m-d H:i:s', $vo['create_time'])}</td>
+                                    <td>{:date('Y-m-d H:i:s', $vo['update_time'])}</td>
+                                    <td style="display: block;">
+                                        <a href="{:url('admin/user.title/edit', array('id'=>$vo.id))}" class="btn btn-primary btn-sm">编辑</a>
+                                        <button type="button" onclick="del(this)" data-url="{:url('admin/user.title/delete')}" data-id="{$vo.id}" class="btn btn-danger btn-sm">删除</button>
+                                    </td>
+                                </tr>
+                                {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button type="button" onclick="batchDel(this)" data-url="{:url('admin/user.title/delete')}" class="btn btn-danger btn-sm">批量删除</button>
+                {$pages}
+            </div>
+        </div>
+    </div>
+</section>
+{include file="public/js"}
+<script src="__STATIC__/iCheck/icheck.min.js"></script>
+<script>
+    $('.mailbox-messages input[type="checkbox"]').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
+    });
+
+    $(".checkbox-toggle").click(function () {
+        var clicks = $(this).data('clicks');
+        if (clicks) {
+            $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+            $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+            console.log('选中')
+        } else {
+            //Check all checkboxes
+            $(".mailbox-messages input[type='checkbox']").iCheck("check");
+            $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+            console.log('取消选中')
+        }
+        $(this).data("clicks", !clicks);
+    });
+</script>

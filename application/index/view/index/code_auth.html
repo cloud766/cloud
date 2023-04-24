@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店 - 商业授权</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file="public/css"}
+</head>
+
+<body>
+    {include file="public/nav"}
+    <link rel="stylesheet" href="__STATIC__/store/css/067ce6f.css" />
+    <div class="mb-50 clearfix">
+        <section class="banner">
+            <div class="banner_text">
+                <i></i><span class="fir">获得合法运营权</span>
+                <i></i><span class="sec">获得增值服务</span>
+                <i></i><span>获得更多的可能</span>
+            </div>
+            <div class="wrap">
+                <div class="search_auth">
+                    <form id="act" method="post" action="{:url('license')}" target="_blank" _lpchecked="1">
+                        <input name="url" type="text" class="search" placeholder="请输入您要查询的IP地址或域名">
+                        <input class="button" id="searchbtn" type="submit" value="授权查询  ">
+                        <iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="section1">
+            <h2>为什么要获得商业授权</h2>
+            <u></u>
+            <div class="w">
+                <ul>
+                    <li>
+                        <img src="__STATIC__/store/image/icon1-8e8de.png" alt="">
+                        <p class="title">经营合法</p>
+                        <p class="cont">具备使用系统商业运行的合法权，避免法律纠纷，提高了企业的商业信誉。</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/store/image/icon2-54f5a.png" alt="">
+                        <p class="title">全面开源</p>
+                        <p class="cont">所有商城功能模块开放源代码，支持商业用户深度定制。</p>
+                    </li>
+                    <li>
+                        <img src="__STATIC__/store/image/icon3-1d105.png" alt="">
+                        <p class="title">需求优先</p>
+                        <p class="cont">获得授权之后，在软件升级、功能调整时，将优先考虑授权用户需求。</p>
+                    </li>
+                    <li class="lastli">
+                        <img src="__STATIC__/store/image/icon4-0befd.png" alt="">
+                        <p class="title">生态接入</p>
+                        <p class="cont">全面支持开源生态接入，支持模板、插件、功能定制服务的快速扩展。</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section class="section2">
+            <div class="link">
+                <a class="linkfirst" href="https://download.dayongjiaoyu.cn/hxcms/hxcms-master.zip">免费下载源码</a>
+                <a class="linklast" id="" href="http://wpa.qq.com/msgrd?v=3&uin=188802126&site=qq&menu=yes" target="_blank">咨询商业授权</a>
+            </div>
+        </section>
+        <!--section class="section3">
+            <table border='1' align="center">
+                <tr>
+                    <th>弘讯开源产品</th>
+                    <th>未授权版</th>
+                    <th>商业授权版</th>
+                </tr>
+                <tr>
+                    <td>合法性</td>
+                    <td>商用违法</td>
+                    <td>商用合法</td>
+                </tr>
+                <tr>
+                    <td>开源</td>
+                    <td>部分开源</td>
+                    <td>全部开源</td>
+                </tr>
+                <tr>
+                    <td>PC端</td>
+                    <td>部分功能开放</td>
+                    <td>全部功能开放</td>
+                </tr>
+                <tr>
+                    <td>弘讯企业建站管理系统</td>
+                    <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAABVUlEQVRIibXXvY7CMAwH8P9l6BOwsbIi8QiI4ZiOjbUPx8rWrQviEU66tSsbL3BMKMhGqcmXXfCWRslPkWwn/fr/+YaIJYADgD2AQU7KaLo+OXfbbRcAjgDapuv/wjkXQU8AVgDOABYluICeaa/TbbddpmBGZzSeW/EAndOnmcQZliiHGo+gHCPcZVA1nkFfcEeJlEKr8Qo0xA+OsvdSOk0OV6Aga8/lpF24DkpNvbbp+oGTa6DNtCc3oRDlZMFNqIQtuAmNwVrchKbgd+FJNAdPxbNoCbbiRbQG/liUYE2dcjxKjbqZ6cQWtBpPwVPQKjwGvwMt4hLW9t7q9irxELbcUKreHuIMW69F9cXCuJt4F4MahRp39O41oRPwo4dbAFcrasC91XrYv/A3GbyIKnBvbPxfBSdXCq9GK/An6gdhOUlcjWbwESrhEP+1ohHc7zVCAeAOubnHNWZ7dEkAAAAASUVORK5CYII="
+                            alt="不支持"></td>
+                    <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAcCAYAAADvANYcAAAB7ElEQVRIib3XT6hMURwH8M97PEVSFhZKUsrSzmYkfxZ6+ZP0nmSjUBIrxcaCZCEpGzbKxoLNS/IvJJKabKQkGxELFv4tKBSJznSupunec++dN3O/u7nnN6fPnHt/59wZabUnNZj5uIlDeBwutFtTRhsEzMENtHAf67KBphAzcBkr4+fZcUU6kKZuxwXsybn+E5uaWInjBQBxRU4PG7EfRxPjHzAxTMQEzibGv2NDuzX1dliI1fFBLJr/D7bhqSF1x3Jcx6xEzT7czj4MGrEEdzAvUXMidsv/DBKxAHexMFFzEcd6Lw4KEXbDW1iWqLmHvfhbhliEcyX3szdjuIIViZpn8UH8lTc4swfwEEuxGJNFX+rKSLy/44mad9iIr0UF2Up0A0I241pc5lROYWdi/FsEvk9NMpoDyDIeD5kiyEEcTsz9G1vxouSHdBBXcwBZ1hZAduBMydy78KAMkCF243OipheyPrZaKkdwqQogQzyP53oVyKrYCWOJ2vM4WRWg68GsCnmEuYmaAD1QB6Bnn8ggn+pOEvME2+Ph1Dcig7TKWionb+Je8KMuIA8R8gprakC+xHb+2A+gCFEHEt4Rt+Blv4AUogqk85Ia/jpMB1CG6Ia8LgBU2oymi8iDDBRQFRESTsIACd0zUAD8A/J6ZSHPXb84AAAAAElFTkSuQmCC"
+                            alt="支持"></td>
+                </tr>
+                <tr>
+                    <td>弘讯物业管理系统</td>
+                    <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAABVUlEQVRIibXXvY7CMAwH8P9l6BOwsbIi8QiI4ZiOjbUPx8rWrQviEU66tSsbL3BMKMhGqcmXXfCWRslPkWwn/fr/+YaIJYADgD2AQU7KaLo+OXfbbRcAjgDapuv/wjkXQU8AVgDOABYluICeaa/TbbddpmBGZzSeW/EAndOnmcQZliiHGo+gHCPcZVA1nkFfcEeJlEKr8Qo0xA+OsvdSOk0OV6Aga8/lpF24DkpNvbbp+oGTa6DNtCc3oRDlZMFNqIQtuAmNwVrchKbgd+FJNAdPxbNoCbbiRbQG/liUYE2dcjxKjbqZ6cQWtBpPwVPQKjwGvwMt4hLW9t7q9irxELbcUKreHuIMW69F9cXCuJt4F4MahRp39O41oRPwo4dbAFcrasC91XrYv/A3GbyIKnBvbPxfBSdXCq9GK/An6gdhOUlcjWbwESrhEP+1ohHc7zVCAeAOubnHNWZ7dEkAAAAASUVORK5CYII="
+                            alt="不支持"></td>
+                    <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAcCAYAAADvANYcAAAB7ElEQVRIib3XT6hMURwH8M97PEVSFhZKUsrSzmYkfxZ6+ZP0nmSjUBIrxcaCZCEpGzbKxoLNS/IvJJKabKQkGxELFv4tKBSJznSupunec++dN3O/u7nnN6fPnHt/59wZabUnNZj5uIlDeBwutFtTRhsEzMENtHAf67KBphAzcBkr4+fZcUU6kKZuxwXsybn+E5uaWInjBQBxRU4PG7EfRxPjHzAxTMQEzibGv2NDuzX1dliI1fFBLJr/D7bhqSF1x3Jcx6xEzT7czj4MGrEEdzAvUXMidsv/DBKxAHexMFFzEcd6Lw4KEXbDW1iWqLmHvfhbhliEcyX3szdjuIIViZpn8UH8lTc4swfwEEuxGJNFX+rKSLy/44mad9iIr0UF2Up0A0I241pc5lROYWdi/FsEvk9NMpoDyDIeD5kiyEEcTsz9G1vxouSHdBBXcwBZ1hZAduBMydy78KAMkCF243OipheyPrZaKkdwqQogQzyP53oVyKrYCWOJ2vM4WRWg68GsCnmEuYmaAD1QB6Bnn8ggn+pOEvME2+Ph1Dcig7TKWionb+Je8KMuIA8R8gprakC+xHb+2A+gCFEHEt4Rt+Blv4AUogqk85Ia/jpMB1CG6Ia8LgBU2oymi8iDDBRQFRESTsIACd0zUAD8A/J6ZSHPXb84AAAAAElFTkSuQmCC"
+                            alt="支持"></td>
+                </tr>
+                <tr>
+                    <td>弘讯微信商城管理系统</td>
+                    <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAABVUlEQVRIibXXvY7CMAwH8P9l6BOwsbIi8QiI4ZiOjbUPx8rWrQviEU66tSsbL3BMKMhGqcmXXfCWRslPkWwn/fr/+YaIJYADgD2AQU7KaLo+OXfbbRcAjgDapuv/wjkXQU8AVgDOABYluICeaa/TbbddpmBGZzSeW/EAndOnmcQZliiHGo+gHCPcZVA1nkFfcEeJlEKr8Qo0xA+OsvdSOk0OV6Aga8/lpF24DkpNvbbp+oGTa6DNtCc3oRDlZMFNqIQtuAmNwVrchKbgd+FJNAdPxbNoCbbiRbQG/liUYE2dcjxKjbqZ6cQWtBpPwVPQKjwGvwMt4hLW9t7q9irxELbcUKreHuIMW69F9cXCuJt4F4MahRp39O41oRPwo4dbAFcrasC91XrYv/A3GbyIKnBvbPxfBSdXCq9GK/An6gdhOUlcjWbwESrhEP+1ohHc7zVCAeAOubnHNWZ7dEkAAAAASUVORK5CYII="
+                            alt="不支持"></td>
+                    <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAcCAYAAADvANYcAAAB7ElEQVRIib3XT6hMURwH8M97PEVSFhZKUsrSzmYkfxZ6+ZP0nmSjUBIrxcaCZCEpGzbKxoLNS/IvJJKabKQkGxELFv4tKBSJznSupunec++dN3O/u7nnN6fPnHt/59wZabUnNZj5uIlDeBwutFtTRhsEzMENtHAf67KBphAzcBkr4+fZcUU6kKZuxwXsybn+E5uaWInjBQBxRU4PG7EfRxPjHzAxTMQEzibGv2NDuzX1dliI1fFBLJr/D7bhqSF1x3Jcx6xEzT7czj4MGrEEdzAvUXMidsv/DBKxAHexMFFzEcd6Lw4KEXbDW1iWqLmHvfhbhliEcyX3szdjuIIViZpn8UH8lTc4swfwEEuxGJNFX+rKSLy/44mad9iIr0UF2Up0A0I241pc5lROYWdi/FsEvk9NMpoDyDIeD5kiyEEcTsz9G1vxouSHdBBXcwBZ1hZAduBMydy78KAMkCF243OipheyPrZaKkdwqQogQzyP53oVyKrYCWOJ2vM4WRWg68GsCnmEuYmaAD1QB6Bnn8ggn+pOEvME2+Ph1Dcig7TKWionb+Je8KMuIA8R8gprakC+xHb+2A+gCFEHEt4Rt+Blv4AUogqk85Ia/jpMB1CG6Ia8LgBU2oymi8iDDBRQFRESTsIACd0zUAD8A/J6ZSHPXb84AAAAAElFTkSuQmCC"
+                            alt="支持"></td>
+                </tr>
+                <tr>
+                    <td>弘讯校园教育管理系统</td>
+                    <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAABVUlEQVRIibXXvY7CMAwH8P9l6BOwsbIi8QiI4ZiOjbUPx8rWrQviEU66tSsbL3BMKMhGqcmXXfCWRslPkWwn/fr/+YaIJYADgD2AQU7KaLo+OXfbbRcAjgDapuv/wjkXQU8AVgDOABYluICeaa/TbbddpmBGZzSeW/EAndOnmcQZliiHGo+gHCPcZVA1nkFfcEeJlEKr8Qo0xA+OsvdSOk0OV6Aga8/lpF24DkpNvbbp+oGTa6DNtCc3oRDlZMFNqIQtuAmNwVrchKbgd+FJNAdPxbNoCbbiRbQG/liUYE2dcjxKjbqZ6cQWtBpPwVPQKjwGvwMt4hLW9t7q9irxELbcUKreHuIMW69F9cXCuJt4F4MahRp39O41oRPwo4dbAFcrasC91XrYv/A3GbyIKnBvbPxfBSdXCq9GK/An6gdhOUlcjWbwESrhEP+1ohHc7zVCAeAOubnHNWZ7dEkAAAAASUVORK5CYII="
+                            alt="不支持"></td>
+                    <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAcCAYAAADvANYcAAAB7ElEQVRIib3XT6hMURwH8M97PEVSFhZKUsrSzmYkfxZ6+ZP0nmSjUBIrxcaCZCEpGzbKxoLNS/IvJJKabKQkGxELFv4tKBSJznSupunec++dN3O/u7nnN6fPnHt/59wZabUnNZj5uIlDeBwutFtTRhsEzMENtHAf67KBphAzcBkr4+fZcUU6kKZuxwXsybn+E5uaWInjBQBxRU4PG7EfRxPjHzAxTMQEzibGv2NDuzX1dliI1fFBLJr/D7bhqSF1x3Jcx6xEzT7czj4MGrEEdzAvUXMidsv/DBKxAHexMFFzEcd6Lw4KEXbDW1iWqLmHvfhbhliEcyX3szdjuIIViZpn8UH8lTc4swfwEEuxGJNFX+rKSLy/44mad9iIr0UF2Up0A0I241pc5lROYWdi/FsEvk9NMpoDyDIeD5kiyEEcTsz9G1vxouSHdBBXcwBZ1hZAduBMydy78KAMkCF243OipheyPrZaKkdwqQogQzyP53oVyKrYCWOJ2vM4WRWg68GsCnmEuYmaAD1QB6Bnn8ggn+pOEvME2+Ph1Dcig7TKWionb+Je8KMuIA8R8gprakC+xHb+2A+gCFEHEt4Rt+Blv4AUogqk85Ia/jpMB1CG6Ia8LgBU2oymi8iDDBRQFRESTsIACd0zUAD8A/J6ZSHPXb84AAAAAElFTkSuQmCC"
+                            alt="支持"></td>
+                </tr>
+            </table>
+        </section-->
+    </div>
+    {include file="public/footer"}
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>
+    全局设置 
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="{:url('admin/index/welcome')}">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统设置</li>
+    <li class="active">全局设置</li>
+    <li class="active">音频视频附件设置</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+        </div>
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li><a href="{:url('admin/config/index', array('group'=>'attachment_abbreviation_setting'))}">附件缩略设置</a></li>
+            <li><a href="{:url('admin/config/index', array('group'=>'image_global_setting'))}">图片附件设置</a></li>
+            <li class="active"><a href="{:url('admin/config/index', array('group'=>'video_global_setting'))}">音频视频附件设置</a></li>
+          </ul>
+        </div>
+        <form class="form-horizontal" action="{:url('admin/config/saveConfig')}" method="post">
+          <div class="box-body">
+            <div class="form-group hide_relation_0">
+              <label for="video_support_suffix" class="col-sm-2 control-label">支持文件后缀</label>
+              <div class="col-sm-8">
+                <textarea class="form-control" rows="3" name="video_support_suffix" placeholder="填写音频视频后缀名称, 如: doc, 换行输入, 一行一个后缀.">{$config.video_support_suffix}</textarea>
+              </div>
+            </div>
+            <div class="form-group hide_relation_0">
+              <label for="video_max_size" class="col-sm-2 control-label">支持文件大小</label>
+              <div class="col-sm-8">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="video_max_size" name="video_max_size" value="{$config.video_max_size}" placeholder="输入 KB" />
+                  <span class="input-group-addon">KB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <input type="hidden" name="group" value="{$group}"/>
+            <button type="submit" class="btn btn-info pull-right">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}

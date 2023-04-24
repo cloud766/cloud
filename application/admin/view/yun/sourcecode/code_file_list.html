@@ -1,0 +1,50 @@
+{include file="public/css"}
+<link rel="stylesheet" href="__STATIC__/hx/css/admin.css">
+<section class="content-header">
+  <h1>
+    源码列表
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="/admin/index/welcome.html">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">云平台</li>
+    <li class="active">源码管理</li>
+    <li class="active">源码仓库</li>
+    <li class="active">源码列表</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="box">
+    <div class="box-body">
+      <div class="dataTables_wrapper form-inline dt-bootstrap">
+        <div class="row">
+          <div class="col-sm-12">
+            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+              <thead>
+                <tr>
+                  <th>文件名</th>
+                  <th>文件大小</th>
+                  <th>关联版本</th>
+                </tr>
+              </thead>
+              <tbody>
+                {volist name='list' id='vo'}
+                <tr>
+                  <td>{$vo.name}</td>
+                  <td>{$vo.size > 1024*1024 ? round($vo['size']/1024/1024, 1) : round($vo.size/1024, 1)}{$vo.size > 1024*1024 ? 'm' : 'k'}</td>
+                  <td>{$vo.version.title}&nbsp;&nbsp;{$vo.version.version}</td>
+                </tr>
+                {/volist}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {$pages}
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}

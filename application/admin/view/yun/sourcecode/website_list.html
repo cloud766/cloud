@@ -1,0 +1,55 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>
+    站点列表
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="/admin/index/welcome.html">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">云平台</li>
+    <li class="active">源码管理</li>
+    <li class="active">源码仓库</li>
+    <li class="active">安装站点列表</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="box">
+    <div class="box-body">
+      <div class="dataTables_wrapper form-inline dt-bootstrap">
+        <div class="row">
+          <div class="col-sm-12">
+            <div id="example1_filter" class="dataTables_filter">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+              <thead>
+                <tr>
+                  <th>网站名</th>
+                  <th>源码版本</th>
+                  <th>源码类型</th>
+                </tr>
+              </thead>
+              <tbody>
+                {volist name='list' id='vo'}
+                <tr>
+                  <td>{$vo.name}</td>
+                  <td>{$vo.sourcecode_name} {$vo.sourcecode_version}</td>
+                  <td>{$vo.type_name}</td>
+                </tr>
+                {/volist}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {$pages}
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}

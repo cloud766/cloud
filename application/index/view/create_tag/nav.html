@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{include file="create_tag/tag_header"}
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">弘讯应用商店</a>
+        </div>
+    </nav>
+    <div class="container">
+        {include file="create_tag/tag_nav"}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>导航 <span class="label label-info">nav</span></h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>类型:</label>
+                        <select name="typeid" class="form-control">
+                            <option value="1">主导航</option>
+                            <!-- <option value="2">尾导航</option>
+                            <option value="3">全部</option> -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>显示数量:</label>
+                        <input name="limit" class="form-control number" type="number">
+                    </div>
+                    <input type="hidden" name="tag_type" value="nav">
+                    <button class="btn btn-info" onclick="createTagLib(this)" type="button">生成标签</button>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>当前位置(面包屑导航) <span class="label label-info">position</span></h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>栏目ID:</label>
+                        <input name="cid" class="form-control number" type="number">
+                    </div>
+                    <div class="form-group">
+                        <label>末尾链接名称:</label>
+                        <input name="name" class="form-control input" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>末尾链接地址:</label>
+                        <input name="url" class="form-control input" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>分隔符:</label>
+                        <input name="delimiter" class="form-control number" type="text">
+                    </div>
+                    <input type="hidden" name="tag_type" value="position">
+                    <button class="btn btn-info" onclick="createTagLib(this)" type="button">生成标签</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+<script>
+    function createTagLib(obj) {
+        $.ajax({
+            url: '{:url("index/createTag/createTagLib")}',
+            data: $(obj).parent().serialize(),
+            type: 'post',
+            dataType: 'json',
+            success: function (res) {
+                $('#textarea').val(res);
+            }
+        })
+    }
+</script>
+
+
+</html>

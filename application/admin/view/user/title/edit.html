@@ -1,0 +1,28 @@
+{include file="public/css"}
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">编辑头衔</h3>
+        </div>
+        <form class="form-horizontal" action="{:url('admin/user.title/save')}" method="post">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">头衔名称</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="name" name="name" value="{$user['name']}" placeholder="name">
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <input type="hidden" name="id" value="{$user['id']}">
+            <button type="submit" class="btn btn-info pull-right">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}
+   

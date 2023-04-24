@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>源码管理 - 源码仓库 - 源码列表 - HXCloud - Hong Xun Technology Development Co., Ltd.</title>
+  {include file="public/css"}
+  <!--//skycons-icons-->
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="left-content">
+      <div class="mother-grid-inner">
+        <!--header start here-->
+        {include file="public/header_main"}
+        <!--heder end here-->
+        <!--inner block start here-->
+        <div class="inner-block">
+          <div class="inbox">
+            <h2>源码管理/源码仓库</h2>
+            {include file="yun/sourcecode/left"}
+            <div class="col-md-10 mailbox-content  tab-content tab-content-in">
+              <div class="tab-pane active text-style" id="tab1">
+                <div class="mailbox-border">
+                  <div class="mail-toolbar clearfix">
+                    <div class="float-left">
+                      <div class="btn btn_1 btn-default mrg5R" onclick="window.location.reload()">
+                        <i class="fa fa-refresh"> </i>
+                      </div>
+                      <div class="dropdown dropdown-inbox">
+                        <a href="#" title="" class="btn btn-default" data-toggle="dropdown" aria-expanded="false">
+                          <i class="fa fa-cog icon_8"></i>
+                          <i class="fa fa-chevron-down icon_8"></i>
+                          <div class="ripple-wrapper"></div>
+                        </a>
+                        <ul class="dropdown-menu float-right">
+                          <li style="margin-top:10px">
+                            <a href="{:url('admin/yun.sourcecode/code_edit')}" title="">
+                              <i class="fa fa-pencil-square-o icon_9"> </i>
+                              添加
+                            </a>
+                          </li>
+                          <li class="divider"></li>
+                          <li style="margin-bottom:10px">
+                            <a href="javascript:;" onclick="batchDel(this)" data-url="{:url('admin/yun.sourcecode/code_delete')}"
+                              class="font-red" title="">
+                              <i class="fa fa-times" icon_9=""> </i>
+                              删除
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="clearfix"> </div>
+                    </div>
+                    <div class="float-right">
+                      <!-- <span class="text-muted m-r-sm">Showing 1 of 100 </span> -->
+                      <div class="btn-group m-r-sm mail-hidden-options" style="display: inline-block;">
+                        <div class="btn-group">
+
+                        </div>
+                        <div class="btn-group">
+
+                        </div>
+                      </div>
+                      {$pages}
+                      <div class="clearfix"> </div>
+                    </div>
+                  </div>
+                  <table class="table tab-border">
+                    <tbody>
+                      <tr>
+                        <th><input type="checkbox" class="checkbox" onclick="selectAll(this)"></th>
+                        <th>id</th>
+                        <th>中文名</th>
+                        <th>英文名</th>
+                        <th>类型</th>
+                        <th>描述</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                      </tr>
+                      {volist name="list" id="vo"}
+                      <tr class="unread checked">
+                        <td class="hidden-xs">
+                          <input type="checkbox" value="{$vo.id}" class="checkbox select-all-checkbox">
+                        </td>
+                        <td>
+                          {$vo.id}
+                        </td>
+                        <td>
+                          {$vo.title}
+                        </td>
+                        <td>
+                          {$vo.name}
+                        </td>
+                        <td>
+                          {$vo.type_name}
+                        </td>
+                        <td>
+                          {$vo.description}
+                        </td>
+                        <td>
+                          {:date('Y-m-d H:i:s',$vo.create_time)}
+                        </td>
+                        <td>
+                          <a href="{:url('admin/yun.sourcecode/version_list', array('sourcecode_id'=>$vo.id))}">版本</a>
+                          <a href="{:url('admin/yun.sourcecode/code_edit', array('id'=>$vo.id))}">编辑</a>
+                          <a href="javascript:;" onclick="del(this)" data-url="{:url('admin/yun.sourcecode/code_delete', array('id'=>$vo.id))}">删除</a>
+                        </td>
+                      </tr>
+                      {/volist}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+      <!--inner block end here-->
+      <!--copy rights start here-->
+      {include file="public/copyright"}
+      <!--COPY rights end here-->
+    </div>
+    <!--slider menu-->
+    {include file="public/sidebar_menu"}
+    <div class="clearfix"> </div>
+  </div>
+  <!--slide bar menu end here-->
+  {include file="public/js"}
+  <!-- mother grid end here-->
+</body>
+
+</html>

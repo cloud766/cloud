@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/order/css/order.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background-color:#eee;padding:35px 0">
+        <div class="cart">
+            <div class="cart-header">
+                <div class="cart-logo">
+                    <img src="/static/store/image/logo.png" alt="">
+                    <p>选择付款方式及付款</p>
+                </div>
+            </div>
+            <div class="pay-header">
+                订单编号：{$order.order_sn}
+            </div>
+            <div class="pay-body">
+                <div class="pay-types">
+                    <!-- <div class="pay-type active" data-type="balance">
+                        <img src="" alt="">
+                        <span>交易币支付</span>
+                        <div class="pay-money">
+                            支付<span>{$order.pay_price}元</span>
+                        </div>
+                    </div> -->
+                    <div class="pay-type active" data-type="alipay">
+                        <img src="" alt="">
+                        <span>支付宝支付</span>
+                        <div class="pay-money">
+                            支付<span>{$order.pay_price}元</span>
+                        </div>
+                    </div>
+                    <div class="pay-type" data-type="wechatpay">
+                        <img src="" alt="">
+                        <span>微信支付</span>
+                        <div class="pay-money">
+                            支付<span>{$order.pay_price}元</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pay-card">
+                    <!-- <div class="pay-password">
+                        <p>支付密码：</p>
+                        <div>
+                            <input type="password" class="form-control">
+                            <a class="btn btn-text">忘记密码？</a>
+                        </div>
+                    </div> -->
+                    <div class="pay-btn">
+                        <a href="{:url('index/user.index/order')}" class="btn btn-default">查看订单</a>
+                        <button type="button" onclick="payOrder()" class="btn btn-primary">确认付款</button>
+                    </div>
+                    <input type="hidden" id="pay-type" value="alipay">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">订单创建成功，请在15分钟内支付</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="height:300px;width:300px;margin:10px auto 20px auto;">
+                        <p id="qrcode_type" style="text-align:center"></p>
+                        <img id="qrcode" src="" alt="" width="300" height="300">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="paycomplete">已完成支付</button>
+                    <button type="button" class="btn btn-default" id="close" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+<script>
+    var order_sn = '{$order.order_sn}';
+    $('.pay-type').click(function () {
+        var _this = $(this);
+        if (_this.hasClass('active')) {
+            return
+        }
+        $('.pay-type').removeClass('active');
+        _this.addClass('active');
+        var type = _this.data('type');
+        if (type == 'balance') {
+            $('.pay-password').show();
+        } else {
+            $('.pay-password').hide();
+        }
+        $('#pay-type').val(type);
+    });
+    function payOrder() {
+        var confirm = layer.confirm('确认要支付订单吗', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.ajax({
+                url: '{:url("index/order/checkOrderPayStatus")}',
+                type: 'post',
+                data: { order_sn: order_sn },
+                dataType: 'json',
+                success: function (res) {
+                    layer.close(confirm);
+                    if (res.code == 1) {
+                        switch ($('#pay-type').val()) {
+                            case 'balance':
+                                layer.msg('暂不支持余额支付')
+                                break;
+                            case 'wechatpay':
+                                wechatpay();
+                                break;
+                            case 'alipay':
+                                alipay();
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        layer.msg(res.msg);
+                        if (typeof (res.url) != 'undefined') {
+                            setTimeout(() => {
+                                location.href = res.url;
+                            }, 2000);
+                        }
+                    }
+                }
+            })
+        });
+    }
+    function alipay() {
+        var qrcode_url = '{:url("aliqrcode")}';
+        qrcode_url = qrcode_url + '?order_sn=' + order_sn;
+        $('#qrcode').attr('src', qrcode_url);
+        $('#qrcode_type').text('支付宝支付');
+        $('#myModal').modal('show')
+    }
+
+    function wechatpay() {
+        var qrcode_url = '{:url("wechatqrcode")}';
+        qrcode_url = qrcode_url + '?order_sn=' + order_sn;
+        $('#qrcode').attr('src', qrcode_url);
+        $('#qrcode_type').text('微信支付');
+        $('#myModal').modal('show')
+    }
+
+    $('#paycomplete').click(function () {
+        checkOrder();
+    });
+    $('#close').click(function () {
+        checkOrder();
+    });
+    function checkOrder() {
+        $.ajax({
+            url: '{:url("index/order/checkPayStatus")}',
+            data: { order_sn: order_sn },
+            dataType: 'json',
+            type: 'post',
+            success: function (res) {
+                layer.msg(res.msg)
+                if (res.code == 1) {
+                    location.href = '{:url("index/user.index/domain")}'
+                }
+            }
+        })
+    }
+</script>
+
+</html>

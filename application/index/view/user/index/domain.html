@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/user/css/user.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background: #f4f4f4;padding: 35px 0">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-md-9">
+                    <div class="right-content">
+                        <div class="right-content-header">
+                            <span>
+                                <p>我的站点</p>
+                            </span>
+                            <span>
+                                <a href="{:url('websiteRegister')}">注册站点</a>
+                                <a href="{:url('index/index/auth')}">商业版特权</a>
+                            </span>
+                        </div>
+                        {volist name="list" id="vo"}
+                        <div class="website-item">
+                            <div class="website-header">
+                                <h5>{$vo.name}</h5>
+                                <a href="{$vo.domain}" target="_blank">{$vo.domain}</a>
+                                <a href="{:url('websiteRegister', array('id'=>$vo.id))}" class="website-name-edit">修改</a>
+                            </div>
+                            <div class="website-content">
+                                <span class="content-item">
+                                    <p>网站IP：{$vo.ip}</p>
+                                    <p>站点ID：{$vo.id}</p>
+                                </span>
+                                <span class="content-item">
+                                    <p>手机：{$vo.phone}</p>
+                                    <p>地址：{$vo.address}</p>
+                                </span>
+                                <span class="content-item">
+                                    {if condition:$vo.auth}
+                                    <p>已授权：{$vo.auth_title}</p>
+                                    <p>授权key：{$vo.update_key}</p>
+                                    {else/}
+                                    <p>未购买授权</p>
+                                    {/if}
+                                </span>
+                                <span class="content-item">
+                                    {if condition:!$vo.auth}
+                                    <a href="{:url('index/user.index/buyAuth')}" class="btn btn-danger btn-website">
+                                        <span>开通授权</span>
+                                    </a>
+                                    {/if}
+                                </span>
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+
+</html>

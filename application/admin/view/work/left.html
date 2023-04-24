@@ -1,0 +1,24 @@
+<div class="col-md-2 compose">
+    <div class="mail-profile">
+        <div class="mail-pic">
+            <a href="#"></a>
+        </div>
+        <div class="mailer-name">
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <div class="compose-bottom">
+        <ul>
+            <!-- <li><a href="{:url('admin/work.work/index',array('status'=>1))}" {if condition:$left eq 'work'}class="hilate"{/if}><i class="fa fa-inbox"> </i>未处理列表</a></li>
+            <li><a href="{:url('admin/work.work/index',array('status'=>2))}" {if condition:$left eq 'work'}class="hilate"{/if}><i class="fa fa-inbox"> </i>已处理列表</a></li>
+            <li><a href="{:url('admin/work.classify/index')}" {if condition:$left eq 'admin'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>分类列表</a></li>
+            <li><a href="{:url('admin/work.admin/index')}" {if condition:$left eq 'classify'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>管理员列表</a></li>
+            <li><a href="{:url('admin/work.operator/index')}" {if condition:$left eq 'operator'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>操作员列表</a></li>
+            <li><a href="{:url('admin/work.slide/index')}" {if condition:$left eq 'slide'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>幻灯片列表</a></li> -->
+            <li><a href="{:url('admin/work.index/index')}" {if condition:$left eq 'wait'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>待处理列表</a></li>
+            <li><a href="{:url('admin/work.index/index', array('s'=>'finish'))}" {if condition:$left eq 'finish'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>已完成列表</a></li>
+            <!-- <li><a href="{:url('admin/work.index/index', array('status'=>2))}" {if condition:$left eq 'finish'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>工单列表</a></li> -->
+            <li><a href="{:url('admin/work.category/index')}" {if condition:$left eq 'category'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>工单分类列表</a></li>
+        </ul>
+    </div>
+</div>

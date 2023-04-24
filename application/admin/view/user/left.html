@@ -1,0 +1,17 @@
+<div class="col-md-2 compose">
+    <div class="mail-profile">
+        <div class="mail-pic">
+            <a href="#"></a>
+        </div>
+        <div class="mailer-name">
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <div class="compose-bottom">
+        <ul>
+            <li><a href="{:url('admin/user.lists/index')}" {if condition:$left eq 'lists'}class="hilate"{/if}><i class="fa fa-inbox"> </i>会员列表</a></li>
+            <li><a href="{:url('admin/user.type/index')}" {if condition:$left eq 'type'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>会员类型</a></li>
+            <li><a href="{:url('admin/user.aptitude/index')}" {if condition:$left eq 'aptitude'}class="hilate"{/if}><i class="fa fa-envelope-o"> </i>资质认证</a></li>
+        </ul>
+    </div>
+</div>

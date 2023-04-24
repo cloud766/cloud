@@ -1,0 +1,49 @@
+<div class="top-bar" style="height: 30px;line-height: 30px;font-size: 12px">
+    <div class="wrap clearfix">
+        <ul>
+            {if condition:$user}
+            <li style="float: left;padding-left: 20px;"><a style="margin-left:5px">亲，欢迎<span style="color:red;padding: 0 5px">{$user.nickname}</span>来到弘讯应用商店！</a></li>
+            <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/user.index/user_info')}">个人中心</a></li>
+            <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/order/cart')}">购物车</a></li>
+            <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" href="{:url('index/user.login/loginout')}">退出</a></li>
+            {else/}
+            <li style="float: left;padding-left: 20px;"><a style="margin-left:5px">亲，欢迎来到弘讯应用商店！</a></li>
+            <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/user.login/login')}">请登录</a></li>
+            <li style="float: left;padding-left: 20px;"><a style="margin-left:5px" target="_blank" href="{:url('index/user.login/register')}">免费注册</a></li>
+            {/if}
+        </ul>
+    </div>
+</div>
+<div class="nav">
+    <div class="wrap clearfix">
+        <a href="/" title="弘讯应用商店" class="logo fl">
+            <img src="__STATIC__/store/image/logo.png">
+        </a>
+        <ul class="menu fl f-16 ml-70">
+            <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="{:url('index/index/codeDownload')}">软件下载</a>
+            </li>
+            <li>
+                <a href="{:url('index/index/codeAuth')}">商业授权</a>
+            </li>
+            <li>
+                <a href="{:url('index/store.template/index')}" target="_blank">模板下载</a>
+            </li>
+            <li>
+                <a href="{:url('index/store.addon/index')}" target="_blank">插件下载</a>
+            </li>
+            <li>
+                <a href="{:url('index/createTag/index')}" target="_blank">模板标签</a>
+            </li>
+        </ul>
+        <div class="search-box fl pt-30">
+            <form method="post" action="{:url('license')}" target="_blank">
+                <input name="url" class="search-url" value="" type="text">&nbsp;<input name="" class="search-btn f-14 t-c"
+                    value="正版授权查询" type="submit">
+            </form>
+        </div>
+    </div>
+</div>

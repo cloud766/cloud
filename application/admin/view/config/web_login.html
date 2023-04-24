@@ -1,0 +1,78 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>
+    登录站点
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="{:url('admin/index/welcome')}">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统设置</li>
+    <li class="active">登录站点</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+				<form class="form-horizontal" action="{:url('admin/config/saveConfig')}" method="post">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="open_login_code" class="col-sm-2 control-label">是否开启验证码</label>
+              <div class="col-sm-8">
+                <div class="radio col-sm-1">
+                  <label><input type="radio" class="switch" name="open_login_code" value="1" {if condition:$config.open_login_code eq 1}checked{/if}/>是</label>
+                </div>
+                <div class="radio col-sm-1">
+                  <label><input type="radio" class="switch" name="open_login_code" value="0" {if condition:$config.open_login_code eq 0}checked{/if}/>否</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="open_phone_login" class="col-sm-2 control-label">是否开启手机登录</label>
+              <div class="col-sm-8">
+                <div class="radio col-sm-1">
+                  <label><input type="radio" class="switch" name="open_phone_login" value="1" {if condition:$config.open_phone_login eq 1}checked{/if}/>是</label>
+                </div>
+                <div class="radio col-sm-1">
+                  <label><input type="radio" class="switch" name="open_phone_login" value="0" {if condition:$config.open_phone_login eq 0}checked{/if}/>否</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="default_login_type" class="col-sm-2 control-label">默认登录方式</label>
+              <div class="col-sm-8">
+                <select class="form-control" data-id="22" name="default_login_type">
+                  <option value="1" {if condition:$config.default_login_type eq 1}selected{/if}>账号密码登录</option>
+                  <option value="2" {if condition:$config.default_login_type eq 2}selected{/if}>手机登录</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mandatory_binding_information" class="col-sm-2 control-label">强制绑定信息</label>
+              <div class="col-sm-8">
+                <select class="form-control" data-id="23" name="mandatory_binding_information">
+                  <option value="1" {if condition:$config.mandatory_binding_information eq 1}selected{/if}>无</option>
+                  <option value="2" {if condition:$config.mandatory_binding_information eq 2}selected{/if}>qq</option>
+                  <option value="3" {if condition:$config.mandatory_binding_information eq 3}selected{/if}>微信</option>
+                  <option value="4" {if condition:$config.mandatory_binding_information eq 4}selected{/if}>支付宝</option>
+                  <option value="5" {if condition:$config.mandatory_binding_information eq 5}selected{/if}>手机号</option>
+                </select>
+              </div>
+            </div>
+          <div class="col-md-12" style=" padding:15px 0;">
+            <div style="width: 100px;height: auto;margin:0 auto;line-height: center;text-align: center;">
+              <input type="hidden" name="group" value="{$group}">
+              <button type="submit" class="btn btn-info pull-right">保存</button>
+            </div>
+          </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}

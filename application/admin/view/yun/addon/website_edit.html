@@ -1,0 +1,40 @@
+{include file="public/css"}
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">编辑站点</h3>
+        </div>
+        <form class="form-horizontal" action="{:url('admin/yun.addon/website_save')}" method="post">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">名称</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="name" name="name" value="{$data['name']}" placeholder="name">
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="form-group">
+              <label for="version_id" class="col-sm-2 control-label">插件版本</label>
+              <div class="col-sm-8">
+                <select class="form-control" name="version_id">
+                  {volist name="version_list" id="vo"}
+                  <option value="{$vo.id}" {if condition="$data['version_id'] eq $vo.id"}selected{/if}>{$vo.name} {$vo.version}</option>                       
+                  {/volist}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <input type="hidden" name='id' value="{$data['id']}">
+            <button type="submit" class="btn btn-info pull-right">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}
+   

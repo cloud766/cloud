@@ -1,0 +1,88 @@
+<div class="col-sm w-xl box w-auto-xs b-r b-l right-bar">
+    <div class="navside white p-a no-borders box-bar">
+        <div class="nav-stacked h6 nav-active-skin">
+            <ul class="nav" id="ziper">
+                <span class="nav-header hidden-folded m-b-sm">
+                    <span class="text text-muted">设置中心</span>
+                </span>
+                <li>
+                    <a href="{:url('/index/user.index/user_info')}" {if condition="$Request.action eq 'user_info'" }class="nav-link active" {else/}class="nav-link"
+                        {/if}>
+                        {if condition="$Request.action eq 'user_info'"}
+                        <span class="arrow right b-skin"></span>{/if}
+                        <span class="nav-icon p-l p-t-sm m-t-xs">
+                            <i class="icon-docs h5"></i>
+                        </span>
+                        <span class="nav-text p-y">个人资料</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('/index/user.index/reset_pwd')}" {if condition="$Request.action eq 'reset_pwd'" }class="nav-link active" {else/}class="nav-link"
+                        {/if}>
+                        {if condition="$Request.action eq 'reset_pwd'"}
+                        <span class="arrow right b-skin"></span>{/if}
+                        <span class="nav-icon p-l p-t-sm m-t-xs">
+                            <i class="icon-lock h5"></i>
+                        </span>
+                        <span class="nav-text p-y">修改密码</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('/index/user.index/portrait')}" {if condition="$Request.action eq 'portrait'" }class="nav-link active" {else/}class="nav-link"
+                        {/if}>
+                        {if condition="$Request.action eq 'portrait'"}
+                        <span class="arrow right b-skin"></span>{/if}
+                        <span class="nav-icon p-l p-t-sm m-t-xs">
+                            <i class="icon-picture h5"></i>
+                        </span>
+                        <span class="nav-text p-y">头像和主页图片</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('/index/user.index/liaison')}" {if condition="$Request.action eq 'liaison'" }class="nav-link active" {else/}class="nav-link"
+                        {/if}>
+                        {if condition="$Request.action eq 'liaison'"}
+                        <span class="arrow right b-skin"></span>{/if}
+                        <span class="nav-icon p-l p-t-sm m-t-xs">
+                            <i class="icon-ghost h5"></i>
+                        </span>
+                        <span class="nav-text p-y">社交应用</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('/index/user.index/works')}" {if condition="$Request.action eq 'works'" }class="nav-link active" {else/}class="nav-link"
+                        {/if}>
+                        {if condition="$Request.action eq 'works'"}
+                        <span class="arrow right b-skin"></span>{/if}
+                        <span class="nav-icon p-l p-t-sm m-t-xs">
+                            <i class="icon-badge h5"></i>
+                        </span>
+                        <span class="nav-text p-y">自荐作品</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('/index/user.index/permit')}" {if condition="$Request.action eq 'permit'" }class="nav-link active" {else/}class="nav-link"
+                        {/if}>
+                        {if condition="$Request.action eq 'permit'"}
+                        <span class="arrow right b-skin"></span>{/if}
+                        <span class="nav-icon p-l p-t-sm m-t-xs">
+                            <i class="icon-flag h5"></i>
+                        </span>
+                        <span class="nav-text p-y">作品许可</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('/index/user.index/domain')}" {if condition="$Request.action eq 'domain'" }class="nav-link active" {else/}class="nav-link"
+                        {/if}>
+                        {if condition="$Request.action eq 'domain'"}
+                        <span class="arrow right b-skin"></span>{/if}
+                        <span class="nav-icon p-l p-t-sm m-t-xs">
+                            <i class="icon-flag h5"></i>
+                        </span>
+                        <span class="nav-text p-y">绑定域名</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

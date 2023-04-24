@@ -1,0 +1,263 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>
+    远程附件
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="/admin/index/welcome.html">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统设置</li>
+    <li class="active">{$title}</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <!-- <h3 class="box-title">{$title}</h3> -->
+        </div> 
+	        <div class="nav-tabs-custom" >
+	        	{if condition:$flag}
+  			      <ul class="nav nav-tabs">
+  			      	{volist name="navList" id="vo"}
+  			        <li {if $group == $vo.group}class="active"{/if}><a href="/admin/config/testindex/group/{$vo.group}">{$vo.title}</a></li>
+  			        {/volist}
+  			      </ul>
+			      {/if}
+					</div>
+				<form class="form-horizontal" action="{:url('admin/config/saveConfig')}" method="post">
+          <div class="box-body">
+            {volist name="list" id="vo"}            
+              <div class="form-group hide_relation_{$vo.hide_relation_id}" {if condition:$vo.hide eq 1}style="display:none"{/if}>
+                <label for="{$vo.name}" class="col-sm-2 control-label">{$vo.title}</label>
+                <div class="col-sm-8">
+                  {switch name="vo.type"}
+                    {case value="switch"}
+                      <div class="radio col-sm-1">
+                        <label>
+                          <input type="radio" class="switch" name="{$vo['name']}" data-id="{$vo['id']}" value="1" {if condition:$vo.value eq 1}checked{/if}>是
+                        </label>
+                      </div>
+                      <div class="radio col-sm-1">
+                        <label>
+                          <input type="radio" class="switch" name="{$vo['name']}" data-id="{$vo['id']}" value="0" {if condition:$vo.value eq 0}checked{/if}>否
+                        </label>
+                      </div>
+                    {/case}
+                    {case value="input"}
+                      {if condition:$vo.rand_code eq 1}
+                        <input type="text" class="form-control" id="{$vo.name}" name="{$vo.name}" onBlur="rand_code_blur(this)" data-length="{$vo.rand_code_length}" data-change="{$vo.rand_code_change}" value="{$vo.value}" placeholder="{$vo.tip}" readonly>
+                        <button type="button" class="btn btn-danger create-rand-code">自动生成</button>
+                        <button type="button" class="btn btn-danger edit-rand-code">修改</button>
+                        <button type="button" class="btn btn-danger copy-rand-code">点击复制</button>
+                      {else /}
+                        <input type="text" class="form-control" id="{$vo['name']}" name="{$vo['name']}" value="{$vo.value}" placeholder="{$vo.tip}">
+                      {/if}
+                    {/case}
+                    {case value="select"}
+                      <select class="form-control {if condition:$vo.hide_relation eq 1}hide_relation{/if} hide_relation_{$vo.hide_relation_id}" data-id="{$vo.id}" name="{$vo.name}">
+                        {volist name="vo.options" id="m"}
+                        <option value="{$key}" {if condition="$vo.value eq $key"}selected{/if}>{$m}</option>                       
+                        {/volist}
+                      </select>
+                    {/case}
+                    {case value="selectm"}
+                      <select multiple="multiple" class="form-control {if condition:$vo.hide_relation eq 1}hide_relation{/if} hide_relation_{$vo.hide_relation_id}" data-id="{$vo.id}" name="{$vo.name}">
+                        {volist name="vo.options" id="m"}
+                        <option value="{$key}" {if condition="$vo.value eq $key"}selected{/if}>{$m}</option>                       
+                        {/volist}
+                      </select>
+                    {/case}
+                    {case value="textarea"}
+                      <textarea class="form-control" rows="3" name="{$vo.name}" placeholder="{$vo.tip}">{$vo.value}</textarea>
+                    {/case}
+                    {case value="upload"}
+                      <input type="text" class="form-control" id="{$vo.name}" name="{$vo.name}" value="{$vo.value}" placeholder="{$vo.tip}">
+                      <span><button type="button" id="plupload-image" rel="image" class="btn btn-danger plupload"><i class="fa fa-upload"></i> 上传</button></span>        
+                      <ul class="row list-inline plupload-preview" id="p-slide" style="margin-left: -6px;">
+                        <li class="col-xs-3">
+                            <img src="{$vo['value']}" class="img-responsive">
+                        </li>
+                      </ul>
+                    {/case}
+                    {case value="baidumap"}
+                      <input type="text" class="form-control " id="{$vo.name}" data-map_relation_id="{$vo.map_relation_id}" onBlur="address_blur(this)" name="{$vo.name}" value="{$vo.value}" placeholder="{$vo.tip}">
+                    {/case}
+                    {case value="baidumap_relation"}
+                      <input type="hidden" id="{$vo.name}" name="{$vo.name}" value="{$vo.value}" placeholder="{$vo.tip}">
+                      <div class="allmap" id="{$vo.name}_map" data-relation="{$vo.id}" style="height: 300px;"></div>
+                    {/case}
+                  {/switch}
+                </div>
+              </div>
+            {/volist}
+          </div>
+          <div class="box-footer">
+            <input type="hidden" name="group" value="{$group}">
+            <input type="file" name="image" id="imagefile" style="display: none;"  />
+            <button type="submit" class="btn btn-info pull-right">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=Q0AWXP9FNzYvVy6zRAGy8sKs7lWzAZO7"></script>
+<script type="text/javascript">
+$(function(){ 
+  var inputid = '';
+  var img = '';
+  $(".plupload").click(function(){
+    //获取要填写值的input
+    inputid = $(this).parent().siblings("input.form-control"); 
+    console.log(inputid);  
+    //为上传图片触发点击事件
+    $("input[name='image']").click();
+  });
+  //ajax上传图片开始
+  $("input[name='image']").on("change",function(){                                       
+    var formData = new FormData();
+    formData.append("myimage",document.getElementById("imagefile").files[0]);
+    formData.append('name',inputid.attr("id"));
+     $.ajax({
+           type: "POST",
+           url: "{:url('index/upload')}",
+           processData: false,  // 不要处理发送的数据
+           contentType: false,   // 不要设置Content-Type请求头
+           data:formData,
+           success: function (data) {
+            if(data.cod == 1){
+              inputid.val(data.path);
+              inputid.siblings("ul.plupload-preview").find("img.img-responsive").attr("src",data.path);                                            
+             }
+           }
+       });
+    // 
+    $("input[name='image']").val('');
+  });
+
+  var chars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+  var createFlag = false;
+
+  $(".create-rand-code").click(function(){
+      var length = $(this).prev().data('length');
+      if (typeof(length)=="undefined" || length == '') {
+        length = 10;
+      }
+      var token = "";
+      for(var i = 0; i < length ; i ++) {
+          var id = Math.floor(Math.random()*chars.length);
+          token += chars[id];
+      }
+      var change = $(this).prev().data('change');
+      if (change == 'toUpperCase') {
+        token = token.toUpperCase();
+      }
+      if (change == 'toLowerCase') {
+        token = token.toLowerCase();
+      }
+      $(this).prev().val(token);
+  });
+
+  $(".edit-rand-code").click(function(){
+    $(this).prev().prev().removeAttr('readonly');
+  });
+
+  $(".copy-rand-code").click(function(){
+      var e=$(this).prev().prev().prev();
+      e.select(); //选择对象
+      document.execCommand("Copy"); //执行浏览器复制命令
+      layer.msg("复制成功");
+  });
+
+  $('.switch').click(function(){
+    var _this = $(this);
+    var id = _this.data('id');
+    var value = _this.val();
+    if (value == 1) {
+      $('.hide_relation_'+id).show();
+    }
+    if (value == 0) {
+      $('.hide_relation_'+id).hide();
+    }
+  });
+
+});                               
+function rand_code_blur(obj){
+  if(typeof($(obj).attr("readonly"))=="undefined"){
+    $(obj).attr('readonly',true);
+  }
+}
+function address_blur(obj){
+  var _this = $(obj);
+  var address = _this.val();
+  if (address.trim()) {
+    var relation_id = _this.data('map_relation_id');
+    var relation = $('.allmap[data-relation='+relation_id+']');
+    var map_id = relation.attr('id');
+    var map = new BMap.Map(map_id);
+    var myGeo = new BMap.Geocoder();
+    // 将地址解析结果显示在地图上,并调整地图视野
+    myGeo.getPoint(address, function(point){
+      if (point) {
+        var lng = point['lng'];
+        var lat = point['lat'];
+        var location = lng+','+lat;
+        relation.prev().val(location);
+        map.centerAndZoom(point, 16);
+        map.addOverlay(new BMap.Marker(point));
+        map.addEventListener("click",function(e){
+          map.clearOverlays();
+          map.addOverlay(new BMap.Marker(e.point));
+          var click_point = e.point;
+          var lng = click_point['lng'];
+          var lat = click_point['lat'];
+          var location = lng+','+lat;
+          relation.prev().val(location);
+        });
+      }else{
+        layer.msg("您选择地址没有解析到结果!");
+      }
+    }, "北京市");
+  }
+}
+$('.allmap').each(function(){
+  var _this = $(this);
+  var id = _this.attr('id');
+  var relation_id = _this.attr('id');
+  var location = _this.prev().val()
+  var lng = 116.404;
+  var lat = 39.915;
+  if (location) {
+    location = location.split(',');
+    lng = location[0];
+    lat = location[1];
+  }
+  var map = new BMap.Map(id);    // 创建Map实例
+  map.centerAndZoom(new BMap.Point(lng, lat), 16);  // 初始化地图,设置中心点坐标和地图级别
+  var marker = new BMap.Marker(new BMap.Point(lng, lat)); // 创建点
+  map.addOverlay(marker);    //增加点
+  //添加地图类型控件
+  map.addControl(new BMap.MapTypeControl({
+    mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));   
+  map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+  map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+  map.addEventListener("click",function(e){
+    map.clearOverlays();
+    map.addOverlay(new BMap.Marker(e.point));
+    var click_point = e.point;
+    var lng = click_point['lng'];
+    var lat = click_point['lat'];
+    var location = lng+','+lat;
+    _this.prev().val(location);
+  });
+})
+</script>

@@ -1,0 +1,145 @@
+{include file="public/css"}
+<link rel="stylesheet" href="__STATIC__/minicolor/jquery.minicolors.css"/>
+<section class="content-header">
+  <h1>
+     图片附件设置
+    <small>   </small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="{:url('admin/index/welcome')}">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统设置</li>
+    <li class="active">图片附件设置</li>
+  </ol>
+</section>
+<section class="content">
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+      </div>
+      <form class="form-horizontal" action="{:url('admin/config/saveConfig')}" method="post">
+        <div class="box-body">
+          <div class="form-group">
+            <label for="watermark_upload_image" class="col-sm-3 control-label">上传的图片是否使用图片水印功能</label>
+            <div class="col-sm-6">
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="watermark_upload_image" value="1" {if condition:$config.watermark_upload_image eq 1}checked{/if}/>是</label>
+              </div>
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="watermark_upload_image" value="0" {if condition:$config.watermark_upload_image eq 0}checked{/if}/>否</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="watermark_collection_image" class="col-sm-3 control-label">采集的图片是否使用图片水印功能</label>
+            <div class="col-sm-6">
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="watermark_collection_image" value="1" {if condition:$config.watermark_collection_image eq 1}checked{/if}/>是</label>
+              </div>
+              <div class="radio col-sm-1">
+                <label><input type="radio" class="switch" name="watermark_collection_image" value="0" {if condition:$config.watermark_collection_image eq 0}checked{/if}/>否</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="watermark_type" class="col-sm-3 control-label">选择水印的文件类型</label>
+            <div class="col-sm-6">
+              <select class="form-control" name="watermark_type">
+                <option value="0" {if condition:$config.watermark_type eq 0}selected{/if}>PNG</option>
+                <option value="1" {if condition:$config.watermark_type eq 1}selected{/if}>JPG</option>
+                <option value="2" {if condition:$config.watermark_type eq 2}selected{/if}>GIF</option>
+                <option value="3" {if condition:$config.watermark_type eq 3}selected{/if}>文字</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="watermark_size_width" class="col-sm-3 control-label">添加水印的图片大小控制（设置为0为不限）宽</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="watermark_size_width" name="watermark_size_width" value="{$config.watermark_size_width}" placeholder="" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="watermark_size_height" class="col-sm-3 control-label">添加水印的图片大小控制（设置为0为不限）高</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="watermark_size_height" name="watermark_size_height" value="{$config.watermark_size_height}" placeholder="" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="watermark_filename" class="col-sm-3 control-label">水印图片文件名（如果不存在，则使用文字水印）</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="watermark_filename" name="watermark_filename" value="{$config.watermark_filename}" placeholder="" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="upload_new_image" class="col-sm-3 control-label">上传新图片</label>
+            <div class="col-sm-6">
+              {tag:upload input='upload_new_image' value='$config.upload_new_image' path='$config.upload_new_image|default="__STATIC__/hx/images/nopic.jpg"'}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="watermark_text" class="col-sm-3 control-label">水印图片文字</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="watermark_text" name="watermark_text" value="{$config.watermark_text}" placeholder="" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="watermark_font_size" class="col-sm-3 control-label">水印图片文字字体大小</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="watermark_font_size" name="watermark_font_size" value="{$config.watermark_font_size}" placeholder="" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="watermark_font_color" class="col-sm-3 control-label">水印图片文字颜色（默认#FF0000为红色）</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="watermark_font_color" name="watermark_font_color" value="{$config.watermark_font_color}" placeholder="" data-position="bottom left"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="watermark_location" class="col-sm-3 control-label">水印位置</label>
+            <div class="col-sm-6">
+              <select class="form-control" name="watermark_location">
+                <option value="0" {if condition:$config.watermark_location eq 0}selected{/if}>随机位置</option>
+                <option value="1" {if condition:$config.watermark_location eq 1}selected{/if}>顶部居左</option>
+                <option value="2" {if condition:$config.watermark_location eq 2}selected{/if}>顶部居右</option>
+                <option value="3" {if condition:$config.watermark_location eq 3}selected{/if}>顶部居右</option>
+                <option value="4" {if condition:$config.watermark_location eq 4}selected{/if}>底部居右</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="box-footer">
+          <input type="hidden" name="group" value="{$group}" /> 
+          <button type="submit" class="btn btn-info pull-right">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</section>
+{include file="public/js"}
+<script src="__STATIC__/minicolor/jquery.minicolors.js"></script>
+<script>
+   $('#watermark_font_color').minicolors({
+          control: $(this).attr('data-control') || 'hue',
+          defaultValue: $(this).attr('data-defaultValue') || '',
+          inline: $(this).attr('data-inline') === 'true',
+          letterCase: $(this).attr('data-letterCase') || 'lowercase',
+          opacity: $(this).attr('data-opacity'),
+          position: $(this).attr('data-position') || 'bottom left',
+          change: function(hex, opacity) {
+              if (!hex)
+                  return;
+              if (opacity)
+                  hex += ', ' + opacity;
+              try {
+                  console.log(hex);
+              } catch (e) {
+              }
+          },
+          theme: 'bootstrap'
+      });
+
+</script>

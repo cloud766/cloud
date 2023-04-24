@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>源码管理 - 源码仓库 - 编辑授权 - HXCloud - Hong Xun Technology Development Co., Ltd.</title>
+  {include file="public/css"}
+  <!--//skycons-icons-->
+  {css href="__STATIC__/addon/datetimepicker/bootstrap-datetimepicker.min.css"}
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="left-content">
+      <div class="mother-grid-inner">
+        <!--header start here-->
+        {include file="public/header_main"}
+        <!--heder end here-->
+        <!--inner block start here-->
+        <div class="inner-block">
+          <div class="inbox">
+            <h2>源码管理/源码仓库</h2>
+            {include file="yun/sourcecode/left"}
+            <div class="col-md-10 compose-right">
+              <div class="inbox-details-default">
+                <div class="inbox-details-heading">
+                  编辑授权
+                </div>
+                <div class="inbox-details-body">
+                  <form action="{:url('admin/yun.sourcecode/auth_save')}" method="post" class="com-mail ajax-form">
+                    期限类型
+                    <div class="input-button" style="margin-bottom:10px">
+                      <input type="radio" name="deadline_type" value="1" {if condition:$data.deadline_type eq 1}checked{/if}>永久
+                      <input type="radio" name="deadline_type" value="0" {if condition:$data.deadline_type eq 0}checked{/if}>时间
+                    </div>
+                    <div id="deadline-show" {if condition:$data.deadline_type eq 1}style="display: none"{/if}>
+                      到期时间
+                      <input type="text" id="deadline" name="deadline" value="{$data['deadline']}" readonly="">
+                    </div>
+                    输入站点
+                    <div class="input-button">
+                      <input type="text" id="website"/>
+                      <input type="button" class="input-group-addon search" data-type="website" value="搜索" style="margin-top:0">
+                    </div>
+                    选择站点
+                    <select name="website_id" id="website_id">
+                      {if condition:$data.id}
+                      <option value="{$data.website.id}">{$data.website.name}</option>
+                    {/if}
+                    </select>
+                    域名
+                    <input type="text" readonly value="{$data.website.domain}" id="domain" {if condition:$data.id}disabled{/if}/>
+                    ip
+                    <input type="text" readonly value="{$data.website.ip}" id="ip" {if condition:$data.id}disabled{/if}/>
+                    qq
+                    <input type="text" readonly value="{$data.website.qq}" id="qq" {if condition:$data.id}disabled{/if}/>
+                    电话
+                    <input type="text" readonly value="{$data.website.phone}" id="phone"{if condition:$data.id}disabled{/if} />
+                    输入源码
+                    <div class="input-button">
+                      <input type="text" id="sourcecode" {if condition:$data.id}disabled{/if}/>
+                      <input type="button" class="input-group-addon search" data-type="sourcecode" value="搜索" style="margin-top:0" {if condition:$data.id}disabled{/if}>
+                    </div>
+                    选择源码
+                    <select name="sourcecode_id" id="sourcecode_id"  {if condition:$data.id}disabled{/if}>
+                      {if condition:$data.id}
+                        <option value="{$data.sourcecode.id}">{$data.sourcecode.title}</option>
+                      {/if}
+                    </select>
+                    授权key
+                    <div class="input-button">
+                      <input type="text" id="update_key" name="update_key" value="{$data.update_key}" placeholder="" />
+                      <input type="button" class="input-group-addon" onclick="createCode()" value="生成" style="margin-top:0">
+                    </div>
+                    <!-- <input type="text" id="update_key" name="update_key" value="{$data.update_key}" placeholder="" />
+                    <span class="input-group-addon" onclick="createCode()">生成</span> -->
+                    <input type="hidden" name='id' value="{$data['id']}">
+                    {:token()}
+                    <input type="button" onclick="formAjaxSubmit()" value="保存">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+      <!--inner block end here-->
+      <!--copy rights start here-->
+      {include file="public/copyright"}
+      <!--COPY rights end here-->
+    </div>
+    <!--slider menu-->
+    {include file="public/sidebar_menu"}
+    <div class="clearfix"> </div>
+  </div>
+  <!--slide bar menu end here-->
+  {include file="public/js"}
+  <script src="__STATIC__/addon/datetimepicker/bootstrap-datetimepicker.js"></script>
+  <script src="__STATIC__/addon/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+  <!-- mother grid end here-->
+</body>
+<script>
+  $('input[name="deadline_type"]').change(function(){
+    if($(this).val() == 1){
+      $('#deadline-show').hide();
+    }else{
+      $('#deadline-show').show();
+    }
+  })
+  $("#deadline").datetimepicker({
+    language: 'zh-CN', //中文
+    format: 'yyyy-mm-dd',//字体格式
+    defaultDate: new Date(),//取得当前日期
+    autoclose: true,
+    minView: "month", //默认选到年月日
+    todayHighlight: true
+  });
+  var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  var createFlag = false;
+
+  function createCode() {
+    var token = "";
+    for (var i = 0; i < 16; i++) {
+      var id = Math.floor(Math.random() * chars.length);
+      token += chars[id];
+    }
+    $('#update_key').val(token)
+  };
+  var sourcecode = [];
+  var website = [];
+  $('.search').click(function () {
+    var index = layer.load(0, { shade: [0.1, '#fff'] });
+    var type = $(this).data('type');
+    var keyword = $('#' + type).val();
+    $.ajax({
+      url: '{:url("admin/yun.sourcecode/auth_ajax")}',
+      data: { type: type, keyword: keyword },
+      type: 'post',
+      dataType: 'json',
+      success: function (res) {
+        if (res.code) {
+          var list = res.list;
+          var str = '';
+          for (var i = 0; i < list.length; i++) {
+            str += '<option value="';
+            str += list[i]['id'];
+            str += '">';
+            if (type == 'website') {
+              str += list[i]['name'];
+            } else {
+              str += list[i]['title'] + ' - ' + list[i]['name'];
+            }
+            str += '</option>';
+          }
+          $('#' + type + '_id').html(str);
+          if (type == 'website') {
+            website = list;
+            $('#domain').val(website[0]['domain']);
+            $('#qq').val(website[0]['qq']);
+            $('#ip').val(website[0]['ip']);
+            $('#phone').val(website[0]['phone']);
+          } else {
+            sourcecode = list;
+          }
+        }
+        layer.close(index);
+      }
+    })
+  });
+  $('#website_id').change(function () {
+    var website_id = $(this).val();
+    for (var i = website.length - 1; i >= 0; i--) {
+      if (website[i]['id'] == website_id) {
+        $('#domain').val(website[i]['domain']);
+        $('#qq').val(website[i]['qq']);
+        $('#ip').val(website[i]['ip']);
+        $('#phone').val(website[i]['phone']);
+        return false;
+      }
+    }
+  })
+</script>
+
+</html>

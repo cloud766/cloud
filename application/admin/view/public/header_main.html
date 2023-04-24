@@ -1,0 +1,150 @@
+<div class="header-main">
+    <div class="header-left">
+        <div class="logo-name">
+            <a href="{:url('admin/index/index')}">
+                <h1>HXCloud</h1>
+                <!--<img id="logo" src="" alt="Logo"/>-->
+            </a>
+        </div>
+        <!--search-box-->
+        <div class="search-box">
+            <form>
+                <input type="text" placeholder="输入关键词" required="">
+                <input type="submit" value="">
+            </form>
+        </div>
+        <!--//end-search-box-->
+        <div class="clearfix"> </div>
+    </div>
+    <div class="header-right">
+        <div class="profile_details_left">
+            <!--notifications of menu start -->
+            <ul class="nofitications-dropdown">
+                <li class="dropdown head-dpdn">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-clipboard"></i><span
+                            class="badge">1</span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="notification_header">
+                                <h3>待处理工单</h3>
+                            </div>
+                        </li>
+                        <li><a href="#">
+                                <div class="user_img"><img src="__STATIC__/admin/images/p4.png" alt=""></div>
+                                <div class="notification_desc">
+                                    <p>会员名称</p>
+                                    <p><span>工单简述......</span></p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </a></li>
+                        <li>
+                            <div class="notification_bottom">
+                                <a href="#">显示全部工单</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown head-dpdn">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-address-card"></i><span
+                            class="badge blue">1</span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="notification_header">
+                                <h3>实名认证待审核会员</h3>
+                            </div>
+                        </li>
+                        <li><a href="#">
+                                <div class="user_img"><img src="__STATIC__/admin/images/p4.png" alt=""></div>
+                                <div class="notification_desc">
+                                    <p>会员名称</p>
+                                    <p><span>审核类型：个人/企业</span></p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </a></li>
+                        <li>
+                            <div class="notification_bottom">
+                                <a href="#">待审核列表</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown head-dpdn">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-flag"></i><span
+                            class="badge blue1">2</span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="notification_header">
+                                <h3>语言转换</h3>
+                            </div>
+                        </li>
+                        <li><a href="#" id="t2s">
+                                <div class="task-info">
+                                    <span class="task-desc">转换到</span><span class="percentage">简体中文</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="progress progress-striped active">
+                                    <div class="bar green" style="width:100%;"></div>
+                                </div>
+                            </a></li>
+                        <li><a href="#" id="s2t">
+                                <div class="task-info">
+                                    <span class="task-desc">轉換到</span><span class="percentage">繁體中文</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="progress progress-striped active">
+                                    <div class="bar  blue" style="width:100%;"></div>
+                                </div>
+                            </a></li>
+                        <li>
+                            <div class="notification_bottom">
+                                Simplified Chinese OR traditional Chinese
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="clearfix"> </div>
+        </div>
+        <!--notification menu end -->
+        <div class="profile_details">
+            <ul>
+                <li class="dropdown profile_details_drop">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <div class="profile_img">
+                            <span class="prfil-img"><img src="__STATIC__/admin/images/p4.png" alt=""> </span>
+                            <div class="user-name">
+                                <p>{$hx_username}</p>
+                                <span>Administrator</span>
+                            </div>
+                            <i class="fa fa-angle-down lnr"></i>
+                            <i class="fa fa-angle-up lnr"></i>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu drp-mnu">
+                        <li> <a href="{:url('admin/login/editPassword')}"><i class="fa fa-key"></i>修改密码</a> </li>
+                        <li> <a href="{:url('admin/login/logout')}"><i class="fa fa-sign-out"></i>退出登录</a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+<!--heder end here-->
+<!-- script-for sticky-nav -->
+<script>
+    $(document).ready(function () {
+        var navoffeset = $(".header-main").offset().top;
+        $(window).scroll(function () {
+            var scrollpos = $(window).scrollTop();
+            if (scrollpos >= navoffeset) {
+                $(".header-main").addClass("fixed");
+            } else {
+                $(".header-main").removeClass("fixed");
+            }
+        });
+
+    });
+</script>

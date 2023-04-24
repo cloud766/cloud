@@ -1,0 +1,19 @@
+<div class="col-md-2 compose">
+    <div class="mail-profile">
+        <div class="mail-pic">
+            <a href="#"></a>
+        </div>
+        <div class="mailer-name">
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <div class="compose-bottom">
+        <ul>
+            <li><a href="{:url('admin/yun.website/index')}" {if condition:$left eq 'index' }class="hilate" {/if}> <i
+                    class="fa fa-inbox"> </i>站点列表</a></li>
+            <li><a href="{:url('admin/yun.website/index', array('is_black'=>1))}" {if condition:$left eq 'black' }class="hilate"
+                    {/if}> <i class="fa fa-envelope-o">
+                    </i>站点黑名单</a></li>
+        </ul>
+    </div>
+</div>

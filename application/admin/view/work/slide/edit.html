@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>工单管理 - 编辑工单 - HXCloud - Hong Xun Technology Development Co., Ltd.</title>
+  {include file="public/css"}
+  <!--//skycons-icons-->
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="left-content">
+      <div class="mother-grid-inner">
+        <!--header start here-->
+        {include file="public/header_main"}
+        <!--heder end here-->
+        <!--inner block start here-->
+        <div class="inner-block">
+          <div class="inbox">
+            <h2>工单管理/编辑工单</h2>
+            {include file="work/left"}
+            <div class="col-md-10 compose-right">
+              <div class="inbox-details-default">
+                <div class="inbox-details-heading">
+                  编辑工单
+                </div>
+                <div class="inbox-details-body">
+                  <form class="form-horizontal" action="{:url('/admin/work/slide/save')}" method="post" id="form1" onkeypress="return event.keyCode != 13;">
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">幻灯片标题</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="title" name="title" value="{$user['title']}" placeholder="幻灯片标题">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">链接</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="url" name="url" value="{$user['url']}" placeholder="跳转链接">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="url" class="col-sm-2 control-label">幻灯片</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="pic" name="pic" value="{$user['pic']}" placeholder="图片地址">
+                          <span>
+                            <button type="button" id="plupload-image" rel="image" class="btn btn-danger plupload">
+                              <i class="fa fa-upload"></i> 上传</button>
+                          </span>
+                          <div class="input-group " style="margin-top:.5em;">
+                            <img {if condition="$user['pic'] eq ''"}src="http://i4.bvimg.com/656414/1ca96d362d057e4c.jpg"{else /}src="{$user['pic']}"{/if} class="img-responsive" width="150px" />
+                            <em class="close" style="position:absolute; top: 0px; right: -14px;" title="删除这张图片" onclick="deleteImage(this)">×</em>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="classify" class="col-sm-2 control-label">请选择首页分类</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" name="classify">
+                            <option value="仅在首页" {if condition="$user['classify'] eq '仅在首页'" }selected{/if}>仅在首页</option>
+                            <option value="循环分类列表" {if condition="$user['classify'] eq '循环分类列表'" }selected{/if}>循环分类列表</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="sort" class="col-sm-2 control-label">排序</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="sort" name="sort" value="{$user['sort']}" placeholder="sort">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="status" class="col-sm-2 control-label">显示状态</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" name="status">
+                            <option value="1" {if condition="$user['status'] eq 1" }selected{/if}>显示</option>
+                            <option value="0" {if condition="$user['status'] eq 0" }selected{/if}>关闭</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <input type="hidden" name="id" value="{$user['id']}">
+                    <input type="file" name="image" id="imagefile" style="display: none;" />
+                    {:token()}
+                    <input type="button" onclick="formAjaxSubmit()" value="保存">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+      <!--inner block end here-->
+      <!--copy rights start here-->
+      {include file="public/copyright"}
+      <!--COPY rights end here-->
+    </div>
+    <!--slider menu-->
+    {include file="public/sidebar_menu"}
+    <div class="clearfix"> </div>
+  </div>
+  <!--slide bar menu end here-->
+  {include file="public/js"}
+  <!-- mother grid end here-->
+</body>
+<script>
+  /*图片上传*/
+  $(function () {
+    var inputid = '';
+    var img = '';
+    $(".plupload").click(function () {
+      //获取要填写值的input
+      inputid = $(this).parent().siblings("input.form-control");
+      //为上传图片触发点击事件
+      $("input[name='image']").click();
+    });
+    //ajax上传图片开始
+    $("input[name='image']").on("change", function () {
+      var formData = new FormData();
+      formData.append("file", document.getElementById("imagefile").files[0]);
+      formData.append('name', inputid.attr("id"));
+      $.ajax({
+        type: "POST",
+        url: "{:url('index/upload')}",
+        processData: false,  // 不要处理发送的数据
+        contentType: false,   // 不要设置Content-Type请求头
+        data: formData,
+        success: function (data) {
+          if (data.cod == 1) {
+            inputid.val(data.path);
+            $(".img-responsive").attr("src", data.path);
+          }
+        }
+      });
+      // 
+      $("input[name='image']").val('');
+    });
+  });
+  /*删除上传图片*/
+  function deleteImage(elm) {
+    $(elm).prev().attr("src", "http://i4.bvimg.com/656414/1ca96d362d057e4c.jpg");
+    $("#img").val('');
+    $("#pic").val('');
+  }
+</script>
+</html>

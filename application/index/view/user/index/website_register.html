@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/user/css/user.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background: #f4f4f4;padding: 35px 0">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-md-9">
+                    <div class="right-content">
+                        <form role="form" action="{:url('websiteRegister')}" method="post" class="ajax-form">
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="name">名称</label>
+                                <input type="text" class="form-control" name="name" value="{$data.name}"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="domain">输入域名：</label>
+                                <input type="text" class="form-control" name="domain" value="{$data.domain}" {if condition:$data.id}disabled{/if}/>
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="ip">输入IP：</label>
+                                <input type="text" class="form-control" name="ip" value="{$data.ip}" {if condition:$data.id}disabled{/if}/>
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="qq">联系QQ：</label>
+                                <input type="text" class="form-control" name="qq" value="{$data.qq}"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="phone">手机号：</label>
+                                <input type="text" class="form-control" name="phone" value="{$data.phone}"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="h6 p-b-xs" for="address">地址：</label>
+                                <input type="text" class="form-control" name="address" value="{$data.address}"/>
+                            </div>
+                            <div class="form-group m-t-md m-b-0">
+                                <input type="hidden" name="id" value="{$data.id}">
+                                <button id="form-submit" class="btn btn-primary" type="button" onclick="formAjaxSubmit()">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+
+</html>

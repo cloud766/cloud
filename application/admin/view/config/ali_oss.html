@@ -1,0 +1,61 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>
+    远程附件
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="{:url('admin/index/welcome')}">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统设置</li>
+    <li class="active">远程附件</li>
+    <li class="active">阿里云OSS</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+        </div>
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li><a href="{:url('admin/config/index', array('group'=>'ftp_setting'))}">ftp</a></li>
+            <li class="active"><a href="{:url('admin/config/index', array('group'=>'ali_oss'))}">阿里云OSS</a></li>
+            <li><a href="{:url('admin/config/index', array('group'=>'qiniu_oss'))}">七牛云存储</a></li>
+            <li><a href="{:url('admin/config/index', array('group'=>'tencent_oss'))}">腾讯云存储</a></li>
+          </ul>
+        </div>
+        <form class="form-horizontal" action="{:url('admin/config/saveConfig')}" method="post">
+          <div class="box-body">
+            <div class="form-group hide_relation_0">
+              <label for="ali_oss_access_key_id" class="col-sm-2 control-label">Access Key ID</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="ali_oss_access_key_id" name="ali_oss_access_key_id" value="{$config.ali_oss_access_key_id}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group hide_relation_0">
+              <label for="ali_oss_access_key_secret" class="col-sm-2 control-label">Access Key Secret</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="ali_oss_access_key_secret" name="ali_oss_access_key_secret" value="{$config.ali_oss_access_key_secret}" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group hide_relation_0">
+              <label for="ali_oss_url" class="col-sm-2 control-label">自定义URL</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="ali_oss_url" name="ali_oss_url" value="{$config.ali_oss_url}" placeholder="" />
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <input type="hidden" name="group" value="{$group}" />
+            <button type="submit" class="btn btn-info pull-right">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}

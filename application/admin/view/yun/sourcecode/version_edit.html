@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>源码管理 - 源码仓库 - 版本管理 - 编辑版本 - HXCloud - Hong Xun Technology Development Co., Ltd.</title>
+  {include file="public/css"}
+  <!--//skycons-icons-->
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="left-content">
+      <div class="mother-grid-inner">
+        <!--header start here-->
+        {include file="public/header_main"}
+        <!--heder end here-->
+        <!--inner block start here-->
+        <div class="inner-block">
+          <div class="inbox">
+            <h2>源码管理/源码仓库</h2>
+            {include file="yun/sourcecode/left"}
+            <div class="col-md-10 compose-right">
+              <div class="inbox-details-default">
+                <div class="inbox-details-heading">
+                  编辑版本
+                </div>
+                <div class="inbox-details-body">
+                  <form action="{:url('admin/yun.sourcecode/version_save')}" method="post" class="com-mail ajax-form">
+                    标题<input type="text" name="title" value="{$data.title}">
+                    名称<input type="text" name="name" value="{$data.name}">
+                    更新包
+                    <div class="input-button">
+                      <input type="text" name="file_name" value="{$data.file_name}" id="file_name" readonly>
+                      <input type="button" class="input-group-addon plupload" data-type="file_name" value="上传" style="margin-top:0">
+                    </div>
+                    校验包
+                    <div class="input-button">
+                      <input type="text" name="check_file_name" value="{$data.check_file_name}" id="check_file_name" readonly>
+                      <input type="button" class="input-group-addon plupload" data-type="check_file_name" value="上传" style="margin-top:0">
+                    </div>
+                    版本号<input type="text" name="version" value="{$data.version}">
+                    作者<input type="text" name="author" value="{$data.author}">
+                    更新内容<textarea rows="6" name="update_content">{$data.update_content}</textarea>
+                    <input type="hidden" name='id' value="{$data['id']}">
+                    <input type="hidden" name='sourcecode_id' value="{$data['sourcecode_id']}">
+                    <input type="hidden" name='path' id="path">
+                    <input type="hidden" name='check_path' id="check_path">
+                    <input type="file" id="imagefile" style="display: none;">
+                    {:token()}
+                    <input type="button" onclick="formAjaxSubmit()" value="保存">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+      <!--inner block end here-->
+      <!--copy rights start here-->
+      {include file="public/copyright"}
+      <!--COPY rights end here-->
+    </div>
+    <!--slider menu-->
+    {include file="public/sidebar_menu"}
+    <div class="clearfix"> </div>
+  </div>
+  <!--slide bar menu end here-->
+  {include file="public/js"}
+  <!-- mother grid end here-->
+</body>
+<script>
+  var type = '';
+  $(".plupload").click(function () {
+    type = $(this).data('type');
+    $("#imagefile").click();
+  });
+
+  $("#imagefile").on("change", function () {
+    var load = layer.load(0, { shade: [0.1, '#fff'] });
+    var formData = new FormData();
+    formData.append("file", document.getElementById("imagefile").files[0]);
+    $.ajax({
+      type: "POST",
+      url: "{:url('admin/yun.sourcecode/upload')}",
+      processData: false,  // 不要处理发送的数据
+      contentType: false,   // 不要设置Content-Type请求头
+      data: formData,
+      success: function (data) {
+        layer.close(load);
+        if (data.cod == 1) {
+          if(type == 'file_name'){
+            $('#file_name').val(data.filename)
+            $('#path').val(data.path)
+          }
+          if(type == 'check_file_name'){
+            $('#check_file_name').val(data.filename)
+            $('#check_path').val(data.path)
+          }
+        } else {
+          layer.msg(data.msg)
+        }
+      }
+    });
+    $('#imagefile').val();
+  });
+</script>
+
+</html>

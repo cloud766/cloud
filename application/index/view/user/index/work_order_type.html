@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/user/css/user.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background: #f4f4f4;padding: 35px 0">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-md-9">
+                    <div class="right-content">
+                        <div class="right-content-header">
+                            <span>
+                                <p>提交工单</p>
+                            </span>
+                        </div>
+                        <div class="work-category-list row">
+                            {volist name="categoryList" id="vo"}
+                            <a class="item col-md-5" href="{:url('workOrderAdd', array('category_id'=>$vo.id))}">
+                                <div class="head">
+                                    {$vo.title}
+                                </div>
+                                <div class="info">
+                                    {$vo.info}
+                                </div>
+                            </a>
+                            {/volist}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+
+</html>

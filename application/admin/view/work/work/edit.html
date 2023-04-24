@@ -1,0 +1,803 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>工单管理 - 编辑工单 - HXCloud - Hong Xun Technology Development Co., Ltd.</title>
+  {include file="public/css"}
+  <!--//skycons-icons-->
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="left-content">
+      <div class="mother-grid-inner">
+        <!--header start here-->
+        {include file="public/header_main"}
+        <!--heder end here-->
+        <!--inner block start here-->
+        <div class="inner-block">
+          <div class="inbox">
+            <h2>工单管理/编辑工单</h2>
+            {include file="work/left"}
+            <div class="col-md-10 compose-right">
+              <div class="inbox-details-default">
+                <div class="inbox-details-heading">
+                  编辑工单
+                </div>
+                <div class="inbox-details-body">
+                  <ul class="nav nav-tabs">
+                    <li class="active">
+                      <a href="#config" data-toggle="tab">基本设置</a>
+                    </li>
+                    <li>
+                      <a href="#field" data-toggle="tab">自定义字段</a>
+                    </li>
+                    <li>
+                      <a href="#skin" data-toggle="tab">皮肤设置</a>
+                    </li>
+                    <li>
+                      <a href="#home" data-toggle="tab">首页/分类</a>
+                    </li>
+                    <li>
+                      <a href="#notice" data-toggle="tab">通知设置</a>
+                    </li>
+                  </ul>
+                  <form class="form-horizontal ajax-form" action="{:url('/admin/work/work/save')}" method="post" id="form1" onkeypress="return event.keyCode != 13;">
+                    <div class="tab-content" style="padding: 10px 0">
+                      <!-- 基本设置 -->
+                      <div class="active tab-pane" id="config">
+                        <div class="form-group">
+                          <label for="theme" class="col-sm-2 control-label">工单主题</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="theme" name="config_theme" value="{$work['config_theme']}" placeholder="">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">联系方式</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <label class="radio-inline">
+                              <input type="radio" name="coption" value="1" {if $work['coption'] eq 1}checked="checked"{/if} onclick="$('#isinfo').show();" /> 启用</label>
+                            <label class="radio-inline">
+                              <input type="radio" name="coption" value="0" {if $work['coption'] eq 0}checked="checked"{/if} onclick="$('#isinfo').hide();" /> 关闭</label>
+                          </div>
+                        </div>
+                        <div id="isinfo" {if $work['coption'] neq 1} style="display:none" {/if}>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">公司名称</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="config_business" value="{$work['config_business']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">联系电话</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="config_tel" value="{$work['config_tel']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">联系地址</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="config_address" value="{$work['config_address']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">地址坐标</label>
+                            <div class="col-sm-9 col-xs-12">
+                              <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZaLN5FfomDpBvTVnn74ehuZIOveTp1Gk"></script>
+                              <script type="text/javascript">
+                                function showCoordinate() {
+                                  $("#allmap").prop("hidden", false);
+                                  $("#r-result").prop("hidden", false);
+                                  var map = new BMap.Map("allmap");    // 创建Map实例
+                                  map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+                                  //添加地图类型控件
+                                  map.addControl(new BMap.MapTypeControl({
+                                    mapTypes: [
+                                      BMAP_NORMAL_MAP,
+                                      BMAP_HYBRID_MAP
+                                    ]
+                                  }));
+                                  map.centerAndZoom("南宁", 11);          // 设置地图显示的城市 此项是必须设置的
+                                  map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+                                  //单击获取点击的经纬度
+                                  map.addEventListener("click", function (e) {
+                                    $("input[name='config_baidumap_lng']").val(e.point.lng);
+                                    $("input[name='config_baidumap_lat']").val(e.point.lat);
+                                  });
+                                  //智能搜索
+                                  function G(id) {
+                                    return document.getElementById(id);
+                                  }
+                                  var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+                                    {
+                                      "input": "suggestId"
+                                      , "location": map
+                                    });
+        
+                                  ac.addEventListener("onhighlight", function (e) {  //鼠标放在下拉列表上的事件
+                                    var str = "";
+                                    var _value = e.fromitem.value;
+                                    var value = "";
+                                    if (e.fromitem.index > -1) {
+                                      value = _value.province + _value.city + _value.district + _value.street + _value.business;
+                                    }
+                                    str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+        
+                                    value = "";
+                                    if (e.toitem.index > -1) {
+                                      _value = e.toitem.value;
+                                      value = _value.province + _value.city + _value.district + _value.street + _value.business;
+                                    }
+                                    str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+                                    G("searchResultPanel").innerHTML = str;
+                                  });
+        
+                                  var myValue;
+                                  ac.addEventListener("onconfirm", function (e) {    //鼠标点击下拉列表后的事件
+                                    var _value = e.item.value;
+                                    myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+                                    G("searchResultPanel").innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+        
+                                    setPlace();
+                                  });
+        
+                                  function setPlace() {
+                                    map.clearOverlays();    //清除地图上所有覆盖物
+                                    function myFun() {
+                                      var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+                                      map.centerAndZoom(pp, 18);
+                                      map.addOverlay(new BMap.Marker(pp));    //添加标注
+                                    }
+                                    var local = new BMap.LocalSearch(map, { //智能搜索
+                                      onSearchComplete: myFun
+                                    });
+                                    local.search(myValue);
+                                  }
+                                }
+                              </script>
+                              <div id="r-result" hidden>搜索地名:
+                                <input type="text" id="suggestId" size="20" value="百度" style="width:150px;" />
+                              </div>
+                              <div id="allmap" style="width: 500px;height: 500px" hidden></div>
+                              <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+                              <div class="row row-fix">
+                                <div class="col-xs-4 col-sm-4">
+                                  <input type="text" name="config_baidumap_lng" value="{$work['config_baidumap_lng']}" placeholder="地理经度" class="form-control"
+                                  />
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                  <input type="text" name="config_baidumap_lat" value="{$work['config_baidumap_lat']}" placeholder="地理纬度" class="form-control"
+                                  />
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                  <button onclick="showCoordinate(this);" class="btn btn-default" type="button">选择坐标</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">头部简介</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <textarea style="height:80px;" class="form-control" id="description" name="config_description" cols="70">{$work['config_description']}</textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="agreement" class="col-sm-2 control-label">协议标题</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="agreement" name="config_agreement" placeholder="" value="{$work['config_agreement']}">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="content" class="col-sm-2 control-label">工单详细说明</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="content" name="config_content" placeholder="" value="{$work['config_content']}">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">提交提示信息</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <textarea type="text" class="form-control" placeholder="" name="config_information">{$work['config_information']}</textarea>
+                            <span class="help-block">工单提交成功以后提示的信息. 例如: 您的工单我们已经收到, 请等待客服确认. </span>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">有效期</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <div class="input-group">
+                              <span class="input-group-addon btn btn-inverse">开始时间</span>
+                              <input type="text" name="config_starttime" id="starttime" value="" placeholder="请选择日期时间" readonly="readonly" class="datetimepicker form-control"
+                                style="padding-left:12px;" />
+        
+                              <span class="input-group-addon btn btn-inverse">结束时间</span>
+                              <input type="text" name="config_endtime" id="endtime" value="" placeholder="请选择日期时间" readonly="readonly" class="datetimepicker form-control"
+                                style="padding-left:12px;" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">启用状态</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <select name="config_status">
+                              <option value="启用" {if condition="$work['config_status'] eq '启用'" }selected{/if}>启用</option>
+                              <option value="关闭" {if condition="$work['config_status'] eq '关闭'" }selected{/if}>关闭</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 自定义字段 -->
+                      <div class="tab-pane" id="field">
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th style="width:200px;">自定义字段</th>
+                              <th style="width:80px;" class="text-center">排序</th>
+                              <th style="width:80px;" class="text-center">必填</th>
+                              <th style="width:150px;" class="text-center text-danger">特殊属性</th>
+                              <th style="width:100px;">类型</th>
+                              <th style="width:100px;">关联工单数据</th>
+                              <th class="text-right" style="width:80px;">操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <input type="text" class="form-control" value="姓名" readonly/>
+                              </td>
+                              <td>
+                                <input type="text" class="form-control" value="顶端" readonly />
+                              </td>
+                              <td style="text-align:center;">
+                                <select class="form-control" readonly>
+                                  <option value="1">是</option>
+                                </select>
+                              </td>
+                              <td style="text-align:center;"></td>
+                              <td>
+                                <select class="form-control" readonly>
+                                  <option>字串(text)</option>
+                                </select>
+                              </td>
+                              <td>
+                                <select class="form-control" readonly>
+                                  <option>真实姓名</option>
+                                </select>
+                              </td>
+                              <td>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <input type="text" class="form-control" value="手机" readonly/>
+                              </td>
+                              <td>
+                                <input type="text" class="form-control" value="顶端" readonly />
+                              </td>
+                              <td style="text-align:center;">
+                                <select class="form-control" readonly>
+                                  <option value="1">是</option>
+                                </select>
+                              </td>
+                              <td style="text-align:center;"></td>
+                              <td>
+                                <select class="form-control" readonly>
+                                  <option>数字(number)</option>
+                                </select>
+                              </td>
+                              <td>
+                                <select class="form-control" readonly>
+                                  <option>手机号码</option>
+                                </select>
+                              </td>
+                              <td>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tbody id="paixu">
+                            {foreach name="field" item="vo"} {if condition="$vo['field_title'] neq '姓名' and $vo['field_title'] neq '手机'"}
+                            <tr>
+                              <td>
+                                <input type="text" class="form-control" name="field_title[]" value="{$vo['field_title']}" />
+                              </td>
+                              <td>
+                                <input type="text" class="form-control" name="field_displayorder[]" value="{$vo['field_displayorder']}" />
+                              </td>
+                              <td style="text-align:center;">
+                                <select name="field_essential[]" class="form-control">
+                                  <option value="1" {if condition="$vo['field_essential'] eq 1" }selected{/if}>是</option>
+                                  <option value="0" {if condition="$vo['field_essential'] eq 0" }selected{/if}>否</option>
+                                </select>
+                              </td>
+                              <td style="text-align:center;"></td>
+                              <td>
+                                <select class="form-control" name="field_type[]">
+                                  <option value="number" {if condition="$vo['field_type'] eq 'number'" }selected{/if}>数字(number)</option>
+                                  <option value="text" {if condition="$vo['field_type'] eq 'text'" }selected{/if}>字符串(text)</option>
+                                  <option value="textarea" {if condition="$vo['field_type'] eq 'textarea'" }selected{/if}>文本(textarea)</option>
+                                  <option value="radio" {if condition="$vo['field_type'] eq 'radio'" }selected{/if}>单选(radio)</option>
+                                  <option value="checkbox" {if condition="$vo['field_type'] eq 'checkbox'" }selected{/if}>多选(checkbox)</option>
+                                  <option value="select" {if condition="$vo['field_type'] eq 'select'" }selected{/if}>下拉框(select)</option>
+                                  <option value="calendar" {if condition="$vo['field_type'] eq 'calendar'" }selected{/if}>日历(calendar)</option>
+                                  <option value="email" {if condition="$vo['field_type'] eq 'email'" }selected{/if}>电子邮件(email)</option>
+                                  <option value="image" {if condition="$vo['field_type'] eq 'image'" }selected{/if}>上传图片(image)</option>
+                                  <option value="range" {if condition="$vo['field_type'] eq 'range'" }selected{/if}>日期时间(range)</option>
+                                  <option value="reside" {if condition="$vo['field_type'] eq 'reside'" }selected{/if}>省市区(reside)</option>
+                                </select>
+                              </td>
+                              <td>
+                                <select class="form-control" name="field_bind[]">
+                                  <option value="" {if condition="$vo['field_bind'] eq ''" }selected{/if}>不关联粉丝数据</option>
+                                  <option value="realname" {if condition="$vo['field_bind'] eq 'realname'" }selected{/if}>真实姓名</option>
+                                  <option value="nickname" {if condition="$vo['field_bind'] eq 'nickname'" }selected{/if}>昵称</option>
+                                  <option value="avatar" {if condition="$vo['field_bind'] eq 'avatar'" }selected{/if}>头像</option>
+                                  <option value="qq" {if condition="$vo['field_bind'] eq 'qq'" }selected{/if}>QQ号</option>
+                                  <option value="mobile" {if condition="$vo['field_bind'] eq 'mobile'" }selected{/if}>手机号码</option>
+                                  <option value="vip" {if condition="$vo['field_bind'] eq 'vip'" }selected{/if}>VIP级别</option>
+                                  <option value="gender" {if condition="$vo['field_bind'] eq 'gender'" }selected{/if}>性别</option>
+                                  <option value="birthyear" {if condition="$vo['field_bind'] eq 'birthyear'" }selected{/if}>出生生日</option>
+                                  <option value="constellation" {if condition="$vo['field_bind'] eq 'constellation'" }selected{/if}>星座</option>
+                                  <option value="zodiac" {if condition="$vo['field_bind'] eq 'zodiac'" }selected{/if}>生肖</option>
+                                  <option value="telephone" {if condition="$vo['field_bind'] eq 'telephone'" }selected{/if}>固定电话</option>
+                                  <option value="idcard" {if condition="$vo['field_bind'] eq 'idcard'" }selected{/if}>证件号码</option>
+                                  <option value="studentid" {if condition="$vo['field_bind'] eq 'studentid'" }selected{/if}>学号</option>
+                                  <option value="grade" {if condition="$vo['field_bind'] eq 'grade'" }selected{/if}>班级</option>
+                                  <option value="address" {if condition="$vo['field_bind'] eq 'address'" }selected{/if}>邮寄地址</option>
+                                  <option value="zipcode" {if condition="$vo['field_bind'] eq 'zipcode'" }selected{/if}>邮编</option>
+                                  <option value="nationality" {if condition="$vo['field_bind'] eq 'nationality'" }selected{/if}>国籍</option>
+                                  <option value="resideprovince" {if condition="$vo['field_bind'] eq 'resideprovince'" }selected{/if}>居住地址</option>
+                                  <option value="graduateschool" {if condition="$vo['field_bind'] eq 'graduateschool'" }selected{/if}>毕业学校</option>
+                                  <option value="company" {if condition="$vo['field_bind'] eq 'company'" }selected{/if}>公司</option>
+                                  <option value="education" {if condition="$vo['field_bind'] eq 'education'" }selected{/if}>学历</option>
+                                  <option value="occupation" {if condition="$vo['field_bind'] eq 'occupation'" }selected{/if}>职业</option>
+                                  <option value="position" {if condition="$vo['field_bind'] eq 'position'" }selected{/if}>职位</option>
+                                  <option value="revenue" {if condition="$vo['field_bind'] eq 'revenue'" }selected{/if}>年收入</option>
+                                  <option value="affectivestatus" {if condition="$vo['field_bind'] eq 'affectivestatus'" }selected{/if}>情感状态</option>
+                                  <option value="lookingfor" {if condition="$vo['field_bind'] eq 'lookingfor'" }selected{/if}> 交友目的</option>
+                                  <option value="bloodtype" {if condition="$vo['field_bind'] eq 'bloodtype'" }selected{/if}>血型</option>
+                                  <option value="height" {if condition="$vo['field_bind'] eq 'height'" }selected{/if}>身高</option>
+                                  <option value="weight" {if condition="$vo['field_bind'] eq 'weight'" }selected{/if}>体重</option>
+                                  <option value="alipay" {if condition="$vo['field_bind'] eq 'alipay'" }selected{/if}>支付宝帐号</option>
+                                  <option value="msn" {if condition="$vo['field_bind'] eq 'msn'" }selected{/if}>MSN</option>
+                                  <option value="email" {if condition="$vo['field_bind'] eq 'email'" }selected{/if}>电子邮箱</option>
+                                  <option value="taobao" {if condition="$vo['field_bind'] eq 'taobao'" }selected{/if}>阿里旺旺</option>
+                                  <option value="site" {if condition="$vo['field_bind'] eq 'site'" }selected{/if}>主页</option>
+                                  <option value="bio" {if condition="$vo['field_bind'] eq 'bio'" }selected{/if}>自我介绍</option>
+                                  <option value="interest" {if condition="$vo['field_bind'] eq 'interest'" }selected{/if}>兴趣爱好</option>
+                                  <option value="uniacid" {if condition="$vo['field_bind'] eq 'uniacid'" }selected{/if}>同一公众号id</option>
+                                  <option value="groupid" {if condition="$vo['field_bind'] eq 'groupid'" }selected{/if}>分组id</option>
+                                  <option value="credit1" {if condition="$vo['field_bind'] eq 'credit1'" }selected{/if}>积分</option>
+                                  <option value="credit2" {if condition="$vo['field_bind'] eq 'credit2'" }selected{/if}>余额</option>
+                                  <option value="credit3" {if condition="$vo['field_bind'] eq 'credit3'" }selected{/if}>预留积分类型3</option>
+                                  <option value="credit4" {if condition="$vo['field_bind'] eq 'credit4'" }selected{/if}>预留积分类型4</option>
+                                  <option value="credit5" {if condition="$vo['field_bind'] eq 'credit5'" }selected{/if}>预留积分类型5</option>
+                                  <option value="credit6" {if condition="$vo['field_bind'] eq 'credit6'" }selected{/if}>预留积分类型6</option>
+                                  <option value="createtime" {if condition="$vo['field_bind'] eq 'createtime'" }selected{/if}>加入时间</option>
+                                  <option value="password" {if condition="$vo['field_bind'] eq 'password'" }selected{/if}>用户密码</option>
+                                  <option value="pay_password" {if condition="$vo['field_bind'] eq 'pay_password'" }selected{/if}>支付密码</option>
+                                </select>
+                              </td>
+                            </tr>
+                            {/if} {/foreach}
+                          </tbody>
+                          <tbody id="re-items">
+                          </tbody>
+                          <tr>
+                            <td>
+                              <input type="text" value="上传多张图片" class="form-control" placeholder="多图上传" />
+                            </td>
+                            <td colspan="2">
+                              <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-default ">
+                                  <input type="radio" name="field_plural" value="1">启用</label>
+                                <label class="btn btn-default active">
+                                  <input type="radio" name="field_plural" value="0" checked="checked">关闭</label>
+                              </div>
+                            </td>
+                            <td colspan="4">支持上传多张图片</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <input type="text" value="录音" class="form-control" placeholder="录音标题" />
+                            </td>
+                            <td colspan="8">
+                              <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-default ">
+                                  <input type="radio" name="field_ivoice" value="1">启用</label>
+                                <label class="btn btn-default active">
+                                  <input type="radio" name="field_ivoice" value="0" checked="checked">关闭</label>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <a href="javascript:;" class="btn btn-success" onclick="addItem();">
+                                <i class="fa fa-plus" title="添加自定义字段"></i> 添加自定义字段</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!-- 皮肤设置 -->
+                      <div class="tab-pane" id="skin">
+                        <div class="form-group">
+                          <label for="skin_title" class="col-sm-2 control-label">提交页自定义标题</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="skin_title" name="skin_title" placeholder="" value="{$work['skin_title']}">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="title" class="col-sm-2 control-label">工单封面</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="skin_img" name="skin_img" value="{$work['skin_img']}" placeholder="">
+                            <span>
+                              <button type="button" id="plupload-image" rel="image" class="btn btn-danger plupload">
+                                <i class="fa fa-upload"></i> 上传</button>
+                            </span>
+                            <div class="input-group " style="margin-top:.5em;">
+                              <img {if condition="$work['skin_img'] eq ''"}src="http://i4.bvimg.com/656414/1ca96d362d057e4c.jpg"{else /} src="{$work['skin_img']}"{/if} class="img-responsive" id="kkk" width="150px" />
+                              <em class="close" style="position:absolute; top: 0px; right: -14px;" title="删除这张图片" onclick="deleteImage(this,'skin_img')">×</em>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="title" class="col-sm-2 control-label">提交页头部</label>
+                          <div class="col-sm-10">
+                            <select name="skin_head" class="form-control">
+                              <option value="关闭" {if condition="$work['skin_head'] eq '关闭'" }selected{/if}>关闭</option>
+                              <option value="显示封面" {if condition="$work['skin_head'] eq '显示封面'" }selected{/if}>显示封面</option>
+                              <option value="显示头部" {if condition="$work['skin_head'] eq '显示头部'" }selected{/if}>显示头部</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">提交记录列表标题</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <div class="input-group">
+                              <input type="text" name="skin_list_title" class="form-control" value="{$work['skin_list_title']}" />
+                              <span class="input-group-addon">例：我的工单 或是 我的预约、我的报名等</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">状态名称设置</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <div class="input-group">
+                              <span class="input-group-addon">待受理/待跟进</span>
+                              <input type="text" name="skin_state1" class="form-control" value="{$work['skin_state1']}" />
+                              <span class="input-group-addon">已受理/跟进中</span>
+                              <input type="text" name="skin_state2" class="form-control" value="{$work['skin_state2']}" />
+                              <span class="input-group-addon">退回修改</span>
+                              <input type="text" name="skin_state3" class="form-control" value="{$work['skin_state3']}" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">状态名称设置</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <div class="input-group">
+                              <span class="input-group-addon">已完成</span>
+                              <input type="text" name="skin_state4" class="form-control" value="{$work['skin_state4']}" />
+                              <span class="input-group-addon">拒绝受理</span>
+                              <input type="text" name="skin_state5" class="form-control" value="{$work['skin_state5']}" />
+                              <span class="input-group-addon">已取消</span>
+                              <input type="text" name="skin_state6" class="form-control" value="{$work['skin_state6']}" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="title" class="col-sm-2 control-label">手机端模板</label>
+                          <div class="col-sm-10" >
+                            <select name="skin_mobile_model" class="form-control">
+                              <option value="模板一" {if condition="$work['skin_mobile_model'] eq '模板一'" }selected{/if}>模板一</option>
+                              <option value="模板二" {if condition="$work['skin_mobile_model'] eq '模板二'" }selected{/if}>模板二</option>
+                              <option value="模板三" {if condition="$work['skin_mobile_model'] eq '模板三'" }selected{/if}>模板三</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 首页/分类 -->
+                      <div class="tab-pane" id="home">
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">首页显示</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <label class="radio-inline">
+                              <input type="radio" name="ioption" value="1" {if $work['ioption'] eq 1}checked="checked"{/if} onclick="$('#homeshow').show();" /> 显示</label>
+                            <label class="radio-inline">
+                              <input type="radio" name="ioption" value="0" {if $work['ioption'] eq 0}checked="checked"{/if} onclick="$('#homeshow').hide();" /> 隐藏</label>
+                          </div>
+                        </div>
+                        <div id="homeshow" {if $work['ioption'] neq 1} style="display:none" {/if}>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">列表显示简短标题</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="home_title" value="{$work['home_title']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">主题列表页图标</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="home_img" name="home_img" value="{$work['home_img']}" placeholder="">
+                              <span>
+                                <button type="button" id="plupload-image" rel="image" class="btn btn-danger plupload">
+                                  <i class="fa fa-upload"></i> 上传</button>
+                              </span>
+                              <div class="input-group " style="margin-top:.5em;">
+                                <img {if condition="$work['home_img'] eq ''"}src="http://i4.bvimg.com/656414/1ca96d362d057e4c.jpg"{else /} src="{$work['home_img']}"{/if} class="img-responsive" width="150px" />
+                                <em class="close" style="position:absolute; top: 0px; right: -14px;" title="删除这张图片" onclick="deleteImage(this,'home_img')">×</em>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="title" class="col-sm-2 control-label">请选择首页分类</label>
+                          <div class="col-sm-10">
+                            <select name="home_classify" class="form-control">
+                              {foreach name="classify" item="vo"}
+                              <option value="{$vo['name']}" {if condition="$work['home_classify'] eq $vo['name']" }selected{/if}>{$vo['name']}</option>
+                              {/foreach}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 通知设置 -->
+                      <div class="tab-pane" id="notice">
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">提醒通知邮箱</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <input type="text" class="form-control" placeholder="" name="notice_email" value="{$work['notice_email']}" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">邮件设置</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <label class="radio-inline">
+                              <input type="radio" name="eoption" value="1" {if $work['eoption'] eq 1}checked="checked"{/if} onclick="$('#emailconf').show();" /> 打开</label>
+                            <label class="radio-inline">
+                              <input type="radio" name="eoption" value="0" {if $work['eoption'] eq 0}checked="checked"{/if} checked="checked" onclick="$('#emailconf').hide();" /> 关闭</label>
+                          </div>
+                        </div>
+                        <div id="emailconf" {if $work['eoption'] neq 1} style="display:none"{/if}>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">网易邮箱服务器</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="notice_email_163" value="{$work['notice_email_163']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">QQ邮箱服务器</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="notice_email_qq" value="{$work['notice_email_qq']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">SMTP服务器地址</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="notice_smtp_address" value="{$work['notice_smtp_address']}"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">SMTP服务器端口</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="notice_smtp_port" value="{$work['notice_smtp_port']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否使用SSL加密</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <select name="notice_ssl" class="form-control">
+                                <option value="是" {if condition="$work['notice_ssl'] eq '是'" }selected{/if}>是</option>
+                                <option value="否" {if condition="$work['notice_ssl'] eq '否'" }selected{/if}>否</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">发送账号用户名</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="notice_email_user" value="{$work['notice_email_user']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">smtp客户端授权密码</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="notice_email_pwd" value="{$work['notice_email_pwd']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">发件人名称</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="notice_email_name" value="{$work['notice_email_name']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">邮件签名</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" class="form-control" placeholder="" name="notice_email_autograph" value="{$work['notice_email_autograph']}"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">短信设置</label>
+                          <div class="col-xs-12 col-sm-9">
+                            <label class="radio-inline">
+                              <input type="radio" name="option" value="1" {if $work['doption'] eq 1}checked="checked"{/if} onclick="$('#messageconf').show();" /> 打开</label>
+                            <label class="radio-inline">
+                              <input type="radio" name="option" value="0" {if $work['doption'] eq 1}checked="checked"{/if} checked="checked" onclick="$('#messageconf').hide();" /> 关闭</label>
+                          </div>
+                        </div>
+                        <div id="messageconf" {if $work['doption'] neq 1} style="display:none"{/if}>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">通知对象</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <label class="radio-inline">
+                                <input type="radio" name="notice_mode" value="notice_admin" {if condition="$work['notice_mode'] eq 'notice_admin'" }checked{/if}/> 1、提交通知管理员</label>
+                              <label class="radio-inline">
+                                <input type="radio" name="notice_mode" value="notice_user" {if condition="$work['notice_mode'] eq 'notice_user'" }checked{/if}/> 2、受理通知用户</label>
+                              <label class="radio-inline">
+                                <input type="radio" name="notice_mode" value="notice_all" {if condition="$work['notice_mode'] eq 'notice_all'" }checked{/if}/> 支持1、2</label>
+                            </div>
+                          </div>
+                          <div class="form-group" id="sms">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">提醒接收手机</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <input type="text" name="notice_mobile" class="form-control" value="{$work['notice_mobile']}" />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">短信通知模板</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <span class="btn btn-default" disabled>需要【dayu短信】支持</span>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">通知内容</label>
+                            <div class="col-xs-12 col-sm-9">
+                              <select name="notice_smstype" class='form-control'>
+                                <option value="some" {if condition="$work['notice_smstype'] eq 'some'" }selected{/if}>姓名、手机、工单标题</option>
+                                <option value="all" {if condition="$work['notice_smstype'] eq 'all'" }selected{/if}>姓名、手机、工单所有内容</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <input type="hidden" name="id" value="{$work['id']}">
+                    {:token()}
+                    <input type="button" onclick="formAjaxSubmit()" value="保存">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+      <!--inner block end here-->
+      <!--copy rights start here-->
+      {include file="public/copyright"}
+      <!--COPY rights end here-->
+    </div>
+    <!--slider menu-->
+    {include file="public/sidebar_menu"}
+    <div class="clearfix"> </div>
+  </div>
+  <!--slide bar menu end here-->
+  {include file="public/js"}
+  <!-- mother grid end here-->
+</body>
+<script>
+  var item_num = 100;
+  function addItem() {
+    var html = '' +
+      '<tr>' +
+      '<td><input name="field_title[]" type="text" class="form-control" /></td>' +
+      '<td><input type="text" name="field_displayorder[]" value="' + item_num + '" class="form-control" /></td>' +
+      '<td style="text-align:center;"><select name="field_essential[]" class="form-control"><option value="1">是</option><option value="0">否</option></select></td>' +
+      '<td class="text-center">' +
+      '<div class="input-group hide" id="only_' + item_num + '">' +
+      '</div>' +
+      '<div class="input-group re-image hide" id="image_' + item_num + '">' +
+      '<input type="text" name="field_image[]" value="" class="form-control" autocomplete="off">' +
+      '<span class="input-group-btn">' +
+      '<button class="btn btn-default" type="button" onclick="showImageDialog(this);">示例图/分隔图</button>' +
+      '</span>' +
+      '</div>' +
+      '</td>' +
+      '<td>' +
+      '<select name="field_type[]" class="form-control" onclick="setClass(this,' + item_num + ');">' +
+      '<option value="number">数字(number)</option>' + '<option value="text">字符串(text)</option>' + '<option value="textarea">文本(textarea)</option>' + '<option value="radio">单选(radio)</option>' + '<option value="checkbox">多选(checkbox)</option>' + '<option value="select">下拉框(select)</option>' + '<option value="calendar">日历(calendar)</option>' + '<option value="email">电子邮件(email)</option>' + '<option value="image">上传图片(image)</option>' + '<option value="range">日期时间(range)</option>' + '<option value="reside">省市区(reside)</option>' + '</select>' +
+      '</td>' +
+      '<td>' +
+      '<select name="field_bind[]" class="form-control">' +
+      '<option value="">不关联粉丝数据</option>' +
+      '<option value="realname">真实姓名</option>' + '<option value="nickname">昵称</option>' + '<option value="avatar">头像</option>' + '<option value="qq">QQ号</option>' + '<option value="mobile">手机号码</option>' + '<option value="vip">VIP级别</option>' + '<option value="gender">性别</option>' + '<option value="birthyear">出生生日</option>' + '<option value="constellation">星座</option>' + '<option value="zodiac">生肖</option>' + '<option value="telephone">固定电话</option>' + '<option value="idcard">证件号码</option>' + '<option value="studentid">学号</option>' + '<option value="grade">班级</option>' + '<option value="address">邮寄地址</option>' + '<option value="zipcode">邮编</option>' + '<option value="nationality">国籍</option>' + '<option value="resideprovince">居住地址</option>' + '<option value="graduateschool">毕业学校</option>' + '<option value="company">公司</option>' + '<option value="education">学历</option>' + '<option value="occupation">职业</option>' + '<option value="position">职位</option>' + '<option value="revenue">年收入</option>' + '<option value="affectivestatus">情感状态</option>' + '<option value="lookingfor"> 交友目的</option>' + '<option value="bloodtype">血型</option>' + '<option value="height">身高</option>' + '<option value="weight">体重</option>' + '<option value="alipay">支付宝帐号</option>' + '<option value="msn">MSN</option>' + '<option value="email">电子邮箱</option>' + '<option value="taobao">阿里旺旺</option>' + '<option value="site">主页</option>' + '<option value="bio">自我介绍</option>' + '<option value="interest">兴趣爱好</option>' + '<option value="uniacid">同一公众号id</option>' + '<option value="groupid">分组id</option>' + '<option value="credit1">积分</option>' + '<option value="credit2">余额</option>' + '<option value="credit3">预留积分类型3</option>' + '<option value="credit4">预留积分类型4</option>' + '<option value="credit5">预留积分类型5</option>' + '<option value="credit6">预留积分类型6</option>' + '<option value="createtime">加入时间</option>' + '<option value="password">用户密码</option>' + '<option value="pay_password">支付密码</option>' + '</select>' +
+      '</td>' +
+      '<td>' +
+      '<a href="javascript:;" data-toggle="tooltip" data-placement="bottom" class="btn btn-default btn-sm" onclick="deleteItem(this)"  title="删除此字段"><i class="fa fa-times"></i></a>' +
+      '</td>' +
+      '</tr>';
+    $('#re-items').append(html);
+    item_num--;
+  }
+  function setClass(obj, id) {
+    if ($(obj).val() == 'text') {
+      $('#only_' + id).removeClass('hide');
+    } else {
+      $('#only_' + id).addClass('hide');
+    }
+    if ($(obj).val() == 'image') {
+      $('#image_' + id).removeClass('hide');
+    } else {
+      $('#image_' + id).addClass('hide');
+    }
+  }
+  function deleteItem(o) {
+    $(o).parent().parent().remove();
+  }
+</script>
+<!-- 实例化时间选择器 -->
+<script type="text/javascript">
+  $("#starttime").datetimepicker({
+    language: 'zh-CN', //中文
+    format: 'yyyy-mm-dd',//字体格式
+    defaultDate: new Date(),//取得当前日期
+    autoclose: true,
+    minView: "month", //默认选到年月日
+    todayHighlight: true
+  });
+  // 设置默认显示时间
+  var starttime = "{$user:config_starttime}";
+  $('#starttime').datetimepicker('update', starttime);
+
+  $("#endtime").datetimepicker({
+    language: 'zh-CN', //中文
+    format: 'yyyy-mm-dd',//字体格式
+    defaultDate: new Date(),//取得当前日期
+    autoclose: true,
+    minView: "month", //默认选到年月日
+    todayHighlight: true
+  });
+  // 设置默认显示时间
+  var endtime = "{$user:config_endtime}";
+  $('#endtime').datetimepicker('update', endtime);
+</script>
+<script>
+  /*图片上传*/
+  $(function () {
+    var inputid = '';
+    var img = '';
+    $(".plupload").click(function () {
+      //获取要填写值的input
+      inputid = $(this).parent().siblings("input.form-control");
+      //为上传图片触发点击事件
+      $("input[name='image']").click();
+    });
+    //ajax上传图片开始
+    $("input[name='image']").on("change", function () {
+      var formData = new FormData();
+      formData.append("file", document.getElementById("imagefile").files[0]);
+      formData.append('name', inputid.attr("id"));
+      $.ajax({
+        type: "POST",
+        url: "{:url('index/upload')}",
+        processData: false,  // 不要处理发送的数据
+        contentType: false,   // 不要设置Content-Type请求头
+        data: formData,
+        success: function (data) {
+          if (data.cod == 1) {
+            inputid.val(data.path);
+            inputid.siblings("div.input-group").find("img.img-responsive").attr("src", data.path);
+          }
+        }
+      });
+      // 
+      $("input[name='image']").val('');
+    });
+  });
+  /*删除上传图片*/
+  function deleteImage(elm,id) {
+    $(elm).prev().attr("src", "http://i4.bvimg.com/656414/1ca96d362d057e4c.jpg");
+    $("#"+id).val('');
+  }
+</script>
+</html>

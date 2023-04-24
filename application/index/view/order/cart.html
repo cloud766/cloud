@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>弘讯应用商店</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="applicable-device" content="pc">
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    {include file='public/css'}
+    <link rel="stylesheet" href="__STATIC__/order/css/order.css" />
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div style="background-color:#eee;padding:35px 0">
+        <div class="cart">
+            <div class="cart-header">
+                <div class="cart-logo">
+                    <img src="/static/store/image/logo.png" alt="">
+                    <p>购物车</p>
+                </div>
+                <div class="cart-total">
+                    <p class="cart-title">全部商品</p>
+                    <p>{$count}</p>
+                </div>
+            </div>
+            <div class="cart-body">
+                <div class="cart-menu">
+                    <span class="cart-checkbox">
+                        <input type="checkbox" class="" onclick="selectAll(this)">
+                        全选
+                    </span>
+                    <span class="cart-lg">应用名称</span>
+                    <span class="cart-df">类别</span>
+                    <span class="cart-lg">站点</span>
+                    <span class="cart-sm">单价</span>
+                    <span class="cart-sm">优惠</span>
+                    <span class="cart-sm">金额</span>
+                    <span class="cart-sm">操作</span>
+                </div>
+                {volist name="list" id="vo"}
+                <div class="cart-item">
+                    <div class="cart-checkbox">
+                        <input type="checkbox" value="{$vo.id}" class="select-all-checkbox">
+                        <label for="" class="ui-checkbox"></label>
+                    </div>
+                    <div class="cart-lg">
+                        {$vo.project_name}
+                    </div>
+                    <div class="cart-df">
+                        {switch name="vo.relation"}
+                        {case value="addon"}购买插件{/case}
+                        {case value="template"}购买模板{/case}
+                        {case value="sourcecode"}购买源码{/case}
+                        {/switch}
+                    </div>
+                    <div class="cart-lg">
+                        <p>{$vo.website_name}</p>
+                        <p class="Info">{$vo.website_domain}</p>
+                    </div>
+                    <div class="cart-sm">￥{$vo.price}</div>
+                    <div class="cart-sm">
+                        ￥{$vo.price-$vo.pay_price}
+                    </div>
+                    <div class="cart-sm">￥{$vo.pay_price}</div>
+                    <div class="cart-sm" style="cursor: pointer;"><button class="btn btn-danger" onclick="deleteCart('{$vo.id}')">删除</button></div>
+                </div>
+                {/volist}
+                <div class="cart-footer">
+                    <p class="cart-footer-total">总计</p>
+                    <span class="cart-price">
+                        <p>￥<span id="total_price">0<span></p>
+                        <a href="javascript:;" class="cart-btn">去结算</a>
+                    </span>
+                </div>
+                <input type="hidden" id="cart_ids">
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"}
+</body>
+<script>
+    function selectAll(obj) {
+        if ($(obj).is(':checked')) {
+            $(".select-all-checkbox").prop("checked", true);
+        } else {
+            $(".select-all-checkbox").prop("checked", false);
+        }
+        var ids = [];
+        $('.select-all-checkbox').each(function () {
+            if ($(this).is(':checked')) {
+                ids.push($(this).val());
+            }
+        });
+        $('#cart_ids').val(ids.join(','));
+        cartPrice();
+    }
+    $('.select-all-checkbox').change(function () {
+        var ids = [];
+        $('.select-all-checkbox').each(function () {
+            if ($(this).is(':checked')) {
+                ids.push($(this).val());
+            }
+        });
+        $('#cart_ids').val(ids.join(','));
+        cartPrice();
+    })
+    function cartPrice() {
+        var ids = $('#cart_ids').val();
+        $.ajax({
+            url: '{:url("index/order/calculatePrice")}',
+            data: { ids: ids },
+            type: 'post',
+            dataType: 'json',
+            success: function (res) {
+                $('#total_price').text(res.price);
+            }
+        })
+    }
+    function deleteCart(id) {
+        var confirm = layer.confirm('确认要删除吗', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.ajax({
+                url: '{:url("index/order/deteleCart")}',
+                data: { id: id },
+                type: 'post',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code) {
+                        location.reload();
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                }
+            })
+        })
+    }
+    $('.cart-btn').click(function () {
+        var ids = $('#cart_ids').val();
+        if (!ids) {
+            layer.msg('未选中任何商品');
+            return;
+        }
+        location.href = "{:url('confirm')}";
+    });
+</script>
+
+</html>

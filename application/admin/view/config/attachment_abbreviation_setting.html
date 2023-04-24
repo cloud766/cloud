@@ -1,0 +1,50 @@
+{include file="public/css"}
+<section class="content-header">
+  <h1>全局设置
+    <small> </small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="{:url('admin/index/welcome')}">
+        <i class="fa fa-dashboard"></i> 首页</a>
+    </li>
+    <li class="active">系统设置</li>
+    <li class="active">全局设置</li>
+    <li class="active">附件缩略设置</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+        </div>
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="{:url('admin/config/index', array('group'=>'attachment_abbreviation_setting'))}">附件缩略设置</a></li>
+            <li><a href="{:url('admin/config/index', array('group'=>'image_global_setting'))}">图片附件设置</a></li>
+            <li><a href="{:url('admin/config/index', array('group'=>'video_global_setting'))}">音频视频附件设置</a></li>
+          </ul>
+        </div>
+        <form class="form-horizontal" action="{:url('admin/config/saveConfig')}" method="post">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="open_attachment_abbreviation" class="col-sm-2 control-label">缩略设置</label>
+              <div class="col-sm-8">
+                <select class="form-control" name="open_attachment_abbreviation">
+                  <option value="0" {if condition:$config.open_attachment_abbreviation eq 0}selected{/if}>不启用缩略</option>
+                  <option value="1" {if condition:$config.open_attachment_abbreviation eq 1}selected{/if}>启用缩略</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <input type="hidden" name="group" value="{$group}"/>
+            <button type="submit" class="btn btn-info pull-right">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{include file="public/js"}

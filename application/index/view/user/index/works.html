@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>应用商店</title>
+    <!-- ALL STYLESHEET -->
+    <link href="__STATIC__/newstore/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/responsive.css" rel="stylesheet">
+    <link href="__STATIC__/newstore/css/hx.css" rel="stylesheet">
+    <!--link href="css/blog-single.css" rel="stylesheet">
+		<link href="css/responsive.css" rel="stylesheet"-->
+</head>
+
+<body>
+    {include file="public/header"}
+    <section class="featured-product recommented-product">
+        <div class="container">
+            <div class="row">
+                {include file="user/index/left"}
+                <div class="col-sm-9">
+                    <!-- desktop -->
+                    <div class="featured-product desktop">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form role="form" action="{:url('save')}" method="post" class="ajax-form">
+                                    <div class="form-group">
+                                        <label class="h6 p-b-md block" for="featured_items">选择自荐作品：</label>
+                                        <select name="recommend" class="form-control">
+                                            <option value="暂不自荐" {if condition="$user['recommend'] eq '暂不自荐'"
+                                                }selected{/if}>暂不自荐 </option> {foreach name="works" item="vo" } <option
+                                                value="{$vo['title']}" {if condition="$user['recommend'] eq $vo['title']"
+                                                }selected{/if}>{$vo['title']} </option> {/foreach} </select> </div>
+                                                <div class="form-group m-t-md m-b-0">
+                                                <input type="hidden" name="page" value="works" />
+                                                <button id="form-submit" class="btn skin b-skin" type="button" onclick="formAjaxSubmit()">保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> <!-- desktop -->
+                    <!-- pagination -->
+                    <nav>
+                        {$page.pages}
+                    </nav>
+                </div>
+                <!--div 9 -->
+            </div>
+        </div>
+    </section>
+    {include file="public/footer"}
+</body>
+
+</html>

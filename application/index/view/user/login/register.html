@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>弘讯应用商店 - 会员登陆</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+    <link rel="shortcut icon" href="/favicon.ico">
+    {include file="user/login/public/css"}
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="style-3">
+    <div class="container">
+        <div class="row">
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-push-8">
+                <!-- Start Sign In Form -->
+                <form action="#" class="fh5co-form animate-box" data-animate-effect="fadeInRight">
+                    <h2>会员注册</h2>
+                    <div class="form-group">
+                        <div class="alert alert-danger" id="tips" role="alert" style="display:none"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username" class="sr-only">用户名</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="用户名" autocomplete="off">
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="email" class="sr-only">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="邮箱地址" autocomplete="off">
+                    </div> -->
+                    <div class="form-group">
+                        <label for="password" class="sr-only">密码</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码"
+                            autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="repassword" class="sr-only">确认密码</label>
+                        <input type="password" class="form-control" id="repassword" name="repassword" placeholder="再次输入密码"
+                            autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <p><a href="{:url('login')}">立即登陆</a></p>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" value="立即注册" onclick="formSubmit()" class="btn btn-primary">
+                    </div>
+                </form>
+                <!-- END Sign In Form -->
+            </div>
+        </div>
+        <div class="row" style="padding-top: 60px; clear: both;">
+            <div class="col-md-12 text-center">
+                <p><small>Copyright 2014-2019 HXStore, All Rights Reserved 粤ICP备15036191号-2</small></p>
+            </div>
+        </div>
+    </div>
+    {include file="user/login/public/js"}
+</body>
+<script>
+    function formSubmit() {
+        $('#tips').hide();
+        $.ajax({
+            url: '{:url("register")}',
+            data: $('form').serialize(),
+            dataType: 'json',
+            type: 'post',
+            success: function (res) {
+                if (res.code) {
+                    location.href = res.url
+                } else {
+                    $('#tips').text(res.msg).show();
+                }
+            }
+        })
+    }
+</script>
+
+</html>
